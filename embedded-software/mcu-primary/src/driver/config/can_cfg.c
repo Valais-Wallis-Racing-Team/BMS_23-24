@@ -389,7 +389,7 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x280, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 0 1 2 */
         { 0x281, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 3 4 5 */
         { 0x282, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 6 7 8 */
-        //{ 0x283, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 9 10 11 */
+        { 0x283, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 9 10 11 */
 		//{ 0x284, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 12 13 14 */
 		//{ 0x285, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 15 16 17 */
 
@@ -533,12 +533,6 @@ CAN_MSG_RX_TYPE_s can0_RxMsgs[] = {
 
         { 0x100, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< debug message      */
         { 0x777, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< request SW version */
-		{ 0x184, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
-		{ 0x185, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
-		{ 0x184, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
-		{ 0x185, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
-		{ 0x184, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
-		{ 0x185, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
 };
 
 

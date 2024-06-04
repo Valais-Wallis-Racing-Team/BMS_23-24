@@ -934,9 +934,7 @@ typedef enum {
 typedef enum {
     CAN0_SIG_ReceiveStateRequest,          /*!< current sensor counter */
     CAN0_SIG_DEBUG_Data,                   /*!< Data of debug message */
-    CAN0_SIG_GetReleaseVersion,
-	CAN0_Dummy_Message1,
-	CAN0_Dummy_Message2
+    CAN0_SIG_GetReleaseVersion
 } CANS_CAN0_signalsRx_e;
 
 

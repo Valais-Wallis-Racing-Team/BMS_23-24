@@ -114,38 +114,6 @@ void CANS_MainFunction(void) {
     	        }
     	counter_ticksComplete++;
 
-    	i = 1;
-    	    	result = E_NOT_OK;
-    	    	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
-    	    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
-    	    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
-    	    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
-
-    	    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
-    	    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
-
-    	    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
-    	    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
-    	    	            }
-    	    	        }
-    	    	counter_ticksComplete++;
-
-    	    	i = 0;
-    	    	    	result = E_NOT_OK;
-    	    	    	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
-    	    	    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
-    	    	    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
-    	    	    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
-
-    	    	    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
-    	    	    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
-
-    	    	    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
-    	    	    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
-    	    	    	            }
-    	    	    	        }
-    	    	    	counter_ticksComplete++;
-
     	/*i = 158;
     	result = E_NOT_OK;
     	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {

@@ -153,8 +153,6 @@ extern float NTCLE413E2103F106A_GetTempFromLUT(uint16_t vadc_mV) {
         /* R2 = R1*(V2/(Vsupply-Vadc)) */
         resistance_Ohm = NTCLE413E2103F106A_RESISTOR_DIVIDER_RESISTANCE_R1_R2_Ohm *
                 (adcVoltage_V/(NTCLE413E2103F106A_RESISTOR_DIVIDER_SUPPLY_VOLTAGE_V - adcVoltage_V));
-
-        resistance_Ohm = resistance_Ohm*2;//because we have the ntc divided by 2
 #endif /* B57861S0103F045_POSITION_IN_RESISTOR_DIVIDER_IS_R1 */
 
         /* Variables for interpolating LUT value */

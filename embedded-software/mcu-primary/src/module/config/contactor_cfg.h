@@ -187,13 +187,13 @@
  * Delay between open first and second contactor
  */
 
-#define CONT_DELAY_BETWEEN_OPENING_CONTACTORS_MS        ((100) * (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_DELAY_BETWEEN_OPENING_CONTACTORS_MS        ((50) * (CONT_TASK_CYCLE_CONTEXT_MS))
 
 /**
  * Delay after opening second contactor
  */
 
-#define CONT_DELAY_AFTER_OPENING_SECOND_CONTACTORS_MS   ((200) *  (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_DELAY_AFTER_OPENING_SECOND_CONTACTORS_MS   ((50) *  (CONT_TASK_CYCLE_CONTEXT_MS))
 
 
 /**
@@ -219,7 +219,7 @@
 /**
  * Delay after closing main minus in ms
  */
-#define CONT_STATEMACH_WAIT_AFTER_CLOSING_MINUS_MS ((100) * (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_STATEMACH_WAIT_AFTER_CLOSING_MINUS_MS ((50) * (CONT_TASK_CYCLE_CONTEXT_MS))
 
 /**
  * Delay after closing precharge in ms
@@ -261,7 +261,7 @@
  * \par Unit:
  * mA
 */
-#define CONT_PRECHARGE_CURRENT_THRESHOLD_mA     2000  /* mA */
+#define CONT_PRECHARGE_CURRENT_THRESHOLD_mA     1170  /* mA */
 
 
 /*================== Charge precharge configuration ====================*/
@@ -274,7 +274,7 @@
 /**
  * Delay after closing charge minus in ms
  */
-#define CONT_STATEMACH_CHARGE_WAIT_AFTER_CLOSING_MINUS_MS ((100) * (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_STATEMACH_CHARGE_WAIT_AFTER_CLOSING_MINUS_MS ((50) * (CONT_TASK_CYCLE_CONTEXT_MS))
 
 /**
  * Delay after closing charge precharge in ms

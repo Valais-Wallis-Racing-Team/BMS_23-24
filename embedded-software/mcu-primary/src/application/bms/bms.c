@@ -482,7 +482,6 @@ void BMS_Trigger(void) {
             BMS_SAVELASTSTATES();
 
             if (bms_state.substate == BMS_ENTRY) {
-            	//BAL_SetStateRequest(BAL_STATE_ALLOWBALANCING_REQUEST);
 #if LTC_NORMAL_PERIODIC_OPEN_WIRE_CHECK == TRUE
                 nextOpenWireCheck = timestamp + LTC_NORMAL_OPEN_WIRE_PERIOD_ms;
 #endif /* LTC_NORMAL_PERIODIC_OPEN_WIRE_CHECK == TRUE */
@@ -641,7 +640,7 @@ void BMS_Trigger(void) {
             if (bms_state.substate == BMS_ENTRY) {
                 BAL_SetStateRequest(BAL_STATE_NOBALANCING_REQUEST);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
-                CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
+                //CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
 #endif
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
 #if BUILD_MODULE_ENABLE_ILCK == 1

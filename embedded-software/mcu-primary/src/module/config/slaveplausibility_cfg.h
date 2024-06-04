@@ -76,7 +76,7 @@
  * \par Default:
  * 1000
 */
-#define SPL_CELL_VOLTAGE_AVG_TOLERANCE_mV        (3000)
+#define SPL_CELL_VOLTAGE_AVG_TOLERANCE_mV        (1000)
 
 /**
  * @ingroup CONFIG_PLAUSIBILITY
@@ -88,7 +88,7 @@
  * \par Default:
  * -25
 */
-#define SPL_MINIMUM_TEMP_MEASUREMENT_RANGE       (-40)
+#define SPL_MINIMUM_TEMP_MEASUREMENT_RANGE       (-50)
 
 /**
  * @ingroup CONFIG_PLAUSIBILITY
@@ -100,7 +100,7 @@
  * \par Default:
  * 125
 */
-#define SPL_MAXIMUM_TEMP_MEASUREMENT_RANGE       (105)
+#define SPL_MAXIMUM_TEMP_MEASUREMENT_RANGE       (125)
 
 /*================== Extern Constant and Variable Declarations ==============*/
 
