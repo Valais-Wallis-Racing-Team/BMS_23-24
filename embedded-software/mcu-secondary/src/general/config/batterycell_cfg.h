@@ -92,7 +92,7 @@
  * \par Default:
  * -20
 */
-#define BC_TEMPMIN_DISCHARGE_MSL      -40  /* &deg;C */
+#define BC_TEMPMIN_DISCHARGE_MSL      -60  /* &deg;C */
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -122,7 +122,7 @@
  * \par Default:
  * 0
 */
-#define BC_TEMPMIN_CHARGE_MSL     0
+#define BC_TEMPMIN_CHARGE_MSL     -60
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -163,7 +163,7 @@
  * \par Default:
  * 1700
 */
-#define BC_VOLTMIN_MSL      3000
+#define BC_VOLTMIN_MSL      2700
 
 /**
  * @ingroup CONFIG_BATTERYCELL

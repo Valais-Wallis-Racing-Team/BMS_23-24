@@ -291,7 +291,7 @@
 #define LTC_NORMAL_OPEN_WIRE_PERIOD_ms      600000
 
 /* #define LTC_CHARGE_PERIODIC_OPEN_WIRE_CHECK TRUE */
-#define LTC_CHARGE_PERIODIC_OPEN_WIRE_CHECK FALSE
+#define LTC_CHARGE_PERIODIC_OPEN_WIRE_CHECK TRUE
 
 /**
  * Periodic open-wire check time in CHARGE state in ms

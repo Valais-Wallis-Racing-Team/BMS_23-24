@@ -110,7 +110,9 @@ void ENG_Init(void) {
 void ENG_Cyclic_1ms(void) {
     SYS_Trigger();
     ILCK_Trigger();
+#if BS_NR_OF_MODULES != 0
     LTC_Trigger();
+#endif
 }
 
 void ENG_Cyclic_10ms(void) {

@@ -1246,7 +1246,6 @@ static void BMS_CheckSlaveTemperatures(void) {
  */
 static void BMS_CheckOpenSenseWire(void) {
     uint8_t openWireDetected = 0;
-
     /* Iterate over all modules */
     for (uint8_t m = 0; m < BS_NR_OF_MODULES; m++) {
         /* Iterate over all voltage sense wires: cells per module + 1 */
@@ -1259,6 +1258,9 @@ static void BMS_CheckOpenSenseWire(void) {
             }
         }
     }
+#ifdef LAST_CELL_NOT_PLUGGED
+    openWireDetected = openWireDetected-BS_NR_OF_MODULES;
+#endif
     /* Set error if open wire detected */
     if (openWireDetected == 0u) {
         DIAG_Handler(DIAG_CH_OPEN_WIRE, DIAG_EVENT_OK, 0);

@@ -81,6 +81,7 @@ static uint32_t cans_getRecommendedOperatingCurrent(uint32_t, void *);
 static uint32_t cans_getMaxAllowedPower(uint32_t, void *);
 static uint32_t cans_getpower(uint32_t, void *);
 static uint32_t cans_getcurr(uint32_t, void *);
+static uint32_t cans_setcurrCaptor(uint32_t, void *);//function added for retreaving IVT values from db and sendig through can0
 static uint32_t cans_getPackVoltage(uint32_t, void *);
 static uint32_t cans_getminmaxvolt(uint32_t, void *);
 static uint32_t cans_getminmaxtemp(uint32_t, void *);
@@ -105,6 +106,7 @@ static uint32_t cans_gettriggercurrent(uint32_t sigIdx, void *value);
 /*================== Extern Constant and Variable Definitions ===============*/
 
 const CANS_signal_s cans_CAN0_signals_tx[] = {
+
     { {CAN0_MSG_SystemState_0}, 0, 3, 0, 7, 1, 0, littleEndian, &cans_getcanerr },  /*!< CAN0_SIG_GS0_general_error, */
     { {CAN0_MSG_SystemState_0}, 8, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getcanerr },  /*!< CAN0_SIG_GS0_current_state, */
     { {CAN0_MSG_SystemState_0}, 16, 3, 0, 7, 1, 0, littleEndian, &cans_getcanerr },  /*!< CAN0_SIG_GS0_error_overtemp_charge, */
@@ -193,7 +195,7 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
 
     { {CAN0_MSG_PackVoltage}, 0, 32, 0, UINT32_MAX, 1, 0, littleEndian, &cans_getPackVoltage },  /*!< CAN0_SIG_PackVolt_Battery */
     { {CAN0_MSG_PackVoltage}, 32, 32, 0, UINT32_MAX, 1, 0, littleEndian, &cans_getPackVoltage },  /*!< CAN0_SIG_PackVolt_PowerNet */
-
+#if BS_NR_OF_MODULES != 0
     /* Module 0 cell voltages */
     { {CAN0_MSG_Mod0_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_valid_0_2 */
     { {CAN0_MSG_Mod0_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_0 */
@@ -720,43 +722,45 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
 	{ {CAN0_MSG_Mod11_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_9 */
 	{ {CAN0_MSG_Mod11_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_10 */
 	{ {CAN0_MSG_Mod11_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_11 */
+#endif
 
-#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-        {{CAN0_MSG_BMS_CurrentTrigger}, 0, 32, 0, 0, 1, 0, &cans_gettriggercurrent }  /*!< CAN0_SIG_ISA_Trigger */
-#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
+	{ {CAN0_MSG_IVT_Current}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_MuxID */
+	{ {CAN0_MSG_IVT_Current}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_Status */
+	{ {CAN0_MSG_IVT_Current}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS0_I_Measurement */
+	{ {CAN0_MSG_IVT_Voltage_1}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_MuxID */
+	{ {CAN0_MSG_IVT_Voltage_1}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_Status */
+	{ {CAN0_MSG_IVT_Voltage_1}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS1_U1_Measurement */
+	{ {CAN0_MSG_IVT_Voltage_2}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_MuxID */
+	{ {CAN0_MSG_IVT_Voltage_2}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_Status */
+	{ {CAN0_MSG_IVT_Voltage_2}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor, },  /* CAN0_SIG_ISENS2_U2_Measurement */
+	{ {CAN0_MSG_IVT_Voltage_3}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_MuxID */
+	{ {CAN0_MSG_IVT_Voltage_3}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_Status */
+	{ {CAN0_MSG_IVT_Voltage_3}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor, },  /* CAN0_SIG_ISENS3_U3_Measurement */
+	{ {CAN0_MSG_IVT_Temperature}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_MuxID */
+	{ {CAN0_MSG_IVT_Temperature}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_Status */
+	{ {CAN0_MSG_IVT_Temperature}, 16, 32, INT32_MIN, INT32_MAX, 0.1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS4_T_Measurement */
+	{ {CAN0_MSG_IVT_Power}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_MuxID */
+	{ {CAN0_MSG_IVT_Power}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_Status */
+	{ {CAN0_MSG_IVT_Power}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS5_P_Measurement */
+	{ {CAN0_MSG_IVT_CoulombCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_MuxID */
+	{ {CAN0_MSG_IVT_CoulombCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_Status */
+	{ {CAN0_MSG_IVT_CoulombCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS6_CC_Measurement */
+	{ {CAN0_MSG_IVT_EnergyCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_MuxID */
+	{ {CAN0_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_Status */
+	{ {CAN0_MSG_IVT_EnergyCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS7_EC_Measurement */
+
 };
 
 
 const CANS_signal_s cans_CAN1_signals_tx[] = {
+#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
+        {{CAN1_MSG_BMS_CurrentTrigger}, 0, 32, 0, 0, 1, 0, &cans_gettriggercurrent }  /*!< CAN0_SIG_ISA_Trigger */
+#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 };
 
 
 const CANS_signal_s cans_CAN0_signals_rx[] = {
     { {CAN0_MSG_StateRequest}, 8, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_setstaterequest },
-    { {CAN0_MSG_IVT_Current}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_MuxID */
-    { {CAN0_MSG_IVT_Current}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_Status */
-    { {CAN0_MSG_IVT_Current}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS0_I_Measurement */
-    { {CAN0_MSG_IVT_Voltage_1}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_MuxID */
-    { {CAN0_MSG_IVT_Voltage_1}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_Status */
-    { {CAN0_MSG_IVT_Voltage_1}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS1_U1_Measurement */
-    { {CAN0_MSG_IVT_Voltage_2}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_MuxID */
-    { {CAN0_MSG_IVT_Voltage_2}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_Status */
-    { {CAN0_MSG_IVT_Voltage_2}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr, },  /* CAN0_SIG_ISENS2_U2_Measurement */
-    { {CAN0_MSG_IVT_Voltage_3}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_MuxID */
-    { {CAN0_MSG_IVT_Voltage_3}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_Status */
-    { {CAN0_MSG_IVT_Voltage_3}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr, },  /* CAN0_SIG_ISENS3_U3_Measurement */
-    { {CAN0_MSG_IVT_Temperature}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_MuxID */
-    { {CAN0_MSG_IVT_Temperature}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_Status */
-    { {CAN0_MSG_IVT_Temperature}, 16, 32, INT32_MIN, INT32_MAX, 0.1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS4_T_Measurement */
-    { {CAN0_MSG_IVT_Power}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_MuxID */
-    { {CAN0_MSG_IVT_Power}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_Status */
-    { {CAN0_MSG_IVT_Power}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS5_P_Measurement */
-    { {CAN0_MSG_IVT_CoulombCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_MuxID */
-    { {CAN0_MSG_IVT_CoulombCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_Status */
-    { {CAN0_MSG_IVT_CoulombCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS6_CC_Measurement */
-    { {CAN0_MSG_IVT_EnergyCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_MuxID */
-    { {CAN0_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_Status */
-    { {CAN0_MSG_IVT_EnergyCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS7_EC_Measurement */
     { {CAN0_MSG_DEBUG}, 0, 64, 0, UINT64_MAX, 1, 0, littleEndian, &cans_setdebug },  /* CAN0_SIG_DEBUG_Data */
     { {CAN0_MSG_GetReleaseVersion}, 0, 64, 0, UINT64_MAX, 1, 0, littleEndian, &cans_setSWversion }  /* CAN0_SIG_DEBUG_Data */
 };
@@ -804,7 +808,7 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
     uint32_t tmp = 0;
     uint32_t tmpVal = 0;
     float canData = 0;
-
+#if BS_NR_OF_MODULES != 0
     /* first signal to transmit cell voltages */
     if (sigIdx == CAN0_SIG_Mod0_volt_valid_0_2) {
         DB_ReadBlock(&volt_tab, DATA_BLOCK_ID_CELLVOLTAGE);
@@ -1258,7 +1262,7 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
         /* Apply offset and factor */
         *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
     }
-
+#endif
     return 0;
 }
 
@@ -1269,7 +1273,7 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
     uint32_t tmp = 0;
     float tmpVal = 0;
     float canData = 0;
-
+#if BS_NR_OF_MODULES != 0
     /* first signal to transmit cell temperatures */
     if (sigIdx == CAN0_SIG_Mod0_temp_valid_0_2) {
         DB_ReadBlock(&temp_tab, DATA_BLOCK_ID_CELLTEMPERATURE);
@@ -1602,7 +1606,7 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
         /* Apply offset and factor */
         *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
     }
-
+#endif
     return 0;
 }
 
@@ -1699,11 +1703,17 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                     canRSL_tab.over_current_charge_pl1     == 1 ||
                     canRSL_tab.over_current_discharge_pl1  == 1 ||
                     canRSL_tab.over_voltage                == 1 ||
+#if BS_NR_OF_MODULES != 0
                     canRSL_tab.under_voltage               == 1 ||
+#endif
                     canRSL_tab.over_temperature_charge     == 1 ||
-                    canRSL_tab.over_temperature_discharge  == 1 ||
+                    canRSL_tab.over_temperature_discharge  == 1
+#if BS_NR_OF_MODULES != 0
+					||
                     canRSL_tab.under_temperature_charge    == 1 ||
-                    canRSL_tab.under_temperature_discharge == 1) {
+                    canRSL_tab.under_temperature_discharge == 1
+#endif
+                	) {
                     /* set flag if error detected */
                     tmp |= 0x01 << 1;
                 }
@@ -1715,11 +1725,17 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                     canMOL_tab.over_current_charge_pl1     == 1 ||
                     canMOL_tab.over_current_discharge_pl1  == 1 ||
                     canMOL_tab.over_voltage                == 1 ||
+#if BS_NR_OF_MODULES != 0
                     canMOL_tab.under_voltage               == 1 ||
+#endif
                     canMOL_tab.over_temperature_charge     == 1 ||
-                    canMOL_tab.over_temperature_discharge  == 1 ||
+                    canMOL_tab.over_temperature_discharge  == 1
+#if BS_NR_OF_MODULES != 0
+					||
                     canMOL_tab.under_temperature_charge    == 1 ||
-                    canMOL_tab.under_temperature_discharge == 1) {
+                    canMOL_tab.under_temperature_discharge == 1
+#endif
+                	) {
                     /* set flag if error detected */
                     tmp |= 0x01 << 2;
                 }
@@ -1737,6 +1753,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.over_temperature_charge;
                 *(uint32_t *)value = tmp;
                 break;
+#if BS_NR_OF_MODULES != 0
             case CAN0_SIG_GS0_error_undertemp_charge:
                 tmp = 0;
                 tmp |= canMOL_tab.under_temperature_charge << 2;
@@ -1744,6 +1761,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.under_temperature_charge;
                 *(uint32_t *)value = tmp;
                 break;
+#endif
             case CAN0_SIG_GS0_error_overtemp_discharge:
                 tmp = 0;
                 tmp |= canMOL_tab.over_temperature_discharge << 2;
@@ -1751,6 +1769,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.over_temperature_discharge;
                 *(uint32_t *)value = tmp;
                 break;
+#if BS_NR_OF_MODULES != 0
             case CAN0_SIG_GS0_error_undertemp_discharge:
                 tmp = 0;
                 tmp |= canMOL_tab.under_temperature_discharge << 2;
@@ -1758,6 +1777,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.under_temperature_discharge;
                 *(uint32_t *)value = tmp;
                 break;
+#endif
             case CAN0_SIG_GS0_error_overcurrent_charge:
                 tmp = 0;
                 tmp |= canMOL_tab.over_current_charge_cell << 2;
@@ -1791,6 +1811,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.over_voltage;
                 *(uint32_t *)value = tmp;
                 break;
+#if BS_NR_OF_MODULES != 0
             case CAN0_SIG_GS1_error_undervoltage:
                 tmp = 0;
                 tmp |= canMOL_tab.under_voltage << 2;
@@ -1801,6 +1822,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
             case CAN0_SIG_GS1_error_deep_discharge:
                 *(uint32_t *)value = canerr_tab.deepDischargeDetected;
                 break;
+#endif
             case CAN0_SIG_GS1_error_temperature_MCU0:
                 *(uint32_t *)value = canerr_tab.mcuDieTemperature;
                 break;
@@ -1853,7 +1875,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 }
                 *(uint32_t *)value = tmp;
                 break;
-
+#if BS_NR_OF_MODULES != 0
             case CAN0_SIG_GS2_lowCoinCellVolt:
                 *(uint32_t *)value = canerr_tab.coinCellVoltage;
                 break;
@@ -1870,7 +1892,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canerr_tab.ltc_config_error << 3;
                 *(uint32_t *)value = tmp;
                 break;
-
+#endif
             case CAN0_SIG_GS2_plausibilityCheck:
                 *(uint32_t *)value = canerr_tab.plausibilityCheck;
                 break;
@@ -2233,6 +2255,70 @@ static uint32_t cans_getPackVoltage(uint32_t sigIdx, void *value) {
 }
 
 
+static uint32_t cans_setcurrCaptor(uint32_t sigIdx, void *value){ // function to read values from current sensor
+	uint32_t retVal = 0;
+	float canData = 0;
+	static DATA_BLOCK_CURRENT_SENSOR_s current_tab_for_send;
+
+	if (value != NULL_PTR) {
+	   switch (sigIdx) {
+	       case CAN0_SIG_IVT_Current_Measurement:
+	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
+	           canData = cans_checkLimits((float)current_tab_for_send.current, sigIdx);
+	           /* Apply offset and factor */
+	           *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
+	           break;
+	       case CAN0_SIG_IVT_Voltage_1_Measurement:
+	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
+	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[0], sigIdx);
+	       	   /* Apply offset and factor */
+	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
+	       	   break;
+	       case CAN0_SIG_IVT_Voltage_2_Measurement:
+	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
+	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[1], sigIdx);
+	       	   /* Apply offset and factor */
+	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
+	       	   break;
+	       case CAN0_SIG_IVT_Voltage_3_Measurement:
+	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
+	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[2], sigIdx);
+	       	   /* Apply offset and factor */
+	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
+	       	   break;
+	       case CAN0_SIG_IVT_Temperature_Measurement:
+	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
+	       	   canData = cans_checkLimits((float)current_tab_for_send.temperature, sigIdx);
+	       	   /* Apply offset and factor */
+	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
+	       	   break;
+	       case CAN0_SIG_IVT_Power_Measurement:
+	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
+	       	   canData = cans_checkLimits((float)current_tab_for_send.power, sigIdx);
+	       	   /* Apply offset and factor */
+	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
+	       	   break;
+	       case CAN0_SIG_IVT_CC_Measurement:
+	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
+	       	   canData = cans_checkLimits((float)current_tab_for_send.current_counter, sigIdx);
+	       	   /* Apply offset and factor */
+	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
+	       	   break;
+	       case CAN0_SIG_IVT_EC_Measurement:
+	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
+	       	   canData = cans_checkLimits((float)current_tab_for_send.energy_counter, sigIdx);
+	       	   /* Apply offset and factor */
+	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
+	       	   break;
+	       default:
+	           *(uint32_t *)value = 0;
+	           break;
+	       }
+	}
+	return retVal;
+}
+
+
 static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
     int32_t currentValue;
     int32_t temperatureValue;
@@ -2245,29 +2331,29 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
 
     if (value != NULL_PTR) {
         switch (sigIdx) {
-            case CAN0_SIG_IVT_Current_Status:
-            case CAN0_SIG_IVT_Voltage_1_Status:
-            case CAN0_SIG_IVT_Voltage_2_Status:
-            case CAN0_SIG_IVT_Voltage_3_Status:
-            case CAN0_SIG_IVT_Temperature_Status:
-            case CAN0_SIG_IVT_Power_Status:
-            case CAN0_SIG_IVT_CC_Status:
-            case CAN0_SIG_IVT_EC_Status:
+        	case CAN1_SIG_IVT_Current_Status:
+        	case CAN1_SIG_IVT_Voltage_1_Status:
+        	case CAN1_SIG_IVT_Voltage_2_Status:
+        	case CAN1_SIG_IVT_Voltage_3_Status:
+        	case CAN1_SIG_IVT_Temperature_Status:
+        	case CAN1_SIG_IVT_Power_Status:
+        	case CAN1_SIG_IVT_CC_Status:
+        	case CAN1_SIG_IVT_EC_Status:
                 dummy = *(uint32_t *)value & 0x000000FF;
                 dummy &= 0xF0;   /* only high nibble contains diag info */
                 if ((dummy & 0x10) == TRUE) {
                     /* Overcurrent detected. This feature is currently not supported. */
                 }
                 if ((dummy & 0x20) == TRUE) {
-                    if (sigIdx == CAN0_SIG_IVT_Current_Status) {
+                    if (sigIdx == CAN1_SIG_IVT_Current_Status) {
                         cans_current_tab.state_current = 1;
-                    } else if (sigIdx == CAN0_SIG_IVT_Voltage_1_Status || sigIdx == CAN0_SIG_IVT_Voltage_2_Status || sigIdx == CAN0_SIG_IVT_Voltage_3_Status) {
+                    } else if (sigIdx == CAN1_SIG_IVT_Voltage_1_Status || sigIdx == CAN1_SIG_IVT_Voltage_2_Status || sigIdx == CAN1_SIG_IVT_Voltage_3_Status) {
                         cans_current_tab.state_voltage = 1;
-                    } else if (sigIdx == CAN0_SIG_IVT_Temperature_Status) {
+                    } else if (sigIdx == CAN1_SIG_IVT_Temperature_Status) {
                         cans_current_tab.state_temperature = 1;
-                    } else if (sigIdx == CAN0_SIG_IVT_Power_Status) {
+                    } else if (sigIdx == CAN1_SIG_IVT_Power_Status) {
                         cans_current_tab.state_power = 1;
-                    } else if (sigIdx == CAN0_SIG_IVT_CC_Status) {
+                    } else if (sigIdx == CAN1_SIG_IVT_CC_Status) {
                         cans_current_tab.state_cc = 1;
                     } else {
                         cans_current_tab.state_ec = 1;
@@ -2291,7 +2377,7 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
 
                 break;
 
-                case CAN0_SIG_IVT_Current_Measurement:
+                case CAN1_SIG_IVT_Current_Measurement:
                 /* case CAN1_SIG_ISENS0_I_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     currentValue = *(int32_t*)value;
                     cans_current_tab.current = (currentValue);
@@ -2300,41 +2386,41 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
                     cans_current_tab.timestamp_cur = OS_getOSSysTick();
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN0_SIG_IVT_Voltage_1_Measurement:
+                case CAN1_SIG_IVT_Voltage_1_Measurement:
                 /* case CAN1_SIG_ISENS1_U1_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     idx = 0;
                     voltageValue[idx] = *(int32_t*)value;
                     cans_current_tab.voltage[idx] = (float)(voltageValue[idx])*cans_CAN0_signals_rx[sigIdx].factor;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN0_SIG_IVT_Voltage_2_Measurement:
+                case CAN1_SIG_IVT_Voltage_2_Measurement:
                 /* case CAN1_SIG_ISENS2_U2_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     idx = 1;
                     voltageValue[idx] = *(int32_t*)value;
                     cans_current_tab.voltage[idx] = (float)(voltageValue[idx])*cans_CAN0_signals_rx[sigIdx].factor;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN0_SIG_IVT_Voltage_3_Measurement:
+                case CAN1_SIG_IVT_Voltage_3_Measurement:
                 /* case CAN1_SIG_ISENS3_U3_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     idx = 2;
                     voltageValue[idx] = *(int32_t*)value;
                     cans_current_tab.voltage[idx]=(float)(voltageValue[idx])*cans_CAN0_signals_rx[sigIdx].factor;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN0_SIG_IVT_Temperature_Measurement:
+                case CAN1_SIG_IVT_Temperature_Measurement:
                 /* case CAN1_SIG_ISENS4_T_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     temperatureValue = *(int32_t*)value;
                     cans_current_tab.temperature = (float)(temperatureValue)*cans_CAN0_signals_rx[sigIdx].factor;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN0_SIG_IVT_Power_Measurement:
+                case CAN1_SIG_IVT_Power_Measurement:
                 /* case CAN1_SIG_ISENS5_P_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     powerValue = *(int32_t*)value;
                     cans_current_tab.power = (float)(powerValue);
                     cans_current_tab.newPower++;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN0_SIG_IVT_CC_Measurement:
+                case CAN1_SIG_IVT_CC_Measurement:
                 /* case CAN1_SIG_ISENS6_CC_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     currentcounterValue = *(int32_t*)value;
                     cans_current_tab.previous_timestamp_cc = cans_current_tab.timestamp_cc;
@@ -2342,7 +2428,7 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
                     cans_current_tab.current_counter = (float)(currentcounterValue);
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN0_SIG_IVT_EC_Measurement:
+                case CAN1_SIG_IVT_EC_Measurement:
                 /* case CAN1_SIG_ISENS7_EC_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     energycounterValue = *(int32_t*)value;
                     cans_current_tab.energy_counter = (float)(energycounterValue);

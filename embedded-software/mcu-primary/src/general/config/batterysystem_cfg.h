@@ -84,7 +84,10 @@
  * \par Default:
  * 12
 */
-#define BS_NR_OF_BAT_CELLS_PER_MODULE               12
+#define BS_NR_OF_BAT_CELLS_PER_MODULE               11
+
+//#define LAST_CELL_NOT_PLUGGED
+#define LAST_CELL_NOT_PLUGGED1
 
 #if BS_NR_OF_BAT_CELLS_PER_MODULE <= 12
     #define BS_MAX_SUPPORTED_CELLS         12
@@ -198,7 +201,7 @@
  * defines if the Isabellenhuette current sensor is connected on CAN0 or CAN1
  * 0 = CAN0 / 1 = CAN1
  */
-#define CURRENT_SENSOR_CAN_CHANNEL 			0
+#define CURRENT_SENSOR_CAN_CHANNEL 			1
 
 #if CURRENT_SENSOR_PRESENT == TRUE
 /**
@@ -273,7 +276,7 @@
  * If set to FALSE, foxBMS checks when balancing must be done and activates it accordingly.
  *
 */
-#define BALANCING_DEFAULT_INACTIVE           TRUE
+#define BALANCING_DEFAULT_INACTIVE           FALSE
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM

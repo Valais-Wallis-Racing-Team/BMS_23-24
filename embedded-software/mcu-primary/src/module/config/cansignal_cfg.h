@@ -63,7 +63,7 @@
 /**
  * Default value send when less voltages are configured than voltages values configured for CAN transmission
  */
-#define CAN_DEFAULT_VOLTAGE 3000
+#define CAN_DEFAULT_VOLTAGE 3600
 
 /**
  * Default value send when less temperatures are configured than temperatures values configured for CAN transmission
@@ -92,6 +92,7 @@
  * symbolic names for TX CAN messages. Every used TX message needs to get an individual message name.
  */
 typedef enum {
+
     /* Insert here symbolic names for CAN0 messages */
     CAN0_MSG_SystemState_0,  /*!< BMS general state 0 */
     CAN0_MSG_SystemState_1,  /*!< BMS general state 1 */
@@ -249,12 +250,20 @@ typedef enum {
 	CAN0_MSG_Mod11_Celltemp_2,  /*!< Module 11 Cell temperatures 6-8 */
 	CAN0_MSG_Mod11_Celltemp_3,  /*!< Module 11 Cell temperatures 9-11 */
 
-#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-    CAN0_MSG_BMS_CurrentTrigger,    /*!< Cell Voltages Max Min Average */
-#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
+	CAN0_MSG_IVT_Current,                    /*!< current sensing */
+	CAN0_MSG_IVT_Voltage_1,                  /*!< current sensor voltage 1 */
+	CAN0_MSG_IVT_Voltage_2,                  /*!< current sensor voltage 2 */
+	CAN0_MSG_IVT_Voltage_3,                  /*!< current sensor voltage 3 */
+	CAN0_MSG_IVT_Temperature,                /*!< current sensor temperature */
+	CAN0_MSG_IVT_Power,                      /*!< current sensor power */
+	CAN0_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
+	CAN0_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
 
 
     /* Insert here symbolic names for CAN1 messages */
+#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
+    CAN1_MSG_BMS_CurrentTrigger,    /*!< Cell Voltages Max Min Average */
+#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 } CANS_messagesTx_e;
 
 /**
@@ -264,14 +273,6 @@ typedef enum {
     /* Insert here symbolic names for CAN0 messages */
     CAN0_MSG_StateRequest,                   /*!< state request */
     CAN0_MSG_SW_RESET,                       /*!< can message for SW reset */
-    CAN0_MSG_IVT_Current,                    /*!< current sensing */
-    CAN0_MSG_IVT_Voltage_1,                  /*!< current sensor voltage 1 */
-    CAN0_MSG_IVT_Voltage_2,                  /*!< current sensor voltage 2 */
-    CAN0_MSG_IVT_Voltage_3,                  /*!< current sensor voltage 3 */
-    CAN0_MSG_IVT_Temperature,                /*!< current sensor temperature */
-    CAN0_MSG_IVT_Power,                      /*!< current sensor power */
-    CAN0_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
-    CAN0_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
     CAN0_MSG_DEBUG,                          /*!< debug messages */
     CAN0_MSG_GetReleaseVersion,              /*!< Get SW release version */
 
@@ -290,6 +291,7 @@ typedef enum {
  * symbolic names for CAN0 transmission signals
  */
 typedef enum {
+
     CAN0_SIG_GS0_general_error,  /* 0:good, 1:error */
     CAN0_SIG_GS0_current_state,  /* currently no used */
     CAN0_SIG_GS0_error_overtemp_charge,  /* 0:good, 1:error */
@@ -883,9 +885,30 @@ typedef enum {
 	CAN0_SIG_Mod11_temp_10,
 	CAN0_SIG_Mod11_temp_11,
 
-#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-    CAN0_SIG_ISA_Trigger,
-#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
+	CAN0_SIG_IVT_Current_MuxID,            /*!< current sensor measurement type */
+	CAN0_SIG_IVT_Current_Status,           /*!< current sensor counter */
+	CAN0_SIG_IVT_Current_Measurement,      /*!< current sensor measurement I */
+	CAN0_SIG_IVT_Voltage_1_MuxID,          /*!< current sensor measurement type */
+	CAN0_SIG_IVT_Voltage_1_Status,         /*!< current sensor counter */
+	CAN0_SIG_IVT_Voltage_1_Measurement,    /*!< current sensor measurement U1 */
+	CAN0_SIG_IVT_Voltage_2_MuxID,          /*!< current sensor measurement type */
+	CAN0_SIG_IVT_Voltage_2_Status,         /*!< current sensor counter */
+	CAN0_SIG_IVT_Voltage_2_Measurement,    /*!< current sensor measurement U2 */
+	CAN0_SIG_IVT_Voltage_3_MuxID,          /*!< current sensor measurement type */
+	CAN0_SIG_IVT_Voltage_3_Status,         /*!< current sensor counter */
+	CAN0_SIG_IVT_Voltage_3_Measurement,    /*!< current sensor measurement U3 */
+	CAN0_SIG_IVT_Temperature_MuxID,        /*!< current sensor measurement type */
+	CAN0_SIG_IVT_Temperature_Status,       /*!< current sensor counter */
+	CAN0_SIG_IVT_Temperature_Measurement,  /*!< current sensor measurement T */
+	CAN0_SIG_IVT_Power_MuxID,              /*!< current sensor measurement type */
+	CAN0_SIG_IVT_Power_Status,             /*!< current sensor counter */
+	CAN0_SIG_IVT_Power_Measurement,        /*!< current sensor measurement P */
+	CAN0_SIG_IVT_CC_MuxID,                 /*!< current sensor measurement type */
+	CAN0_SIG_IVT_CC_Status,                /*!< current sensor counter */
+	CAN0_SIG_IVT_CC_Measurement,           /*!< current sensor measurement C-C */
+	CAN0_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
+	CAN0_SIG_IVT_EC_Status,                /*!< current sensor counter */
+	CAN0_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
 
     CAN0_SIGNAL_NONE = 0xFFFF
 } CANS_CAN0_signalsTx_e;
@@ -894,6 +917,10 @@ typedef enum {
  * symbolic names for CAN1 transmission signals
  */
 typedef enum {
+#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
+    CAN1_SIG_ISA_Trigger,
+#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
+
     CAN1_TX_SIGNAL_NONE = 0xFFFF,
 } CANS_CAN1_signalsTx_e;
 
@@ -903,32 +930,6 @@ typedef enum {
  */
 typedef enum {
     CAN0_SIG_ReceiveStateRequest,          /*!< current sensor counter */
-#if CURRENT_SENSOR_CAN_CHANNEL == 0
-    CAN0_SIG_IVT_Current_MuxID,            /*!< current sensor measurement type */
-    CAN0_SIG_IVT_Current_Status,           /*!< current sensor counter */
-    CAN0_SIG_IVT_Current_Measurement,      /*!< current sensor measurement I */
-    CAN0_SIG_IVT_Voltage_1_MuxID,          /*!< current sensor measurement type */
-    CAN0_SIG_IVT_Voltage_1_Status,         /*!< current sensor counter */
-    CAN0_SIG_IVT_Voltage_1_Measurement,    /*!< current sensor measurement U1 */
-    CAN0_SIG_IVT_Voltage_2_MuxID,          /*!< current sensor measurement type */
-    CAN0_SIG_IVT_Voltage_2_Status,         /*!< current sensor counter */
-    CAN0_SIG_IVT_Voltage_2_Measurement,    /*!< current sensor measurement U2 */
-    CAN0_SIG_IVT_Voltage_3_MuxID,          /*!< current sensor measurement type */
-    CAN0_SIG_IVT_Voltage_3_Status,         /*!< current sensor counter */
-    CAN0_SIG_IVT_Voltage_3_Measurement,    /*!< current sensor measurement U3 */
-    CAN0_SIG_IVT_Temperature_MuxID,        /*!< current sensor measurement type */
-    CAN0_SIG_IVT_Temperature_Status,       /*!< current sensor counter */
-    CAN0_SIG_IVT_Temperature_Measurement,  /*!< current sensor measurement T */
-    CAN0_SIG_IVT_Power_MuxID,              /*!< current sensor measurement type */
-    CAN0_SIG_IVT_Power_Status,             /*!< current sensor counter */
-    CAN0_SIG_IVT_Power_Measurement,        /*!< current sensor measurement P */
-    CAN0_SIG_IVT_CC_MuxID,                 /*!< current sensor measurement type */
-    CAN0_SIG_IVT_CC_Status,                /*!< current sensor counter */
-    CAN0_SIG_IVT_CC_Measurement,           /*!< current sensor measurement C-C */
-    CAN0_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
-    CAN0_SIG_IVT_EC_Status,                /*!< current sensor counter */
-    CAN0_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
-#endif
     CAN0_SIG_DEBUG_Data,                   /*!< Data of debug message */
     CAN0_SIG_GetReleaseVersion
 } CANS_CAN0_signalsRx_e;
@@ -938,7 +939,6 @@ typedef enum {
  * symbolic names for CAN 1 receive signals
  */
 typedef enum {
-#if CURRENT_SENSOR_CAN_CHANNEL == 1
 	CAN1_SIG_IVT_Current_MuxID,            /*!< current sensor measurement type */
 	CAN1_SIG_IVT_Current_Status,           /*!< current sensor counter */
 	CAN1_SIG_IVT_Current_Measurement,      /*!< current sensor measurement I */
@@ -963,7 +963,6 @@ typedef enum {
 	CAN1_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
 	CAN1_SIG_IVT_EC_Status,                /*!< current sensor counter */
 	CAN1_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
-#endif
 	CAN1_RX_SIGNAL_NONE = 0xFFFF,
 } CANS_CAN1_signalsRx_e;
 
