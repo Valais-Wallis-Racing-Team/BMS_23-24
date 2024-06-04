@@ -97,10 +97,10 @@ void APPL_Cyclic_10ms(void) {
     /* User specific implementations:   */
     /*   ...                            */
     /*   ...                            */
-    CANS_MainFunction();
+    //CANS_MainFunction();
 
     LED_Ctrl();
-
+    CANS_MainFunction();
     SOC_Calculation();
     SOF_Calculation();
 

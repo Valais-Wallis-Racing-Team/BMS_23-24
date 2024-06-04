@@ -126,7 +126,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_CONTACTOR           0
+#define BUILD_MODULE_ENABLE_CONTACTOR           1
 
 /**
  * @ingroup CONFIG_GENERAL

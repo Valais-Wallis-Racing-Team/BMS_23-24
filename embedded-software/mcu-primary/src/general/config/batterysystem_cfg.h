@@ -194,6 +194,11 @@
  *
 */
 #define CURRENT_SENSOR_PRESENT               FALSE
+/**
+ * defines if the Isabellenhuette current sensor is connected on CAN0 or CAN1
+ * 0 = CAN0 / 1 = CAN1
+ */
+#define CURRENT_SENSOR_CAN_CHANNEL 			0
 
 #if CURRENT_SENSOR_PRESENT == TRUE
 /**
@@ -201,6 +206,8 @@
 */
 #define CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC
 /* #define CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
+
+
 
 /**
  * Delay in ms after which it is considered the current sensor is not responding anymore.

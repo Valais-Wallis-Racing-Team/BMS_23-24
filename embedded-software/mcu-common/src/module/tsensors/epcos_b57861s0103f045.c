@@ -46,7 +46,7 @@
  * @ingroup TSENSORS
  * @prefix  B57861S0103F045
  *
- * @brief   Resistive divider used for measuring temperature
+ * @brief   Resistive divider used for measuring temperature used for testing
  *
  */
 
