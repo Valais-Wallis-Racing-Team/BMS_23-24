@@ -77,9 +77,9 @@
  * \par Default:
  * 55
 */
-#define BC_TEMPMAX_DISCHARGE_MSL      60
-#define BC_TEMPMAX_DISCHARGE_RSL      50
-#define BC_TEMPMAX_DISCHARGE_MOL      45
+#define BC_TEMPMAX_DISCHARGE_MSL      55
+#define BC_TEMPMAX_DISCHARGE_RSL      55
+#define BC_TEMPMAX_DISCHARGE_MOL      55
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -94,9 +94,9 @@
  * \par Default:
  * -20
 */
-#define BC_TEMPMIN_DISCHARGE_MSL      -60
-#define BC_TEMPMIN_DISCHARGE_RSL      -60
-#define BC_TEMPMIN_DISCHARGE_MOL      -65
+#define BC_TEMPMIN_DISCHARGE_MSL      -20
+#define BC_TEMPMIN_DISCHARGE_RSL      -20
+#define BC_TEMPMIN_DISCHARGE_MOL      -20
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -111,9 +111,9 @@
  * \par Default:
  * 45
 */
-#define BC_TEMPMAX_CHARGE_MSL     60
-#define BC_TEMPMAX_CHARGE_RSL     50
-#define BC_TEMPMAX_CHARGE_MOL     45
+#define BC_TEMPMAX_CHARGE_MSL     55
+#define BC_TEMPMAX_CHARGE_RSL     55
+#define BC_TEMPMAX_CHARGE_MOL     55
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -128,9 +128,9 @@
  * \par Default:
  * 0
 */
-#define BC_TEMPMIN_CHARGE_MSL     -60
-#define BC_TEMPMIN_CHARGE_RSL     -60
-#define BC_TEMPMIN_CHARGE_MOL     -60
+#define BC_TEMPMIN_CHARGE_MSL     -20
+#define BC_TEMPMIN_CHARGE_RSL     -20
+#define BC_TEMPMIN_CHARGE_MOL     -20
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -145,9 +145,9 @@
  * \par Default:
  * 2800
 */
-#define BC_VOLTMAX_MSL      4250
-#define BC_VOLTMAX_RSL      4200
-#define BC_VOLTMAX_MOL      4250
+#define BC_VOLTMAX_MSL      4100
+#define BC_VOLTMAX_RSL      4100
+#define BC_VOLTMAX_MOL      4100
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -174,9 +174,9 @@
  * \par Default:
  * 1700
 */
-#define BC_VOLTMIN_MSL      2700
-#define BC_VOLTMIN_RSL      2700
-#define BC_VOLTMIN_MOL      2700
+#define BC_VOLTMIN_MSL      2500
+#define BC_VOLTMIN_RSL      2500
+#define BC_VOLTMIN_MOL      2500
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -206,9 +206,9 @@
  * \par Default:
  * 180000
 */
-#define BC_CURRENTMAX_DISCHARGE_MSL     45500
-#define BC_CURRENTMAX_DISCHARGE_RSL     45000
-#define BC_CURRENTMAX_DISCHARGE_MOL     44500
+#define BC_CURRENTMAX_DISCHARGE_MSL     180000
+#define BC_CURRENTMAX_DISCHARGE_RSL     180000
+#define BC_CURRENTMAX_DISCHARGE_MOL     180000
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -223,9 +223,9 @@
  * \par Default:
  * 180000
 */
-#define BC_CURRENTMAX_CHARGE_MSL        13500
-#define BC_CURRENTMAX_CHARGE_RSL        13000
-#define BC_CURRENTMAX_CHARGE_MOL        12500
+#define BC_CURRENTMAX_CHARGE_MSL        54000
+#define BC_CURRENTMAX_CHARGE_RSL        54000
+#define BC_CURRENTMAX_CHARGE_MOL        54000
 
 /*
  * the cell capacity used for SOC calculation, in this case Ah counting
@@ -234,7 +234,7 @@
  * @default 3500
  * @group
  */
-#define BC_CAPACITY 4500
+#define BC_CAPACITY 18000
 
 #if BC_VOLTMIN_MSL < BC_VOLT_DEEP_DISCHARGE
 #error "Configuration error! - Maximum safety limit for under voltage can't be lower than deep-discharge limit"

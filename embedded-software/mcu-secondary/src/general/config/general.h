@@ -63,6 +63,8 @@
 
 /*================== Macros and Definitions ===============================*/
 
+#define IS_TEST
+
 /**
  * @ingroup CONFIG_GENERAL
  * enables checking of flash checksum at startup.
@@ -71,7 +73,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_FLASHCHECKSUM           1
+#define BUILD_MODULE_ENABLE_FLASHCHECKSUM           0
 /* #define BUILD_MODULE_ENABLE_FLASHCHECKSUM           0 */
 
 /**
