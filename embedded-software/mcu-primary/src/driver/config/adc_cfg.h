@@ -62,6 +62,7 @@
 /*================== Macros and Definitions ===============================*/
 
 /*================== Constant and Variable Definitions ====================*/
+
 extern ADC_HandleTypeDef adc_devices[];
 extern const uint8_t adc_number_of_used_devices;
 extern uint32_t adc_ChannelList[BS_NR_OF_VOLTAGES_FROM_MCU_ADC];

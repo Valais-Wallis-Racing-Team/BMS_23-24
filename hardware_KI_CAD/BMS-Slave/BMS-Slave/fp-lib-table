@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "LTC6811HG-1#PBF")(type "KiCad")(uri "C:/Users/Mattia/OneDrive - HESSO/foxbms1/foxbms/hardware_KI_CAD/components/Slave/LTC6811HG-1#PBF")(options "")(descr "12 Channel Multicell Battery Monitor with Daisy Chain Interface"))
+  (lib (name "43045-0412")(type "KiCad")(uri "C:/Users/Mattia/OneDrive - HESSO/foxbms1/foxbms/hardware_KI_CAD/components/Slave/43045-0412")(options "")(descr "molex micro-fit 2x4"))
+)

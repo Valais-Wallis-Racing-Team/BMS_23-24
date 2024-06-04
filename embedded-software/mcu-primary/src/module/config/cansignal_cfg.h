@@ -63,12 +63,12 @@
 /**
  * Default value send when less voltages are configured than voltages values configured for CAN transmission
  */
-#define CAN_DEFAULT_VOLTAGE 1000
+#define CAN_DEFAULT_VOLTAGE 3000
 
 /**
  * Default value send when less temperatures are configured than temperatures values configured for CAN transmission
  */
-#define CAN_DEFAULT_TEMPERATURE 10
+#define CAN_DEFAULT_TEMPERATURE 20
 
 /**
  * Default value send when less valid flags are configured than valid flags values configured for CAN transmission
@@ -92,7 +92,6 @@
  * symbolic names for TX CAN messages. Every used TX message needs to get an individual message name.
  */
 typedef enum {
-
     /* Insert here symbolic names for CAN0 messages */
     CAN0_MSG_SystemState_0,  /*!< BMS general state 0 */
     CAN0_MSG_SystemState_1,  /*!< BMS general state 1 */
@@ -122,151 +121,96 @@ typedef enum {
     CAN0_MSG_Mod0_Cellvolt_1,  /*!< Module 0 Cell voltages 3-5 */
     CAN0_MSG_Mod0_Cellvolt_2,  /*!< Module 0 Cell voltages 6-8 */
     CAN0_MSG_Mod0_Cellvolt_3,  /*!< Module 0 Cell voltages 9-11 */
-	//CAN0_MSG_Mod0_Cellvolt_4,  /*!< Module 0 Cell voltages 12-14 */
-	//CAN0_MSG_Mod0_Cellvolt_5,  /*!< Module 0 Cell voltages 15-17 */
+    CAN0_MSG_Mod0_Cellvolt_4,  /*!< Module 0 Cell voltages 12-14 */
+    CAN0_MSG_Mod0_Cellvolt_5,  /*!< Module 0 Cell voltages 15-17 */
     CAN0_MSG_Mod0_Celltemp_0,  /*!< Module 0 Cell temperatures 0-2 */
     CAN0_MSG_Mod0_Celltemp_1,  /*!< Module 0 Cell temperatures 3-5 */
     CAN0_MSG_Mod0_Celltemp_2,  /*!< Module 0 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod0_Celltemp_3,  /*!< Module 0 Cell temperatures 9-11 */
+    CAN0_MSG_Mod0_Celltemp_3,  /*!< Module 0 Cell temperatures 9-11 */
 
     CAN0_MSG_Mod1_Cellvolt_0,  /*!< Module 1 Cell voltages 0-2 */
     CAN0_MSG_Mod1_Cellvolt_1,  /*!< Module 1 Cell voltages 3-5 */
     CAN0_MSG_Mod1_Cellvolt_2,  /*!< Module 1 Cell voltages 6-8 */
     CAN0_MSG_Mod1_Cellvolt_3,  /*!< Module 1 Cell voltages 9-11 */
-	//CAN0_MSG_Mod1_Cellvolt_4,  /*!< Module 1 Cell voltages 12-14 */
-	//CAN0_MSG_Mod1_Cellvolt_5,  /*!< Module 1 Cell voltages 15-17 */
+    CAN0_MSG_Mod1_Cellvolt_4,  /*!< Module 1 Cell voltages 12-14 */
+    CAN0_MSG_Mod1_Cellvolt_5,  /*!< Module 1 Cell voltages 15-17 */
     CAN0_MSG_Mod1_Celltemp_0,  /*!< Module 1 Cell temperatures 0-2 */
     CAN0_MSG_Mod1_Celltemp_1,  /*!< Module 1 Cell temperatures 3-5 */
     CAN0_MSG_Mod1_Celltemp_2,  /*!< Module 1 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod1_Celltemp_3,  /*!< Module 1 Cell temperatures 9-11 */
+    CAN0_MSG_Mod1_Celltemp_3,  /*!< Module 1 Cell temperatures 9-11 */
 
     CAN0_MSG_Mod2_Cellvolt_0,  /*!< Module 2 Cell voltages 0-2 */
     CAN0_MSG_Mod2_Cellvolt_1,  /*!< Module 2 Cell voltages 3-5 */
     CAN0_MSG_Mod2_Cellvolt_2,  /*!< Module 2 Cell voltages 6-8 */
     CAN0_MSG_Mod2_Cellvolt_3,  /*!< Module 2 Cell voltages 9-11 */
-	//CAN0_MSG_Mod2_Cellvolt_4,  /*!< Module 2 Cell voltages 12-14 */
-	//CAN0_MSG_Mod2_Cellvolt_5,  /*!< Module 2 Cell voltages 15-17 */
+    CAN0_MSG_Mod2_Cellvolt_4,  /*!< Module 2 Cell voltages 12-14 */
+    CAN0_MSG_Mod2_Cellvolt_5,  /*!< Module 2 Cell voltages 15-17 */
     CAN0_MSG_Mod2_Celltemp_0,  /*!< Module 2 Cell temperatures 0-2 */
     CAN0_MSG_Mod2_Celltemp_1,  /*!< Module 2 Cell temperatures 3-5 */
     CAN0_MSG_Mod2_Celltemp_2,  /*!< Module 2 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod2_Celltemp_3,  /*!< Module 2 Cell temperatures 9-11 */
+    CAN0_MSG_Mod2_Celltemp_3,  /*!< Module 2 Cell temperatures 9-11 */
 
     CAN0_MSG_Mod3_Cellvolt_0,  /*!< Module 3 Cell voltages 0-2 */
     CAN0_MSG_Mod3_Cellvolt_1,  /*!< Module 3 Cell voltages 3-5 */
     CAN0_MSG_Mod3_Cellvolt_2,  /*!< Module 3 Cell voltages 6-8 */
     CAN0_MSG_Mod3_Cellvolt_3,  /*!< Module 3 Cell voltages 9-11 */
-	//CAN0_MSG_Mod3_Cellvolt_4,  /*!< Module 3 Cell voltages 12-14 */
-	//CAN0_MSG_Mod3_Cellvolt_5,  /*!< Module 3 Cell voltages 15-17 */
+    CAN0_MSG_Mod3_Cellvolt_4,  /*!< Module 3 Cell voltages 12-14 */
+    CAN0_MSG_Mod3_Cellvolt_5,  /*!< Module 3 Cell voltages 15-17 */
     CAN0_MSG_Mod3_Celltemp_0,  /*!< Module 3 Cell temperatures 0-2 */
     CAN0_MSG_Mod3_Celltemp_1,  /*!< Module 3 Cell temperatures 3-5 */
     CAN0_MSG_Mod3_Celltemp_2,  /*!< Module 3 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod3_Celltemp_3,  /*!< Module 3 Cell temperatures 9-11 */
+    CAN0_MSG_Mod3_Celltemp_3,  /*!< Module 3 Cell temperatures 9-11 */
 
     CAN0_MSG_Mod4_Cellvolt_0,  /*!< Module 4 Cell voltages 0-2 */
     CAN0_MSG_Mod4_Cellvolt_1,  /*!< Module 4 Cell voltages 3-5 */
     CAN0_MSG_Mod4_Cellvolt_2,  /*!< Module 4 Cell voltages 6-8 */
     CAN0_MSG_Mod4_Cellvolt_3,  /*!< Module 4 Cell voltages 9-11 */
-	//CAN0_MSG_Mod4_Cellvolt_4,  /*!< Module 4 Cell voltages 12-14 */
-	//CAN0_MSG_Mod4_Cellvolt_5,  /*!< Module 4 Cell voltages 15-17 */
+    CAN0_MSG_Mod4_Cellvolt_4,  /*!< Module 4 Cell voltages 12-14 */
+    CAN0_MSG_Mod4_Cellvolt_5,  /*!< Module 4 Cell voltages 15-17 */
     CAN0_MSG_Mod4_Celltemp_0,  /*!< Module 4 Cell temperatures 0-2 */
     CAN0_MSG_Mod4_Celltemp_1,  /*!< Module 4 Cell temperatures 3-5 */
     CAN0_MSG_Mod4_Celltemp_2,  /*!< Module 4 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod4_Celltemp_3,  /*!< Module 4 Cell temperatures 9-11 */
+    CAN0_MSG_Mod4_Celltemp_3,  /*!< Module 4 Cell temperatures 9-11 */
 
     CAN0_MSG_Mod5_Cellvolt_0,  /*!< Module 5 Cell voltages 0-2 */
     CAN0_MSG_Mod5_Cellvolt_1,  /*!< Module 5 Cell voltages 3-5 */
     CAN0_MSG_Mod5_Cellvolt_2,  /*!< Module 5 Cell voltages 6-8 */
     CAN0_MSG_Mod5_Cellvolt_3,  /*!< Module 5 Cell voltages 9-11 */
-	//CAN0_MSG_Mod5_Cellvolt_4,  /*!< Module 5 Cell voltages 12-14 */
-	//CAN0_MSG_Mod5_Cellvolt_5,  /*!< Module 5 Cell voltages 15-17 */
+    CAN0_MSG_Mod5_Cellvolt_4,  /*!< Module 5 Cell voltages 12-14 */
+    CAN0_MSG_Mod5_Cellvolt_5,  /*!< Module 5 Cell voltages 15-17 */
     CAN0_MSG_Mod5_Celltemp_0,  /*!< Module 5 Cell temperatures 0-2 */
     CAN0_MSG_Mod5_Celltemp_1,  /*!< Module 5 Cell temperatures 3-5 */
     CAN0_MSG_Mod5_Celltemp_2,  /*!< Module 5 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod5_Celltemp_3,  /*!< Module 5 Cell temperatures 9-11 */
+    CAN0_MSG_Mod5_Celltemp_3,  /*!< Module 5 Cell temperatures 9-11 */
 
     CAN0_MSG_Mod6_Cellvolt_0,  /*!< Module 6 Cell voltages 0-2 */
     CAN0_MSG_Mod6_Cellvolt_1,  /*!< Module 6 Cell voltages 3-5 */
     CAN0_MSG_Mod6_Cellvolt_2,  /*!< Module 6 Cell voltages 6-8 */
     CAN0_MSG_Mod6_Cellvolt_3,  /*!< Module 6 Cell voltages 9-11 */
-	//CAN0_MSG_Mod6_Cellvolt_4,  /*!< Module 6 Cell voltages 12-14 */
-	//CAN0_MSG_Mod6_Cellvolt_5,  /*!< Module 6 Cell voltages 15-17 */
+    CAN0_MSG_Mod6_Cellvolt_4,  /*!< Module 6 Cell voltages 12-14 */
+    CAN0_MSG_Mod6_Cellvolt_5,  /*!< Module 6 Cell voltages 15-17 */
     CAN0_MSG_Mod6_Celltemp_0,  /*!< Module 6 Cell temperatures 0-2 */
     CAN0_MSG_Mod6_Celltemp_1,  /*!< Module 6 Cell temperatures 3-5 */
     CAN0_MSG_Mod6_Celltemp_2,  /*!< Module 6 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod6_Celltemp_3,  /*!< Module 6 Cell temperatures 9-11 */
+    CAN0_MSG_Mod6_Celltemp_3,  /*!< Module 6 Cell temperatures 9-11 */
 
     CAN0_MSG_Mod7_Cellvolt_0,  /*!< Module 7 Cell voltages 0-2 */
     CAN0_MSG_Mod7_Cellvolt_1,  /*!< Module 7 Cell voltages 3-5 */
     CAN0_MSG_Mod7_Cellvolt_2,  /*!< Module 7 Cell voltages 6-8 */
     CAN0_MSG_Mod7_Cellvolt_3,  /*!< Module 7 Cell voltages 9-11 */
-	//CAN0_MSG_Mod7_Cellvolt_4,  /*!< Module 7 Cell voltages 12-14 */
-	//CAN0_MSG_Mod7_Cellvolt_5,  /*!< Module 7 Cell voltages 15-17 */
+    CAN0_MSG_Mod7_Cellvolt_4,  /*!< Module 7 Cell voltages 12-14 */
+    CAN0_MSG_Mod7_Cellvolt_5,  /*!< Module 7 Cell voltages 15-17 */
     CAN0_MSG_Mod7_Celltemp_0,  /*!< Module 7 Cell temperatures 0-2 */
     CAN0_MSG_Mod7_Celltemp_1,  /*!< Module 7 Cell temperatures 3-5 */
     CAN0_MSG_Mod7_Celltemp_2,  /*!< Module 7 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod7_Celltemp_3,  /*!< Module 7 Cell temperatures 9-11 */
+    CAN0_MSG_Mod7_Celltemp_3,  /*!< Module 7 Cell temperatures 9-11 */
 
-	CAN0_MSG_Mod8_Cellvolt_0,  /*!< Module 8 Cell voltages 0-2 */
-	CAN0_MSG_Mod8_Cellvolt_1,  /*!< Module 8 Cell voltages 3-5 */
-	CAN0_MSG_Mod8_Cellvolt_2,  /*!< Module 8 Cell voltages 6-8 */
-	CAN0_MSG_Mod8_Cellvolt_3,  /*!< Module 8 Cell voltages 9-11 */
-	//CAN0_MSG_Mod8_Cellvolt_4,  /*!< Module 8 Cell voltages 12-14 */
-	//CAN0_MSG_Mod8_Cellvolt_5,  /*!< Module 8 Cell voltages 15-17 */
-	CAN0_MSG_Mod8_Celltemp_0,  /*!< Module 8 Cell temperatures 0-2 */
-	CAN0_MSG_Mod8_Celltemp_1,  /*!< Module 8 Cell temperatures 3-5 */
-	CAN0_MSG_Mod8_Celltemp_2,  /*!< Module 8 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod8_Celltemp_3,  /*!< Module 8 Cell temperatures 9-11 */
-
-	CAN0_MSG_Mod9_Cellvolt_0,  /*!< Module 9 Cell voltages 0-2 */
-	CAN0_MSG_Mod9_Cellvolt_1,  /*!< Module 9 Cell voltages 3-5 */
-	CAN0_MSG_Mod9_Cellvolt_2,  /*!< Module 9 Cell voltages 6-8 */
-	CAN0_MSG_Mod9_Cellvolt_3,  /*!< Module 9 Cell voltages 9-11 */
-	//CAN0_MSG_Mod9_Cellvolt_4,  /*!< Module 9 Cell voltages 12-14 */
-	//CAN0_MSG_Mod9_Cellvolt_5,  /*!< Module 9 Cell voltages 15-17 */
-	CAN0_MSG_Mod9_Celltemp_0,  /*!< Module 9 Cell temperatures 0-2 */
-	CAN0_MSG_Mod9_Celltemp_1,  /*!< Module 9 Cell temperatures 3-5 */
-	CAN0_MSG_Mod9_Celltemp_2,  /*!< Module 9 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod9_Celltemp_3,  /*!< Module 9 Cell temperatures 9-11 */
-
-	CAN0_MSG_Mod10_Cellvolt_0,  /*!< Module 10 Cell voltages 0-2 */
-	CAN0_MSG_Mod10_Cellvolt_1,  /*!< Module 10 Cell voltages 3-5 */
-	CAN0_MSG_Mod10_Cellvolt_2,  /*!< Module 10 Cell voltages 6-8 */
-	CAN0_MSG_Mod10_Cellvolt_3,  /*!< Module 10 Cell voltages 9-11 */
-	//CAN0_MSG_Mod10_Cellvolt_4,  /*!< Module 10 Cell voltages 12-14 */
-	//CAN0_MSG_Mod10_Cellvolt_5,  /*!< Module 10 Cell voltages 15-17 */
-	CAN0_MSG_Mod10_Celltemp_0,  /*!< Module 10 Cell temperatures 0-2 */
-	CAN0_MSG_Mod10_Celltemp_1,  /*!< Module 10 Cell temperatures 3-5 */
-	CAN0_MSG_Mod10_Celltemp_2,  /*!< Module 10 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod10_Celltemp_3,  /*!< Module 10 Cell temperatures 9-11 */
-
-	CAN0_MSG_Mod11_Cellvolt_0,  /*!< Module 11 Cell voltages 0-2 */
-	CAN0_MSG_Mod11_Cellvolt_1,  /*!< Module 11 Cell voltages 3-5 */
-	CAN0_MSG_Mod11_Cellvolt_2,  /*!< Module 11 Cell voltages 6-8 */
-	CAN0_MSG_Mod11_Cellvolt_3,  /*!< Module 11 Cell voltages 9-11 */
-	//CAN0_MSG_Mod11_Cellvolt_4,  /*!< Module 11 Cell voltages 12-14 */
-	//CAN0_MSG_Mod11_Cellvolt_5,  /*!< Module 11 Cell voltages 15-17 */
-	CAN0_MSG_Mod11_Celltemp_0,  /*!< Module 11 Cell temperatures 0-2 */
-	CAN0_MSG_Mod11_Celltemp_1,  /*!< Module 11 Cell temperatures 3-5 */
-	CAN0_MSG_Mod11_Celltemp_2,  /*!< Module 11 Cell temperatures 6-8 */
-	//CAN0_MSG_Mod11_Celltemp_3,  /*!< Module 11 Cell temperatures 9-11 */
-
-	CAN0_MSG_IVT_Current,                    /*!< current sensing */
-	CAN0_MSG_IVT_Voltage_1,                  /*!< current sensor voltage 1 */
-	CAN0_MSG_IVT_Voltage_2,                  /*!< current sensor voltage 2 */
-	CAN0_MSG_IVT_Voltage_3,                  /*!< current sensor voltage 3 */
-	CAN0_MSG_IVT_Temperature,                /*!< current sensor temperature */
-	CAN0_MSG_IVT_Power,                      /*!< current sensor power */
-	CAN0_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
-	CAN0_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
-
-	CAN0_MSG_BatInfo0_Tele,
-	CAN0_MSG_BatInfo1_Tele,
+#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
+    CAN0_MSG_BMS_CurrentTrigger,    /*!< Cell Voltages Max Min Average */
+#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 
 
     /* Insert here symbolic names for CAN1 messages */
-#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-    CAN1_MSG_BMS_CurrentTrigger,    /*!< Cell Voltages Max Min Average */
-#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 } CANS_messagesTx_e;
 
 /**
@@ -276,25 +220,24 @@ typedef enum {
     /* Insert here symbolic names for CAN0 messages */
     CAN0_MSG_StateRequest,                   /*!< state request */
     CAN0_MSG_SW_RESET,                       /*!< can message for SW reset */
+    CAN0_MSG_IVT_Current,                    /*!< current sensing */
+    CAN0_MSG_IVT_Voltage_1,                  /*!< current sensor voltage 1 */
+    CAN0_MSG_IVT_Voltage_2,                  /*!< current sensor voltage 2 */
+    CAN0_MSG_IVT_Voltage_3,                  /*!< current sensor voltage 3 */
+    CAN0_MSG_IVT_Temperature,                /*!< current sensor temperature */
+    CAN0_MSG_IVT_Power,                      /*!< current sensor power */
+    CAN0_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
+    CAN0_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
     CAN0_MSG_DEBUG,                          /*!< debug messages */
     CAN0_MSG_GetReleaseVersion,              /*!< Get SW release version */
 
-    /* Insert here symbolic names for CAN1 messages */ //dupplicated from the CAN0
-	CAN1_MSG_IVT_Current,                    /*!< current sensing */
-	CAN1_MSG_IVT_Voltage_1,                  /*!< current sensor voltage 1 */
-	CAN1_MSG_IVT_Voltage_2,                  /*!< current sensor voltage 2 */
-	CAN1_MSG_IVT_Voltage_3,                  /*!< current sensor voltage 3 */
-	CAN1_MSG_IVT_Temperature,                /*!< current sensor temperature */
-	CAN1_MSG_IVT_Power,                      /*!< current sensor power */
-	CAN1_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
-	CAN1_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
+    /* Insert here symbolic names for CAN1 messages */
 } CANS_messagesRx_e;
 
 /**
  * symbolic names for CAN0 transmission signals
  */
 typedef enum {
-
     CAN0_SIG_GS0_general_error,  /* 0:good, 1:error */
     CAN0_SIG_GS0_current_state,  /* currently no used */
     CAN0_SIG_GS0_error_overtemp_charge,  /* 0:good, 1:error */
@@ -400,14 +343,14 @@ typedef enum {
     CAN0_SIG_Mod0_volt_9,
     CAN0_SIG_Mod0_volt_10,
     CAN0_SIG_Mod0_volt_11,
-    //CAN0_SIG_Mod0_volt_valid_12_14,
-    //CAN0_SIG_Mod0_volt_12,
-    //CAN0_SIG_Mod0_volt_13,
-    //CAN0_SIG_Mod0_volt_14,
-    //CAN0_SIG_Mod0_volt_valid_15_17,
-    //CAN0_SIG_Mod0_volt_15,
-    //CAN0_SIG_Mod0_volt_16,
-    //CAN0_SIG_Mod0_volt_17,
+    CAN0_SIG_Mod0_volt_valid_12_14,
+    CAN0_SIG_Mod0_volt_12,
+    CAN0_SIG_Mod0_volt_13,
+    CAN0_SIG_Mod0_volt_14,
+    CAN0_SIG_Mod0_volt_valid_15_17,
+    CAN0_SIG_Mod0_volt_15,
+    CAN0_SIG_Mod0_volt_16,
+    CAN0_SIG_Mod0_volt_17,
 
     CAN0_SIG_Mod0_temp_valid_0_2,
     CAN0_SIG_Mod0_temp_0,
@@ -421,10 +364,10 @@ typedef enum {
     CAN0_SIG_Mod0_temp_6,
     CAN0_SIG_Mod0_temp_7,
     CAN0_SIG_Mod0_temp_8,
-    //CAN0_SIG_Mod0_temp_valid_9_11,
-    //CAN0_SIG_Mod0_temp_9,
-    //CAN0_SIG_Mod0_temp_10,
-    //CAN0_SIG_Mod0_temp_11,
+    CAN0_SIG_Mod0_temp_valid_9_11,
+    CAN0_SIG_Mod0_temp_9,
+    CAN0_SIG_Mod0_temp_10,
+    CAN0_SIG_Mod0_temp_11,
 
     CAN0_SIG_Mod1_volt_valid_0_2,
     CAN0_SIG_Mod1_volt_0,
@@ -442,14 +385,14 @@ typedef enum {
     CAN0_SIG_Mod1_volt_9,
     CAN0_SIG_Mod1_volt_10,
     CAN0_SIG_Mod1_volt_11,
-    //CAN0_SIG_Mod1_volt_valid_12_14,
-    //CAN0_SIG_Mod1_volt_12,
-    //CAN0_SIG_Mod1_volt_13,
-    //CAN0_SIG_Mod1_volt_14,
-    //CAN0_SIG_Mod1_volt_valid_15_17,
-    //CAN0_SIG_Mod1_volt_15,
-    //CAN0_SIG_Mod1_volt_16,
-    //CAN0_SIG_Mod1_volt_17,
+    CAN0_SIG_Mod1_volt_valid_12_14,
+    CAN0_SIG_Mod1_volt_12,
+    CAN0_SIG_Mod1_volt_13,
+    CAN0_SIG_Mod1_volt_14,
+    CAN0_SIG_Mod1_volt_valid_15_17,
+    CAN0_SIG_Mod1_volt_15,
+    CAN0_SIG_Mod1_volt_16,
+    CAN0_SIG_Mod1_volt_17,
 
     CAN0_SIG_Mod1_temp_valid_0_2,
     CAN0_SIG_Mod1_temp_0,
@@ -463,10 +406,10 @@ typedef enum {
     CAN0_SIG_Mod1_temp_6,
     CAN0_SIG_Mod1_temp_7,
     CAN0_SIG_Mod1_temp_8,
-    //CAN0_SIG_Mod1_temp_valid_9_11,
-    //CAN0_SIG_Mod1_temp_9,
-    //CAN0_SIG_Mod1_temp_10,
-    //CAN0_SIG_Mod1_temp_11,
+    CAN0_SIG_Mod1_temp_valid_9_11,
+    CAN0_SIG_Mod1_temp_9,
+    CAN0_SIG_Mod1_temp_10,
+    CAN0_SIG_Mod1_temp_11,
 
     CAN0_SIG_Mod2_volt_valid_0_2,
     CAN0_SIG_Mod2_volt_0,
@@ -484,14 +427,14 @@ typedef enum {
     CAN0_SIG_Mod2_volt_9,
     CAN0_SIG_Mod2_volt_10,
     CAN0_SIG_Mod2_volt_11,
-    //CAN0_SIG_Mod2_volt_valid_12_14,
-    //CAN0_SIG_Mod2_volt_12,
-    //CAN0_SIG_Mod2_volt_13,
-    //CAN0_SIG_Mod2_volt_14,
-    //CAN0_SIG_Mod2_volt_valid_15_17,
-    //CAN0_SIG_Mod2_volt_15,
-    //CAN0_SIG_Mod2_volt_16,
-    //CAN0_SIG_Mod2_volt_17,
+    CAN0_SIG_Mod2_volt_valid_12_14,
+    CAN0_SIG_Mod2_volt_12,
+    CAN0_SIG_Mod2_volt_13,
+    CAN0_SIG_Mod2_volt_14,
+    CAN0_SIG_Mod2_volt_valid_15_17,
+    CAN0_SIG_Mod2_volt_15,
+    CAN0_SIG_Mod2_volt_16,
+    CAN0_SIG_Mod2_volt_17,
 
     CAN0_SIG_Mod2_temp_valid_0_2,
     CAN0_SIG_Mod2_temp_0,
@@ -505,10 +448,10 @@ typedef enum {
     CAN0_SIG_Mod2_temp_6,
     CAN0_SIG_Mod2_temp_7,
     CAN0_SIG_Mod2_temp_8,
-    //CAN0_SIG_Mod2_temp_valid_9_11,
-    //CAN0_SIG_Mod2_temp_9,
-    //CAN0_SIG_Mod2_temp_10,
-    //CAN0_SIG_Mod2_temp_11,
+    CAN0_SIG_Mod2_temp_valid_9_11,
+    CAN0_SIG_Mod2_temp_9,
+    CAN0_SIG_Mod2_temp_10,
+    CAN0_SIG_Mod2_temp_11,
 
     CAN0_SIG_Mod3_volt_valid_0_2,
     CAN0_SIG_Mod3_volt_0,
@@ -526,14 +469,14 @@ typedef enum {
     CAN0_SIG_Mod3_volt_9,
     CAN0_SIG_Mod3_volt_10,
     CAN0_SIG_Mod3_volt_11,
-    //CAN0_SIG_Mod3_volt_valid_12_14,
-    //CAN0_SIG_Mod3_volt_12,
-    //CAN0_SIG_Mod3_volt_13,
-    //CAN0_SIG_Mod3_volt_14,
-    //CAN0_SIG_Mod3_volt_valid_15_17,
-    //CAN0_SIG_Mod3_volt_15,
-    //CAN0_SIG_Mod3_volt_16,
-    //CAN0_SIG_Mod3_volt_17,
+    CAN0_SIG_Mod3_volt_valid_12_14,
+    CAN0_SIG_Mod3_volt_12,
+    CAN0_SIG_Mod3_volt_13,
+    CAN0_SIG_Mod3_volt_14,
+    CAN0_SIG_Mod3_volt_valid_15_17,
+    CAN0_SIG_Mod3_volt_15,
+    CAN0_SIG_Mod3_volt_16,
+    CAN0_SIG_Mod3_volt_17,
 
     CAN0_SIG_Mod3_temp_valid_0_2,
     CAN0_SIG_Mod3_temp_0,
@@ -547,10 +490,10 @@ typedef enum {
     CAN0_SIG_Mod3_temp_6,
     CAN0_SIG_Mod3_temp_7,
     CAN0_SIG_Mod3_temp_8,
-    //CAN0_SIG_Mod3_temp_valid_9_11,
-    //CAN0_SIG_Mod3_temp_9,
-    //CAN0_SIG_Mod3_temp_10,
-    //CAN0_SIG_Mod3_temp_11,
+    CAN0_SIG_Mod3_temp_valid_9_11,
+    CAN0_SIG_Mod3_temp_9,
+    CAN0_SIG_Mod3_temp_10,
+    CAN0_SIG_Mod3_temp_11,
 
     CAN0_SIG_Mod4_volt_valid_0_2,
     CAN0_SIG_Mod4_volt_0,
@@ -568,14 +511,14 @@ typedef enum {
     CAN0_SIG_Mod4_volt_9,
     CAN0_SIG_Mod4_volt_10,
     CAN0_SIG_Mod4_volt_11,
-    //CAN0_SIG_Mod4_volt_valid_12_14,
-    //CAN0_SIG_Mod4_volt_12,
-    //CAN0_SIG_Mod4_volt_13,
-    //CAN0_SIG_Mod4_volt_14,
-    //CAN0_SIG_Mod4_volt_valid_15_17,
-    //CAN0_SIG_Mod4_volt_15,
-    //CAN0_SIG_Mod4_volt_16,
-    //CAN0_SIG_Mod4_volt_17,
+    CAN0_SIG_Mod4_volt_valid_12_14,
+    CAN0_SIG_Mod4_volt_12,
+    CAN0_SIG_Mod4_volt_13,
+    CAN0_SIG_Mod4_volt_14,
+    CAN0_SIG_Mod4_volt_valid_15_17,
+    CAN0_SIG_Mod4_volt_15,
+    CAN0_SIG_Mod4_volt_16,
+    CAN0_SIG_Mod4_volt_17,
 
     CAN0_SIG_Mod4_temp_valid_0_2,
     CAN0_SIG_Mod4_temp_0,
@@ -589,10 +532,10 @@ typedef enum {
     CAN0_SIG_Mod4_temp_6,
     CAN0_SIG_Mod4_temp_7,
     CAN0_SIG_Mod4_temp_8,
-    //CAN0_SIG_Mod4_temp_valid_9_11,
-    //CAN0_SIG_Mod4_temp_9,
-    //CAN0_SIG_Mod4_temp_10,
-    //CAN0_SIG_Mod4_temp_11,
+    CAN0_SIG_Mod4_temp_valid_9_11,
+    CAN0_SIG_Mod4_temp_9,
+    CAN0_SIG_Mod4_temp_10,
+    CAN0_SIG_Mod4_temp_11,
 
     CAN0_SIG_Mod5_volt_valid_0_2,
     CAN0_SIG_Mod5_volt_0,
@@ -610,14 +553,14 @@ typedef enum {
     CAN0_SIG_Mod5_volt_9,
     CAN0_SIG_Mod5_volt_10,
     CAN0_SIG_Mod5_volt_11,
-    //CAN0_SIG_Mod5_volt_valid_12_14,
-    //CAN0_SIG_Mod5_volt_12,
-    //CAN0_SIG_Mod5_volt_13,
-    //CAN0_SIG_Mod5_volt_14,
-    //CAN0_SIG_Mod5_volt_valid_15_17,
-    //CAN0_SIG_Mod5_volt_15,
-    //CAN0_SIG_Mod5_volt_16,
-    //CAN0_SIG_Mod5_volt_17,
+    CAN0_SIG_Mod5_volt_valid_12_14,
+    CAN0_SIG_Mod5_volt_12,
+    CAN0_SIG_Mod5_volt_13,
+    CAN0_SIG_Mod5_volt_14,
+    CAN0_SIG_Mod5_volt_valid_15_17,
+    CAN0_SIG_Mod5_volt_15,
+    CAN0_SIG_Mod5_volt_16,
+    CAN0_SIG_Mod5_volt_17,
 
     CAN0_SIG_Mod5_temp_valid_0_2,
     CAN0_SIG_Mod5_temp_0,
@@ -631,10 +574,10 @@ typedef enum {
     CAN0_SIG_Mod5_temp_6,
     CAN0_SIG_Mod5_temp_7,
     CAN0_SIG_Mod5_temp_8,
-    //CAN0_SIG_Mod5_temp_valid_9_11,
-    //CAN0_SIG_Mod5_temp_9,
-    //CAN0_SIG_Mod5_temp_10,
-    //CAN0_SIG_Mod5_temp_11,
+    CAN0_SIG_Mod5_temp_valid_9_11,
+    CAN0_SIG_Mod5_temp_9,
+    CAN0_SIG_Mod5_temp_10,
+    CAN0_SIG_Mod5_temp_11,
 
     CAN0_SIG_Mod6_volt_valid_0_2,
     CAN0_SIG_Mod6_volt_0,
@@ -652,14 +595,14 @@ typedef enum {
     CAN0_SIG_Mod6_volt_9,
     CAN0_SIG_Mod6_volt_10,
     CAN0_SIG_Mod6_volt_11,
-    //CAN0_SIG_Mod6_volt_valid_12_14,
-    //CAN0_SIG_Mod6_volt_12,
-    //CAN0_SIG_Mod6_volt_13,
-    //CAN0_SIG_Mod6_volt_14,
-    //CAN0_SIG_Mod6_volt_valid_15_17,
-    //CAN0_SIG_Mod6_volt_15,
-    //CAN0_SIG_Mod6_volt_16,
-    //CAN0_SIG_Mod6_volt_17,
+    CAN0_SIG_Mod6_volt_valid_12_14,
+    CAN0_SIG_Mod6_volt_12,
+    CAN0_SIG_Mod6_volt_13,
+    CAN0_SIG_Mod6_volt_14,
+    CAN0_SIG_Mod6_volt_valid_15_17,
+    CAN0_SIG_Mod6_volt_15,
+    CAN0_SIG_Mod6_volt_16,
+    CAN0_SIG_Mod6_volt_17,
 
     CAN0_SIG_Mod6_temp_valid_0_2,
     CAN0_SIG_Mod6_temp_0,
@@ -673,10 +616,10 @@ typedef enum {
     CAN0_SIG_Mod6_temp_6,
     CAN0_SIG_Mod6_temp_7,
     CAN0_SIG_Mod6_temp_8,
-    //CAN0_SIG_Mod6_temp_valid_9_11,
-    //CAN0_SIG_Mod6_temp_9,
-    //CAN0_SIG_Mod6_temp_10,
-    //CAN0_SIG_Mod6_temp_11,
+    CAN0_SIG_Mod6_temp_valid_9_11,
+    CAN0_SIG_Mod6_temp_9,
+    CAN0_SIG_Mod6_temp_10,
+    CAN0_SIG_Mod6_temp_11,
 
     CAN0_SIG_Mod7_volt_valid_0_2,
     CAN0_SIG_Mod7_volt_0,
@@ -694,14 +637,14 @@ typedef enum {
     CAN0_SIG_Mod7_volt_9,
     CAN0_SIG_Mod7_volt_10,
     CAN0_SIG_Mod7_volt_11,
-    //CAN0_SIG_Mod7_volt_valid_12_14,
-    //CAN0_SIG_Mod7_volt_12,
-    //CAN0_SIG_Mod7_volt_13,
-    //CAN0_SIG_Mod7_volt_14,
-    //CAN0_SIG_Mod7_volt_valid_15_17,
-    //CAN0_SIG_Mod7_volt_15,
-    //CAN0_SIG_Mod7_volt_16,
-    //CAN0_SIG_Mod7_volt_17,
+    CAN0_SIG_Mod7_volt_valid_12_14,
+    CAN0_SIG_Mod7_volt_12,
+    CAN0_SIG_Mod7_volt_13,
+    CAN0_SIG_Mod7_volt_14,
+    CAN0_SIG_Mod7_volt_valid_15_17,
+    CAN0_SIG_Mod7_volt_15,
+    CAN0_SIG_Mod7_volt_16,
+    CAN0_SIG_Mod7_volt_17,
 
     CAN0_SIG_Mod7_temp_valid_0_2,
     CAN0_SIG_Mod7_temp_0,
@@ -715,203 +658,14 @@ typedef enum {
     CAN0_SIG_Mod7_temp_6,
     CAN0_SIG_Mod7_temp_7,
     CAN0_SIG_Mod7_temp_8,
-    //CAN0_SIG_Mod7_temp_valid_9_11,
-    //CAN0_SIG_Mod7_temp_9,
-    //CAN0_SIG_Mod7_temp_10,
-    //CAN0_SIG_Mod7_temp_11,
+    CAN0_SIG_Mod7_temp_valid_9_11,
+    CAN0_SIG_Mod7_temp_9,
+    CAN0_SIG_Mod7_temp_10,
+    CAN0_SIG_Mod7_temp_11,
 
-    CAN0_SIG_Mod8_volt_valid_0_2,
-    CAN0_SIG_Mod8_volt_0,
-    CAN0_SIG_Mod8_volt_1,
-    CAN0_SIG_Mod8_volt_2,
-    CAN0_SIG_Mod8_volt_valid_3_5,
-    CAN0_SIG_Mod8_volt_3,
-    CAN0_SIG_Mod8_volt_4,
-    CAN0_SIG_Mod8_volt_5,
-    CAN0_SIG_Mod8_volt_valid_6_8,
-    CAN0_SIG_Mod8_volt_6,
-    CAN0_SIG_Mod8_volt_7,
-    CAN0_SIG_Mod8_volt_8,
-    CAN0_SIG_Mod8_volt_valid_9_11,
-    CAN0_SIG_Mod8_volt_9,
-    CAN0_SIG_Mod8_volt_10,
-    CAN0_SIG_Mod8_volt_11,
-    //CAN0_SIG_Mod8_volt_valid_12_14,
-    //CAN0_SIG_Mod8_volt_12,
-    //CAN0_SIG_Mod8_volt_13,
-    //CAN0_SIG_Mod8_volt_14,
-    //CAN0_SIG_Mod8_volt_valid_15_17,
-    //CAN0_SIG_Mod8_volt_15,
-    //CAN0_SIG_Mod8_volt_16,
-    //CAN0_SIG_Mod8_volt_17,
-
-    CAN0_SIG_Mod8_temp_valid_0_2,
-    CAN0_SIG_Mod8_temp_0,
-    CAN0_SIG_Mod8_temp_1,
-    CAN0_SIG_Mod8_temp_2,
-    CAN0_SIG_Mod8_temp_valid_3_5,
-    CAN0_SIG_Mod8_temp_3,
-    CAN0_SIG_Mod8_temp_4,
-    CAN0_SIG_Mod8_temp_5,
-    CAN0_SIG_Mod8_temp_valid_6_8,
-    CAN0_SIG_Mod8_temp_6,
-    CAN0_SIG_Mod8_temp_7,
-    CAN0_SIG_Mod8_temp_8,
-    //CAN0_SIG_Mod8_temp_valid_9_11,
-    //CAN0_SIG_Mod8_temp_9,
-    //CAN0_SIG_Mod8_temp_10,
-    //CAN0_SIG_Mod8_temp_11,
-
-    CAN0_SIG_Mod9_volt_valid_0_2,
-    CAN0_SIG_Mod9_volt_0,
-    CAN0_SIG_Mod9_volt_1,
-    CAN0_SIG_Mod9_volt_2,
-    CAN0_SIG_Mod9_volt_valid_3_5,
-    CAN0_SIG_Mod9_volt_3,
-    CAN0_SIG_Mod9_volt_4,
-    CAN0_SIG_Mod9_volt_5,
-    CAN0_SIG_Mod9_volt_valid_6_8,
-    CAN0_SIG_Mod9_volt_6,
-    CAN0_SIG_Mod9_volt_7,
-    CAN0_SIG_Mod9_volt_8,
-    CAN0_SIG_Mod9_volt_valid_9_11,
-    CAN0_SIG_Mod9_volt_9,
-    CAN0_SIG_Mod9_volt_10,
-    CAN0_SIG_Mod9_volt_11,
-    //CAN0_SIG_Mod9_volt_valid_12_14,
-    //CAN0_SIG_Mod9_volt_12,
-    //CAN0_SIG_Mod9_volt_13,
-    //CAN0_SIG_Mod9_volt_14,
-    //CAN0_SIG_Mod9_volt_valid_15_17,
-    //CAN0_SIG_Mod9_volt_15,
-    //CAN0_SIG_Mod9_volt_16,
-    //CAN0_SIG_Mod9_volt_17,
-
-    CAN0_SIG_Mod9_temp_valid_0_2,
-    CAN0_SIG_Mod9_temp_0,
-    CAN0_SIG_Mod9_temp_1,
-    CAN0_SIG_Mod9_temp_2,
-    CAN0_SIG_Mod9_temp_valid_3_5,
-    CAN0_SIG_Mod9_temp_3,
-    CAN0_SIG_Mod9_temp_4,
-    CAN0_SIG_Mod9_temp_5,
-    CAN0_SIG_Mod9_temp_valid_6_8,
-    CAN0_SIG_Mod9_temp_6,
-    CAN0_SIG_Mod9_temp_7,
-    CAN0_SIG_Mod9_temp_8,
-    //CAN0_SIG_Mod9_temp_valid_9_11,
-    //CAN0_SIG_Mod9_temp_9,
-    //CAN0_SIG_Mod9_temp_10,
-    //CAN0_SIG_Mod9_temp_11,
-
-    CAN0_SIG_Mod10_volt_valid_0_2,
-    CAN0_SIG_Mod10_volt_0,
-    CAN0_SIG_Mod10_volt_1,
-    CAN0_SIG_Mod10_volt_2,
-    CAN0_SIG_Mod10_volt_valid_3_5,
-    CAN0_SIG_Mod10_volt_3,
-    CAN0_SIG_Mod10_volt_4,
-    CAN0_SIG_Mod10_volt_5,
-    CAN0_SIG_Mod10_volt_valid_6_8,
-    CAN0_SIG_Mod10_volt_6,
-    CAN0_SIG_Mod10_volt_7,
-    CAN0_SIG_Mod10_volt_8,
-    CAN0_SIG_Mod10_volt_valid_9_11,
-    CAN0_SIG_Mod10_volt_9,
-    CAN0_SIG_Mod10_volt_10,
-    CAN0_SIG_Mod10_volt_11,
-    //CAN0_SIG_Mod10_volt_valid_12_14,
-    //CAN0_SIG_Mod10_volt_12,
-    //CAN0_SIG_Mod10_volt_13,
-    //CAN0_SIG_Mod10_volt_14,
-    //CAN0_SIG_Mod10_volt_valid_15_17,
-    //CAN0_SIG_Mod10_volt_15,
-    //CAN0_SIG_Mod10_volt_16,
-    //CAN0_SIG_Mod10_volt_17,
-
-    CAN0_SIG_Mod10_temp_valid_0_2,
-    CAN0_SIG_Mod10_temp_0,
-    CAN0_SIG_Mod10_temp_1,
-    CAN0_SIG_Mod10_temp_2,
-    CAN0_SIG_Mod10_temp_valid_3_5,
-    CAN0_SIG_Mod10_temp_3,
-    CAN0_SIG_Mod10_temp_4,
-    CAN0_SIG_Mod10_temp_5,
-    CAN0_SIG_Mod10_temp_valid_6_8,
-    CAN0_SIG_Mod10_temp_6,
-    CAN0_SIG_Mod10_temp_7,
-    CAN0_SIG_Mod10_temp_8,
-    //CAN0_SIG_Mod10_temp_valid_9_11,
-    //CAN0_SIG_Mod10_temp_9,
-    //CAN0_SIG_Mod10_temp_10,
-    //CAN0_SIG_Mod10_temp_11,
-
-    CAN0_SIG_Mod11_volt_valid_0_2,
-    CAN0_SIG_Mod11_volt_0,
-    CAN0_SIG_Mod11_volt_1,
-    CAN0_SIG_Mod11_volt_2,
-    CAN0_SIG_Mod11_volt_valid_3_5,
-    CAN0_SIG_Mod11_volt_3,
-    CAN0_SIG_Mod11_volt_4,
-    CAN0_SIG_Mod11_volt_5,
-    CAN0_SIG_Mod11_volt_valid_6_8,
-    CAN0_SIG_Mod11_volt_6,
-    CAN0_SIG_Mod11_volt_7,
-    CAN0_SIG_Mod11_volt_8,
-    CAN0_SIG_Mod11_volt_valid_9_11,
-    CAN0_SIG_Mod11_volt_9,
-    CAN0_SIG_Mod11_volt_10,
-    CAN0_SIG_Mod11_volt_11,
-    //CAN0_SIG_Mod11_volt_valid_12_14,
-    //CAN0_SIG_Mod11_volt_12,
-    //CAN0_SIG_Mod11_volt_13,
-    //CAN0_SIG_Mod11_volt_14,
-    //CAN0_SIG_Mod11_volt_valid_15_17,
-    //CAN0_SIG_Mod11_volt_15,
-    //CAN0_SIG_Mod11_volt_16,
-    //CAN0_SIG_Mod11_volt_17,
-
-    CAN0_SIG_Mod11_temp_valid_0_2,
-    CAN0_SIG_Mod11_temp_0,
-    CAN0_SIG_Mod11_temp_1,
-    CAN0_SIG_Mod11_temp_2,
-    CAN0_SIG_Mod11_temp_valid_3_5,
-    CAN0_SIG_Mod11_temp_3,
-    CAN0_SIG_Mod11_temp_4,
-    CAN0_SIG_Mod11_temp_5,
-    CAN0_SIG_Mod11_temp_valid_6_8,
-    CAN0_SIG_Mod11_temp_6,
-    CAN0_SIG_Mod11_temp_7,
-    CAN0_SIG_Mod11_temp_8,
-    //CAN0_SIG_Mod11_temp_valid_9_11,
-    //CAN0_SIG_Mod11_temp_9,
-    //CAN0_SIG_Mod11_temp_10,
-    //CAN0_SIG_Mod11_temp_11,
-
-	CAN0_SIG_IVT_Current_MuxID,            /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Current_Status,           /*!< current sensor counter */
-	CAN0_SIG_IVT_Current_Measurement,      /*!< current sensor measurement I */
-	CAN0_SIG_IVT_Voltage_1_MuxID,          /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Voltage_1_Status,         /*!< current sensor counter */
-	CAN0_SIG_IVT_Voltage_1_Measurement,    /*!< current sensor measurement U1 */
-	CAN0_SIG_IVT_Voltage_2_MuxID,          /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Voltage_2_Status,         /*!< current sensor counter */
-	CAN0_SIG_IVT_Voltage_2_Measurement,    /*!< current sensor measurement U2 */
-	CAN0_SIG_IVT_Voltage_3_MuxID,          /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Voltage_3_Status,         /*!< current sensor counter */
-	CAN0_SIG_IVT_Voltage_3_Measurement,    /*!< current sensor measurement U3 */
-	CAN0_SIG_IVT_Temperature_MuxID,        /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Temperature_Status,       /*!< current sensor counter */
-	CAN0_SIG_IVT_Temperature_Measurement,  /*!< current sensor measurement T */
-	CAN0_SIG_IVT_Power_MuxID,              /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Power_Status,             /*!< current sensor counter */
-	CAN0_SIG_IVT_Power_Measurement,        /*!< current sensor measurement P */
-	CAN0_SIG_IVT_CC_MuxID,                 /*!< current sensor measurement type */
-	CAN0_SIG_IVT_CC_Status,                /*!< current sensor counter */
-	CAN0_SIG_IVT_CC_Measurement,           /*!< current sensor measurement C-C */
-	CAN0_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
-	CAN0_SIG_IVT_EC_Status,                /*!< current sensor counter */
-	CAN0_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
+#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
+    CAN0_SIG_ISA_Trigger,
+#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 
     CAN0_SIGNAL_NONE = 0xFFFF
 } CANS_CAN0_signalsTx_e;
@@ -920,10 +674,6 @@ typedef enum {
  * symbolic names for CAN1 transmission signals
  */
 typedef enum {
-#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-    CAN1_SIG_ISA_Trigger,
-#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
-
     CAN1_TX_SIGNAL_NONE = 0xFFFF,
 } CANS_CAN1_signalsTx_e;
 
@@ -933,6 +683,30 @@ typedef enum {
  */
 typedef enum {
     CAN0_SIG_ReceiveStateRequest,          /*!< current sensor counter */
+    CAN0_SIG_IVT_Current_MuxID,            /*!< current sensor measurement type */
+    CAN0_SIG_IVT_Current_Status,           /*!< current sensor counter */
+    CAN0_SIG_IVT_Current_Measurement,      /*!< current sensor measurement I */
+    CAN0_SIG_IVT_Voltage_1_MuxID,          /*!< current sensor measurement type */
+    CAN0_SIG_IVT_Voltage_1_Status,         /*!< current sensor counter */
+    CAN0_SIG_IVT_Voltage_1_Measurement,    /*!< current sensor measurement U1 */
+    CAN0_SIG_IVT_Voltage_2_MuxID,          /*!< current sensor measurement type */
+    CAN0_SIG_IVT_Voltage_2_Status,         /*!< current sensor counter */
+    CAN0_SIG_IVT_Voltage_2_Measurement,    /*!< current sensor measurement U2 */
+    CAN0_SIG_IVT_Voltage_3_MuxID,          /*!< current sensor measurement type */
+    CAN0_SIG_IVT_Voltage_3_Status,         /*!< current sensor counter */
+    CAN0_SIG_IVT_Voltage_3_Measurement,    /*!< current sensor measurement U3 */
+    CAN0_SIG_IVT_Temperature_MuxID,        /*!< current sensor measurement type */
+    CAN0_SIG_IVT_Temperature_Status,       /*!< current sensor counter */
+    CAN0_SIG_IVT_Temperature_Measurement,  /*!< current sensor measurement T */
+    CAN0_SIG_IVT_Power_MuxID,              /*!< current sensor measurement type */
+    CAN0_SIG_IVT_Power_Status,             /*!< current sensor counter */
+    CAN0_SIG_IVT_Power_Measurement,        /*!< current sensor measurement P */
+    CAN0_SIG_IVT_CC_MuxID,                 /*!< current sensor measurement type */
+    CAN0_SIG_IVT_CC_Status,                /*!< current sensor counter */
+    CAN0_SIG_IVT_CC_Measurement,           /*!< current sensor measurement C-C */
+    CAN0_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
+    CAN0_SIG_IVT_EC_Status,                /*!< current sensor counter */
+    CAN0_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
     CAN0_SIG_DEBUG_Data,                   /*!< Data of debug message */
     CAN0_SIG_GetReleaseVersion
 } CANS_CAN0_signalsRx_e;
@@ -942,31 +716,7 @@ typedef enum {
  * symbolic names for CAN 1 receive signals
  */
 typedef enum {
-	CAN1_SIG_IVT_Current_MuxID,            /*!< current sensor measurement type */
-	CAN1_SIG_IVT_Current_Status,           /*!< current sensor counter */
-	CAN1_SIG_IVT_Current_Measurement,      /*!< current sensor measurement I */
-	CAN1_SIG_IVT_Voltage_1_MuxID,          /*!< current sensor measurement type */
-	CAN1_SIG_IVT_Voltage_1_Status,         /*!< current sensor counter */
-	CAN1_SIG_IVT_Voltage_1_Measurement,    /*!< current sensor measurement U1 */
-	CAN1_SIG_IVT_Voltage_2_MuxID,          /*!< current sensor measurement type */
-	CAN1_SIG_IVT_Voltage_2_Status,         /*!< current sensor counter */
-	CAN1_SIG_IVT_Voltage_2_Measurement,    /*!< current sensor measurement U2 */
-	CAN1_SIG_IVT_Voltage_3_MuxID,          /*!< current sensor measurement type */
-	CAN1_SIG_IVT_Voltage_3_Status,         /*!< current sensor counter */
-	CAN1_SIG_IVT_Voltage_3_Measurement,    /*!< current sensor measurement U3 */
-	CAN1_SIG_IVT_Temperature_MuxID,        /*!< current sensor measurement type */
-	CAN1_SIG_IVT_Temperature_Status,       /*!< current sensor counter */
-	CAN1_SIG_IVT_Temperature_Measurement,  /*!< current sensor measurement T */
-	CAN1_SIG_IVT_Power_MuxID,              /*!< current sensor measurement type */
-	CAN1_SIG_IVT_Power_Status,             /*!< current sensor counter */
-	CAN1_SIG_IVT_Power_Measurement,        /*!< current sensor measurement P */
-	CAN1_SIG_IVT_CC_MuxID,                 /*!< current sensor measurement type */
-	CAN1_SIG_IVT_CC_Status,                /*!< current sensor counter */
-	CAN1_SIG_IVT_CC_Measurement,           /*!< current sensor measurement C-C */
-	CAN1_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
-	CAN1_SIG_IVT_EC_Status,                /*!< current sensor counter */
-	CAN1_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
-	CAN1_RX_SIGNAL_NONE = 0xFFFF,
+    CAN1_RX_SIGNAL_NONE = 0xFFFF,
 } CANS_CAN1_signalsRx_e;
 
 typedef enum {

@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AD8628ARTZ-R2
+D AD8628ARTZ-R2, Operational Amplifier Chopper Stabilized, 2.5MHz R-R, 3V, 5-Pin SOT-23
+K
+F http://www.analog.com/static/imported-files/data_sheets/AD8628_8629_8630.pdf
+$ENDCMP
+#
+#End Doc Library

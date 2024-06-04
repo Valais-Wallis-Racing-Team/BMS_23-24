@@ -123,7 +123,7 @@ static void BAL_Init(void) {
 
 static void BAL_Deactivate(void) {
     uint16_t i;
-#if BS_NR_OF_MODULES != 0
+
     DB_ReadBlock(&bal_balancing, DATA_BLOCK_ID_BALANCING_CONTROL_VALUES);
 
     for (i=0; i < BS_NR_OF_BAT_CELLS; i++) {
@@ -137,7 +137,6 @@ static void BAL_Deactivate(void) {
     bal_balancing.previous_timestamp = bal_balancing.timestamp;
     bal_balancing.timestamp = OS_getOSSysTick();
     DB_WriteBlock(&bal_balancing, DATA_BLOCK_ID_BALANCING_CONTROL_VALUES);
-#endif
 }
 
 #if BALANCING_VOLTAGE_BASED == TRUE
@@ -146,7 +145,7 @@ static uint8_t BAL_Activate_Balancing_Voltage(void) {
     uint32_t i = 0;
     uint16_t min = 0;
     uint8_t finished = TRUE;
-#if BS_NR_OF_MODULES != 0
+
     DB_ReadBlock(&bal_balancing, DATA_BLOCK_ID_BALANCING_CONTROL_VALUES);
     DB_ReadBlock(&bal_cellvoltage, DATA_BLOCK_ID_CELLVOLTAGE);
     DB_ReadBlock(&bal_minmax, DATA_BLOCK_ID_MINMAX);
@@ -169,12 +168,8 @@ static uint8_t BAL_Activate_Balancing_Voltage(void) {
     bal_balancing.previous_timestamp = bal_balancing.timestamp;
     bal_balancing.timestamp = OS_getOSSysTick();
     DB_WriteBlock(&bal_balancing, DATA_BLOCK_ID_BALANCING_CONTROL_VALUES);
+
     return finished;
-#else
-    return TRUE;
-#endif
-
-
 }
 
 #else

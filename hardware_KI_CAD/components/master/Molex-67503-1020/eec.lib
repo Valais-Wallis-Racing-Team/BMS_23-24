@@ -1,0 +1,39 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# Molex 67503-1020
+#
+DEF 67503-1020 J 0 0 Y Y 1 L N
+F0 "J" 0 200 50 H V L CNN 
+F1 "67503-1020" 0 300 50 H V L CNN 
+F2 "Molex-67503-1020-*" 0 400 50 H I L CNN 
+F3 "http://www.molex.com/pdm_docs/sd/675031020_sd.pdf" 0 500 50 H I L CNN 
+F4 "Manufacturer URL" 0 600 50 H I L CNN "Component Link 1 Description"
+F5 "http://www.molex.com/" 0 700 50 H I L CNN "Component Link 1 URL"
+F6 "Rev F, 06/2009" 0 800 50 H I L CNN "Datasheet Version"
+F7 "Surface Mount" 0 900 50 H I L CNN "Mounting Technology"
+F8 "Mini USB Connector, SMT, Righer Angle" 0 1000 50 H I L CNN "Package Description"
+F9 "0.8 mm" 0 1100 50 H I L CNN "Terminal Pitch"
+F10 "Conn" 0 1200 50 H I L CNN "category"
+F11 "777800" 0 1300 50 H I L CNN "ciiva ids"
+F12 "c7eb104de269af6f" 0 1400 50 H I L CNN "library id"
+F13 "Molex" 0 1500 50 H I L CNN "manufacturer"
+F14 "67503-1020" 0 1600 50 H I L CNN "package"
+F15 "1376983232" 0 1700 50 H I L CNN "release date"
+F16 "6342946C-8644-4096-A842-FDBCFB6A4DA0" 0 1800 50 H I L CNN "vault revision"
+F17 "yes" 0 1900 50 H I L CNN "imported"
+DRAW
+X VBUS 1 0 0 100 R 40 40 1 1 W 
+X D- 2 0 -100 100 R 40 40 1 1 B 
+X D+ 3 0 -200 100 R 40 40 1 1 B 
+X ID 4 0 -300 100 R 40 40 1 1 P 
+X GND 5 0 -400 100 R 40 40 1 1 W 
+X MP1 6 800 -100 100 L 40 40 1 1 P 
+X MP2 7 800 -200 100 L 40 40 1 1 P 
+X MP3 8 800 -300 100 L 40 40 1 1 P 
+X MP4 9 800 -400 100 L 40 40 1 1 P 
+S 100 100 700 -500 1 1 0 f
+ENDDRAW
+ENDDEF
+#
+# End Library

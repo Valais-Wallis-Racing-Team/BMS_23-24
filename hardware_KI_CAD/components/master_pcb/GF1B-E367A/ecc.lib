@@ -1,0 +1,46 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# Vishay GF1B-E3/67A
+#
+DEF GF1B-E3_67A D 0 40 Y Y 1 L N
+F0 "D" 0 200 50 H V L CNN 
+F1 "GF1B-E3/67A" 0 300 50 H V L CNN 
+F2 "Vishay-GF1B-E3_67A-0-0-*" 0 400 50 H I L CNN 
+F3 "http://www.vishay.com/docs/88617/gf1.pdf" 0 500 50 H I L CNN 
+F4 "Yes" 0 600 50 H I L CNN "automotive"
+F5 "Grade 0" 0 700 50 H I L CNN "automotive grade"
+F6 "15pF" 0 800 50 H I L CNN "capacitance"
+F7 "Diode" 0 900 50 H I L CNN "category"
+F8 "Discrete Semiconductors" 0 1000 50 H I L CNN "device class L1"
+F9 "Diodes" 0 1100 50 H I L CNN "device class L2"
+F10 "Rectifier Diodes" 0 1200 50 H I L CNN "device class L3"
+F11 "DIODE GEN PURP 100V 1A DO214BA" 0 1300 50 H I L CNN "digikey description"
+F12 "GF1B-E3/67AGICT-ND" 0 1400 50 H I L CNN "digikey part number"
+F13 "1A" 0 1500 50 H I L CNN "forward current"
+F14 "3mm" 0 1600 50 H I L CNN "height"
+F15 "Yes" 0 1700 50 H I L CNN "lead free"
+F16 "f5e6eeea32991e6a" 0 1800 50 H I L CNN "library id"
+F17 "Vishay" 0 1900 50 H I L CNN "manufacturer"
+F18 "+175°C" 0 2000 50 H I L CNN "max junction temp"
+F19 "100V" 0 2100 50 H I L CNN "max repetitive reverse voltage"
+F20 "30A" 0 2200 50 H I L CNN "max surge forward current"
+F21 "Diode Standard Recovery Rectifier 100V 1A 2-Pin DO-214BA T/R" 0 2300 50 H I L CNN "mouser description"
+F22 "625-GF1B-E3" 0 2400 50 H I L CNN "mouser part number"
+F23 "DO-214BA" 0 2500 50 H I L CNN "package"
+F24 "5uA" 0 2600 50 H I L CNN "peak reverse current"
+F25 "Yes" 0 2700 50 H I L CNN "rohs"
+F26 "0.152mm" 0 2800 50 H I L CNN "standoff height"
+F27 "+175°C" 0 2900 50 H I L CNN "temperature range high"
+F28 "-65°C" 0 3000 50 H I L CNN "temperature range low"
+DRAW
+X ANODE 2 100 0 100 R 40 0 1 1 P 
+X CATHODE 1 500 0 100 L 40 0 1 1 P 
+P 2 1 1 0 200 100 200 -100 N
+P 2 1 1 0 400 100 400 -100 N
+P 2 1 1 0 200 100 400 0 N
+P 2 1 1 0 200 -100 400 0 N
+ENDDRAW
+ENDDEF
+#
+# End Library

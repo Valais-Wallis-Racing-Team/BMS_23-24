@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP LM5161QPWPRQ1
+D Wide Input 4.5-V to 100-V, 1-A Synchronous Buck / Fly-Buck Converter
+K
+F http://www.ti.com/lit/ds/symlink/lm5161-q1.pdf
+$ENDCMP
+#
+#End Doc Library

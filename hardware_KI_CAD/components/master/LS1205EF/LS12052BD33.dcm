@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP LS12052BD33
+D 5.5V 4A Low-Ron Power Distribution Load Switch
+K
+F https://www.littelfuse.com/media?resourcetype=datasheets&itemid=19678e0a-18aa-45bd-9562-8ed495d87f58&filename=littelfuse-protection-ic-ls12052bd33-datasheet
+$ENDCMP
+#
+#End Doc Library

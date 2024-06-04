@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AQY-211EHA
+D SSR RELAY SPST-NO 1A 0-30V
+K
+F 
+$ENDCMP
+#
+#End Doc Library

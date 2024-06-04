@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP B82789C0513H002
+D Common Mode Filters / Chokes, |Z|=2800? at 1MHz, L x W x T :
+K
+F https://product.tdk.com/system/files/dam/doc/product/emc/emc/cmf_cmc/data_sheet/30/db/ind_2008/b82789c0_s0.pdf
+$ENDCMP
+#
+#End Doc Library

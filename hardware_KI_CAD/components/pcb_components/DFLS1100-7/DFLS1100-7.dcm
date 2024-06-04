@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP DFLS1100-7
+D Diode Schottky 1A 100V PowerDI 123 Diodes Inc DFLS1100-7, SMT Schottky Diode, 100V 1A, 2-Pin PowerDI 123
+K
+F https://datasheet.datasheetarchive.com/originals/distributors/Datasheets-9/DSA-163400.pdf
+$ENDCMP
+#
+#End Doc Library

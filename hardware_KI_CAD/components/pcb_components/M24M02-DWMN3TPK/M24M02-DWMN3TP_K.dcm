@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP M24M02-DWMN3TP_K
+D EEPROM Automotive 2-Mbit serial I2C bus EEPROM with 1 MHz clock
+K
+F http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00200595.pdf
+$ENDCMP
+#
+#End Doc Library

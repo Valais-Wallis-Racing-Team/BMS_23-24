@@ -1,0 +1,31 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid 2c0db601-9492-4d4b-ba6d-047aa55963a8)
+
+  (paper "A4")
+
+  (lib_symbols
+  )
+
+
+  (sheet (at 20.32 22.86) (size 45.72 52.07) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid ad8dc35c-1c34-43ef-8126-622ef7b7b0a7)
+    (property "Sheetname" "slave1_of_2" (at 20.32 22.1484 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "slave1_of_2.kicad_sch" (at 20.32 75.5146 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "BMS-Slave"
+        (path "/2c0db601-9492-4d4b-ba6d-047aa55963a8" (page "2"))
+      )
+    )
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

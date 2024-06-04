@@ -1,0 +1,2 @@
+- 1.6mm FR4 TG-140, green soldermask, white silkscreen, 35um CU, NiAu finition,
+- conformal coating on region specified in photo

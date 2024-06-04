@@ -82,7 +82,6 @@ static void CANS_ParseMessage(CAN_NodeTypeDef_e canNode, CANS_messagesRx_e msgId
 static uint8_t CANS_CheckCanTiming(void);
 static void CANS_SetCurrentSensorPresent(uint8_t command);
 static void CANS_SetCurrentSensorCCPresent(uint8_t command);
-static uint32_t counter_ticksComplete = 0;
 /*================== Function Implementations =============================*/
 
 /*================== Public functions =====================================*/
@@ -95,56 +94,6 @@ void CANS_MainFunction(void) {
     CANS_CheckCanTiming();
     if (cans_state.periodic_enable == TRUE) {
         (void)CANS_PeriodicTransmit();
-    }
-    else//modif pour envoyer le 0x112 tout le temps
-    {
-    	uint32_t i = 2;
-    	STD_RETURN_TYPE_e result = E_NOT_OK;
-    	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
-    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
-    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
-    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
-
-    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
-    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
-
-    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
-    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
-    	            }
-    	        }
-    	counter_ticksComplete++;
-
-    	/*i = 158;
-    	result = E_NOT_OK;
-    	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
-    	    	     Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
-    	    	     CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
-    	    	     PduToSend.id = can_CAN0_messages_tx[i].ID;
-
-    	    	     result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
-    	    	     DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
-
-    	    	     if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
-    	    	    	 can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
-    	    	     }
-    	}
-    	counter_ticksComplete++;
-
-    	i = 159;
-    	result = E_NOT_OK;
-    	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
-    				Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
-    				CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
-    				PduToSend.id = can_CAN0_messages_tx[i].ID;
-
-    				result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
-    				DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
-
-    				if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
-    					can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
-    	    	    }
-    	}
-    	counter_ticksComplete++;*/
     }
     DIAG_SysMonNotify(DIAG_SYSMON_CANS_ID, 0);  /* task is running, state = ok */
 }
@@ -195,14 +144,6 @@ static STD_RETURN_TYPE_e CANS_PeriodicTransmit(void) {
     static uint32_t counter_ticks = 0;
     uint32_t i = 0;
     STD_RETURN_TYPE_e result = E_NOT_OK;
-    if (counter_ticks< counter_ticksComplete)
-    {
-    	counter_ticks=counter_ticksComplete;
-    }
-    else if(counter_ticksComplete < counter_ticks)
-    {
-    	counter_ticksComplete = counter_ticks;
-    }
 
 #if CAN_USE_CAN_NODE0 == TRUE
     for (i = 0; i < can_CAN0_tx_length; i++) {
@@ -272,7 +213,7 @@ static STD_RETURN_TYPE_e CANS_PeriodicReceive(void) {
 #else
     result_node0 = E_OK;
 #endif
-//TODO make message from current sensor be sent to-----------------------------------------------------------------------------------------------
+
 #if CAN_USE_CAN_NODE1 == TRUE
     while (CAN_ReceiveBuffer(CAN_NODE1, &msg) == E_OK) {
         for (i = 0; i < can_CAN1_rx_length; i++) {
@@ -445,7 +386,6 @@ static void CANS_ParseMessage(CAN_NodeTypeDef_e canNode, CANS_messagesRx_e msgId
                 }
             }
         }
-
     }
 }
 

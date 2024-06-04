@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ADBMS1818ASWZ
+D 18-Cell Battery Monitor with Daisy Chain Interface
+K
+F https://www.analog.com/ADBMS1818/datasheet
+$ENDCMP
+#
+#End Doc Library

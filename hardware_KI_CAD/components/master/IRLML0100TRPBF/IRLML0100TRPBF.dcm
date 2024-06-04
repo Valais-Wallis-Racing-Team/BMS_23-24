@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP IRLML0100TRPBF
+D MOSFET N-Channel 100V 1.6A SOT23 Infineon IRLML0100TRPBF N-channel MOSFET Transistor, 1.6 A, 100 V, 3-Pin SOT-23
+K
+F http://www.infineon.com/dgdl/irlml0100pbf.pdf?fileId=5546d462533600a4015356649d9225e8
+$ENDCMP
+#
+#End Doc Library

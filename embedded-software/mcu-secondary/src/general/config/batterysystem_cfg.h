@@ -67,7 +67,7 @@
  * When set to TRUE, goes back to stand-by when the violation disappeared.
  *
  */
-#define SECONDARY_OUT_OF_ERROR_STATE     TRUE
+#define SECONDARY_OUT_OF_ERROR_STATE     FALSE
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -77,7 +77,7 @@
  * \par Default:
  * 2
 */
-#define BS_NR_OF_MODULES                           6
+#define BS_NR_OF_MODULES                           2
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -87,11 +87,7 @@
  * \par Default:
  * 12
 */
-#define BS_NR_OF_BAT_CELLS_PER_MODULE               11
-
-//#define LAST_CELL_NOT_PLUGGED
-#define LAST_CELL_NOT_PLUGGED1
-
+#define BS_NR_OF_BAT_CELLS_PER_MODULE               12
 
 #if BS_NR_OF_BAT_CELLS_PER_MODULE <= 12
     #define BS_MAX_SUPPORTED_CELLS         12
@@ -117,12 +113,12 @@
  * Number of user multiplexer used per LTC-IC
  * The other type is temperature multiplexer
  */
-#define BS_N_USER_MUX_PER_LTC               0
+#define BS_N_USER_MUX_PER_LTC               1
 
 /**
  * Number of channels per multiplexer
  */
-#define BS_N_MUX_CHANNELS_PER_MUX      8
+#define BS_N_MUX_CHANNELS_PER_MUX      1
 
 /*
  * specify the type of LTC connected to the battery module
@@ -187,7 +183,7 @@
  * \par Default:
  * 6
 */
-#define BS_NR_OF_TEMP_SENSORS_PER_MODULE            8
+#define BS_NR_OF_TEMP_SENSORS_PER_MODULE            16
 
 
 #define BS_NR_OF_BAT_CELLS                         (BS_NR_OF_MODULES * BS_NR_OF_BAT_CELLS_PER_MODULE)
@@ -201,7 +197,7 @@
  * \par Default:
  * 3
 */
-#define BS_NR_OF_VOLTAGES_FROM_CURRENT_SENSOR      3
+#define BS_NR_OF_VOLTAGES_FROM_CURRENT_SENSOR      0
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -233,7 +229,7 @@
  * \par Default:
  * 1
 */
- #define BS_SEPARATE_POWERLINES 0
+#define BS_SEPARATE_POWERLINES 0
 /*#define BS_SEPARATE_POWERLINES 1*/
 
 /*================== Constant and Variable Definitions ====================*/

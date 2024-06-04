@@ -77,7 +77,7 @@
  * \par Default:
  * 55
 */
-#define BC_TEMPMAX_DISCHARGE_MSL      55
+#define BC_TEMPMAX_DISCHARGE_MSL      60
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -107,7 +107,7 @@
  * \par Default:
  * 45
 */
-#define BC_TEMPMAX_CHARGE_MSL     55
+#define BC_TEMPMAX_CHARGE_MSL     45
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -137,7 +137,7 @@
  * \par Default:
  * 2800
 */
-#define BC_VOLTMAX_MSL      4100
+#define BC_VOLTMAX_MSL      4200
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -163,7 +163,7 @@
  * \par Default:
  * 1700
 */
-#define BC_VOLTMIN_MSL      2500
+#define BC_VOLTMIN_MSL      2800
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -193,7 +193,7 @@
  * \par Default:
  * 180000
 */
-#define BC_CURRENTMAX_CHARGE_MSL        54000
+#define BC_CURRENTMAX_CHARGE_MSL        18000
 
 /*
  * the cell capacity used for SOC calculation, in this case Ah counting

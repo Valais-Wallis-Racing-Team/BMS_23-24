@@ -97,10 +97,10 @@ void APPL_Cyclic_10ms(void) {
     /* User specific implementations:   */
     /*   ...                            */
     /*   ...                            */
-    //CANS_MainFunction();
+    CANS_MainFunction();
 
     LED_Ctrl();
-    CANS_MainFunction();
+
     SOC_Calculation();
     SOF_Calculation();
 
@@ -139,11 +139,9 @@ void APPL_Cyclic_100ms(void) {
         /* Shifting 1 up and down (light cycle demo if LEDs are connected to the port-expander) */
         if (io_initialized == FALSE) {
             io_initialized = TRUE;
-#if BS_NR_OF_MODULES != 0
             for (i=0; i< BS_NR_OF_MODULES; i++) {
                 io_cycle = 1;
             }
-#endif
         } else {
             if (io_counter%2 == 0) {
                 if (io_direction == 1) {
@@ -164,11 +162,10 @@ void APPL_Cyclic_100ms(void) {
         }
 
         DB_ReadBlock(&example_slave_control, DATA_BLOCK_ID_SLAVE_CONTROL);
-#if BS_NR_OF_MODULES != 0
         for (i=0; i < BS_NR_OF_MODULES; i++) {
             example_slave_control.io_value_out[i] = ~io_cycle;
         }
-#endif
+
         if (io_counter%2 == 0) {
             /************************************************************
             DEMO, write to port-expander

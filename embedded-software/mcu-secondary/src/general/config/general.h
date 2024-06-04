@@ -63,8 +63,6 @@
 
 /*================== Macros and Definitions ===============================*/
 
-#define IS_TEST
-
 /**
  * @ingroup CONFIG_GENERAL
  * enables checking of flash checksum at startup.
@@ -73,7 +71,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_FLASHCHECKSUM           0
+#define BUILD_MODULE_ENABLE_FLASHCHECKSUM           1
 /* #define BUILD_MODULE_ENABLE_FLASHCHECKSUM           0 */
 
 /**
@@ -161,7 +159,7 @@
 */
 
 /* #define BUILD_MODULE_DEBUGPRINTF          1 */
-#define BUILD_MODULE_DEBUGPRINTF          0
+#define BUILD_MODULE_DEBUGPRINTF          1
 
 
 /**
@@ -172,8 +170,8 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_RTC           0
-/* #define BUILD_MODULE_ENABLE_RTC           0 */
+/*#define BUILD_MODULE_ENABLE_RTC           1*/
+ #define BUILD_MODULE_ENABLE_RTC           0
 
 /**
   * @ingroup CONFIG_GENERAL
@@ -192,7 +190,7 @@
  * \par Default:
  * 1
 */
-#define BUILD_MODULE_ENABLE_WATCHDOG        0
+#define BUILD_MODULE_ENABLE_WATCHDOG        1
 /* #define BUILD_MODULE_ENABLE_WATCHDOG      0 */
 
 /**
@@ -217,7 +215,7 @@
  * If this define is set to 1, task statistics will be computed
  * during runtime with diag_calc_runtime_stats().
  */
-#define BUILD_DIAG_ENABLE_TASK_STATISTICS        0
+#define BUILD_DIAG_ENABLE_TASK_STATISTICS        1
 /* #define BUILD_DIAG_ENABLE_TASK_STATISTICS      0 */
 
 /**

@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP M95M02-DRMN6TP
+D 2-Mbit serial SPI bus EEPROM
+K
+F http://www.st.com/web/en/resource/technical/document/datasheet/CD00290531.pdf
+$ENDCMP
+#
+#End Doc Library

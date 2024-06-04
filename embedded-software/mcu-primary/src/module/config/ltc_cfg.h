@@ -97,7 +97,7 @@
  * Total number of multiplexer used per LTC-IC
  * (1 temperature multiplexer + 2 user multiplexers)
  */
-#define LTC_N_MUX_PER_LTC               1
+#define LTC_N_MUX_PER_LTC               3
 
 /**
  * Number of user multiplexer used per LTC-IC
@@ -113,7 +113,7 @@
 /**
  * Number of multiplexer measurements per LTC cycle
  */
-#define LTC_NUMBER_OF_MUX_MEASUREMENTS_PER_CYCLE 	8
+#define LTC_NUMBER_OF_MUX_MEASUREMENTS_PER_CYCLE 8
 
 /**
  * Number of multiplexed channels per LTC-IC
@@ -291,7 +291,7 @@
 #define LTC_NORMAL_OPEN_WIRE_PERIOD_ms      600000
 
 /* #define LTC_CHARGE_PERIODIC_OPEN_WIRE_CHECK TRUE */
-#define LTC_CHARGE_PERIODIC_OPEN_WIRE_CHECK TRUE
+#define LTC_CHARGE_PERIODIC_OPEN_WIRE_CHECK FALSE
 
 /**
  * Periodic open-wire check time in CHARGE state in ms
