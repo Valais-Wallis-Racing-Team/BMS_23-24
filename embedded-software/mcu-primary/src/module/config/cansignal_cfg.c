@@ -1085,11 +1085,15 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
             case CAN0_SIG_Mod7_temp_1:
             case CAN0_SIG_Mod7_temp_2:
                 cellIdx--;  /* Because cell 0 - valid flag = 1, decrement by one to get the right index */
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 if ((modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx >= BS_NR_OF_TEMP_SENSORS) {
+#endif
                     tmpVal = CAN_DEFAULT_TEMPERATURE;
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 } else {
                     tmpVal = temp_tab.temperature[(modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx];
                 }
+#endif
                 break;
 
             case CAN0_SIG_Mod0_temp_3:
@@ -1118,11 +1122,15 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
             case CAN0_SIG_Mod7_temp_5:
                 cellIdx--;  /* Because cell 0 - valid flag = 1, decrement by one to get the right index */
                 cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_3_5 */
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 if ((modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx >= BS_NR_OF_TEMP_SENSORS) {
+#endif
                     tmpVal = CAN_DEFAULT_TEMPERATURE;
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 } else {
                     tmpVal = temp_tab.temperature[(modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx];
                 }
+#endif
                 break;
 
             case CAN0_SIG_Mod0_temp_6:
@@ -1152,11 +1160,15 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
                 cellIdx--;  /* Because cell 0 - valid flag = 1, decrement by one to get the right index */
                 cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_3_5 */
                 cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_6_8 */
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 if ((modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx >= BS_NR_OF_TEMP_SENSORS) {
+#endif
                     tmpVal = CAN_DEFAULT_TEMPERATURE;
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 } else {
                     tmpVal = temp_tab.temperature[(modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx];
                 }
+#endif
                 break;
 
             case CAN0_SIG_Mod0_temp_9:
@@ -1187,11 +1199,15 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
                 cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_3_5 */
                 cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_6_8 */
                 cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_9_11 */
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 if ((modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx >= BS_NR_OF_TEMP_SENSORS) {
+#endif
                     tmpVal = CAN_DEFAULT_TEMPERATURE;
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 } else {
                     tmpVal = temp_tab.temperature[(modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx];
                 }
+#endif
                 break;
 
             default:

@@ -124,6 +124,7 @@ extern STD_RETURN_TYPE_e PL_CheckTempMinMax(DATA_BLOCK_CELLTEMPERATURE_s *ptrCel
     /* Pointer validity check */
     if (ptrCelltemperature != NULL_PTR) {
         /* Iterate over all modules */
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
         for (uint16_t mod = 0; mod < BS_NR_OF_MODULES; mod++) {
             /* Iterate over all cells */
             for (uint16_t sensor = 0; sensor < BS_NR_OF_TEMP_SENSORS_PER_MODULE; sensor++) {
@@ -144,6 +145,7 @@ extern STD_RETURN_TYPE_e PL_CheckTempMinMax(DATA_BLOCK_CELLTEMPERATURE_s *ptrCel
                 }
             }
         }
+#endif
     } else {
         /* Invalid pointer -> TODO: error handling */
     }

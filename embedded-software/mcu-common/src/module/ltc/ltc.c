@@ -287,10 +287,11 @@ static void LTC_Initialize_Database(void) {
         ltc_openwire_pdown_buffer[i] = 0;
         ltc_openwire_delta[i] = 0;
     }
-
+#if BS_N_USER_MUX_PER_LTC != 0
     for (i=0; i < (LTC_N_MUX_CHANNELS_PER_MUX*LTC_N_USER_MUX_PER_LTC*BS_NR_OF_MODULES); i++) {
         ltc_user_mux.value[i] = 0;
     }
+#endif
     ltc_user_mux.previous_timestamp = 0;
     ltc_user_mux.timestamp = 0;
     ltc_user_mux.state = 0;
@@ -481,7 +482,7 @@ extern void LTC_SaveTemperatures(void) {
     retval_PL = PL_CheckTempMinMax(&ltc_celltemperature);
     /* Set flag if plausibility error detected */
     DIAG_checkEvent(retval_PL, DIAG_CH_PLAUSIBILITY_CELL_TEMP, 0);
-
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
     for (i=0; i < BS_NR_OF_MODULES; i++) {
         for (j=0; j < BS_NR_OF_TEMP_SENSORS_PER_MODULE; j++) {
             if ((ltc_celltemperature.valid_temperature[i] & (0x01 << j)) == 0) {
@@ -501,6 +502,7 @@ extern void LTC_SaveTemperatures(void) {
             }
         }
     }
+#endif
 
     /* Prevent division by 0, if all temperatues are invalid */
     if (nrValidTemperatures > 0) {
@@ -1992,11 +1994,12 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
                 ch_idx = 0 + muxseqptr->muxCh;    /* channel index 0..7 */
             else
                 ch_idx = 8 + muxseqptr->muxCh;    /* channel index 8..15 */
-
+#if BS_N_USER_MUX_PER_LTC != 0
             if (ch_idx < LTC_N_USER_MUX_PER_LTC*LTC_N_MUX_CHANNELS_PER_MUX) {
                 val_ui =*((uint16_t *)(&rxBuffer[6+1*i*8]));        /* raw values, all mux on all LTCs */
                 ltc_user_mux.value[i*LTC_N_MUX_CHANNELS_PER_MUX*LTC_N_USER_MUX_PER_LTC+ch_idx] = (uint16_t)(((float)(val_ui))*100e-6f*1000.0f);  /* Unit -> in V -> in mV */
             }
+#endif
         }
     } else {
         /* temperature multiplexer type -> connected to GPIO1! */
@@ -2006,8 +2009,13 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
             temperature = (int16_t)LTC_Convert_MuxVoltages_to_Temperatures((float)(val_ui)*0.0001f);        /* Unit Celsius */
             sensor_idx = ltc_muxsensortemperatur_cfg[muxseqptr->muxCh];
             /* if wrong configuration: exit and write nothing */
-            if (sensor_idx >= BS_NR_OF_TEMP_SENSORS_PER_MODULE)
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
+            if (sensor_idx >= BS_NR_OF_TEMP_SENSORS_PER_MODULE){
+#endif
                 return;
+#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
+            }
+#endif
             /* Set bitmask for valid flags */
             bitmask |= 1 < sensor_idx;
             /* Check LTC PEC error */

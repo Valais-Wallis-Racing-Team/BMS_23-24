@@ -65,7 +65,7 @@ SPI_HandleType_s spi_devices[] = {
         .Init.Mode = SPI_MODE_MASTER,
         .Init.Direction = SPI_DIRECTION_2LINES,
         .Init.DataSize = SPI_DATASIZE_8BIT,
-        .Init.CLKPolarity = SPI_POLARITY_LOW,   /* CPOL = 0 */
+        .Init.CLKPolarity = SPI_POLARITY_LOW,    /*CPOL = 0 */
         .Init.CLKPhase = SPI_PHASE_1EDGE,       /* CPHA = 0 */
         .Init.NSS = SPI_NSS_SOFT,
         .Init.FirstBit = SPI_FIRSTBIT_MSB,

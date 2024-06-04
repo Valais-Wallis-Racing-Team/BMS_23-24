@@ -74,7 +74,7 @@
  * \par Default:
  * 2
 */
-#define BS_NR_OF_MODULES                           1
+#define BS_NR_OF_MODULES                           2
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -96,7 +96,7 @@
     #error "Unsupported number of cells per module, higher than 18"
 #endif
 
-#define BS_BALANCING_RESISTANCE_OHM             100.0
+#define BS_BALANCING_RESISTANCE_OHM             34.0
 /* Number of GPIOs on the LTC IC
  * 5 for 12 cell version
  * 9 for 18 cell version
@@ -111,7 +111,7 @@
  * Number of user multiplexer used per LTC-IC
  * The other type is temperature multiplexer
  */
-#define BS_N_USER_MUX_PER_LTC               2
+#define BS_N_USER_MUX_PER_LTC               0
 
 /**
  * Number of channels per multiplexer
@@ -193,7 +193,7 @@
  * If set to TRUE, foxBMS checks for the presence of a current sensor. If sensor stops responding during runtime, an error is raised
  *
 */
-#define CURRENT_SENSOR_PRESENT               TRUE
+#define CURRENT_SENSOR_PRESENT               FALSE
 
 #if CURRENT_SENSOR_PRESENT == TRUE
 /**
@@ -289,7 +289,7 @@
  * \par Default:
  * 1
 */
-#define BMS_TEST_CELL_SOF_LIMITS                TRUE
+#define BMS_TEST_CELL_SOF_LIMITS                FALSE
 
 
 /**
@@ -319,7 +319,7 @@
  * \par Default:
  * 3
 */
-#define BS_NR_OF_VOLTAGES_FROM_MCU_ADC      2
+#define BS_NR_OF_VOLTAGES_FROM_MCU_ADC      1
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -331,7 +331,7 @@
  * \par Default:
  * 3
 */
-#define BS_NR_OF_CONTACTORS                        6
+#define BS_NR_OF_CONTACTORS                        3
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -341,8 +341,8 @@
  * \par Default:
  * 1
 */
-/* #define BS_SEPARATE_POWERLINES 0 */
-#define BS_SEPARATE_POWERLINES 1
+ #define BS_SEPARATE_POWERLINES 0
+/*#define BS_SEPARATE_POWERLINES 1*/
 
 #if BS_NR_OF_CONTACTORS > 3 && BS_SEPARATE_POWERLINES == 0
 #error "Configuration mismatch: Can't use only one powerline with more than 3 contactors"

@@ -67,7 +67,7 @@
  * When set to TRUE, goes back to stand-by when the violation disappeared.
  *
  */
-#define SECONDARY_OUT_OF_ERROR_STATE     FALSE
+#define SECONDARY_OUT_OF_ERROR_STATE     TRUE
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -77,7 +77,7 @@
  * \par Default:
  * 2
 */
-#define BS_NR_OF_MODULES                           1
+#define BS_NR_OF_MODULES                           2
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -113,7 +113,7 @@
  * Number of user multiplexer used per LTC-IC
  * The other type is temperature multiplexer
  */
-#define BS_N_USER_MUX_PER_LTC               2
+#define BS_N_USER_MUX_PER_LTC               0
 
 /**
  * Number of channels per multiplexer
@@ -207,7 +207,7 @@
  * \par Default:
  * 3
 */
-#define BS_NR_OF_VOLTAGES_FROM_MCU_ADC      2
+#define BS_NR_OF_VOLTAGES_FROM_MCU_ADC      1
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -219,7 +219,7 @@
  * \par Default:
  * 3
 */
-#define BS_NR_OF_CONTACTORS                        6
+#define BS_NR_OF_CONTACTORS                        3
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -229,8 +229,8 @@
  * \par Default:
  * 1
 */
-/* #define BS_SEPARATE_POWERLINES 0 */
-#define BS_SEPARATE_POWERLINES 1
+ #define BS_SEPARATE_POWERLINES 0
+/*#define BS_SEPARATE_POWERLINES 1*/
 
 /*================== Constant and Variable Definitions ====================*/
 

@@ -93,8 +93,8 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_RS485           1
-/* #define BUILD_MODULE_ENABLE_RS485          0 */
+/*#define BUILD_MODULE_ENABLE_RS485           1*/
+#define BUILD_MODULE_ENABLE_RS485          0
 
 /**
  * @ingroup CONFIG_GENERAL
@@ -159,7 +159,7 @@
 */
 
 /* #define BUILD_MODULE_DEBUGPRINTF          1 */
-#define BUILD_MODULE_DEBUGPRINTF          1
+#define BUILD_MODULE_DEBUGPRINTF          0
 
 
 /**

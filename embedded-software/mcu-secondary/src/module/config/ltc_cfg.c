@@ -241,10 +241,10 @@ float LTC_Convert_MuxVoltages_to_Temperatures(float v_adc) {
     float temperature = 0.0;
 
     /* Example: 5th grade polynomial for EPCOS B57861S0103F045 NTC-Thermistor, 10 kOhm, Series B57861S, Vref = 3V, R in series 10k */
-    /* temperature = B57861S0103F045_GetTempFromPolynom(v_adc*1000); */
+     temperature = B57861S0103F045_GetTempFromPolynom(v_adc*1000);
 
     /* Dummy function, must be adapted to the application */
-    temperature = 10 * v_adc;
+    //temperature = 10 * v_adc;
 
     return temperature;
 }

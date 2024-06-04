@@ -93,7 +93,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_RS485           1
+#define BUILD_MODULE_ENABLE_RS485           0
 /* #define BUILD_MODULE_ENABLE_RS485          0 */
 
 /**
@@ -126,7 +126,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_CONTACTOR           1
+#define BUILD_MODULE_ENABLE_CONTACTOR           0
 
 /**
  * @ingroup CONFIG_GENERAL
@@ -146,7 +146,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_ISOGUARD          1
+#define BUILD_MODULE_ENABLE_ISOGUARD          0
 
 
 /**
