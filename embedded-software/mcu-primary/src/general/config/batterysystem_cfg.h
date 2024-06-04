@@ -74,7 +74,7 @@
  * \par Default:
  * 2
 */
-#define BS_NR_OF_MODULES                           2
+#define BS_NR_OF_MODULES                           6
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -84,7 +84,10 @@
  * \par Default:
  * 12
 */
-#define BS_NR_OF_BAT_CELLS_PER_MODULE               12
+#define BS_NR_OF_BAT_CELLS_PER_MODULE               11
+
+//#define LAST_CELL_NOT_PLUGGED
+#define LAST_CELL_NOT_PLUGGED1
 
 #if BS_NR_OF_BAT_CELLS_PER_MODULE <= 12
     #define BS_MAX_SUPPORTED_CELLS         12
@@ -111,12 +114,12 @@
  * Number of user multiplexer used per LTC-IC
  * The other type is temperature multiplexer
  */
-#define BS_N_USER_MUX_PER_LTC               1
+#define BS_N_USER_MUX_PER_LTC               0
 
 /**
  * Number of channels per multiplexer
  */
-#define BS_N_MUX_CHANNELS_PER_MUX      1
+#define BS_N_MUX_CHANNELS_PER_MUX      8
 
 /*
  * specify the type of LTC connected to the battery module
@@ -181,7 +184,7 @@
  * \par Default:
  * 6
 */
-#define BS_NR_OF_TEMP_SENSORS_PER_MODULE            16
+#define BS_NR_OF_TEMP_SENSORS_PER_MODULE            8
 
 
 #define BS_NR_OF_BAT_CELLS                         (BS_NR_OF_MODULES * BS_NR_OF_BAT_CELLS_PER_MODULE)
@@ -194,6 +197,11 @@
  *
 */
 #define CURRENT_SENSOR_PRESENT               FALSE
+/**
+ * defines if the Isabellenhuette current sensor is connected on CAN0 or CAN1
+ * 0 = CAN0 / 1 = CAN1
+ */
+#define CURRENT_SENSOR_CAN_CHANNEL 			1
 
 #if CURRENT_SENSOR_PRESENT == TRUE
 /**
@@ -201,6 +209,8 @@
 */
 #define CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC
 /* #define CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
+
+
 
 /**
  * Delay in ms after which it is considered the current sensor is not responding anymore.
@@ -216,9 +226,9 @@
  * or maximum operating limit (MOL) is violated, the respective flag will be
  * set.
  */
-#define BS_CURRENTMAX_CHARGE_PL0_MSL_mA        (18000u)
-#define BS_CURRENTMAX_CHARGE_PL0_RSL_mA        (15000u)
-#define BS_CURRENTMAX_CHARGE_PL0_MOL_mA        (15000u)
+#define BS_CURRENTMAX_CHARGE_PL0_MSL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL0_RSL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL0_MOL_mA        (54000u)
 
 /**
  * @brief Maximum operation limit of current on the powerline 0 in
@@ -238,9 +248,9 @@
  * or maximum operating limit (MOL) is violated, the respective flag will be
  * set.
  */
-#define BS_CURRENTMAX_CHARGE_PL1_MSL_mA        (18000u)
-#define BS_CURRENTMAX_CHARGE_PL1_RSL_mA        (15000u)
-#define BS_CURRENTMAX_CHARGE_PL1_MOL_mA        (15000u)
+#define BS_CURRENTMAX_CHARGE_PL1_MSL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL1_RSL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL1_MOL_mA        (54000u)
 
 /**
  * @brief Maximum operation limit of current of powerline 1 in
@@ -259,7 +269,7 @@
  * If set to TRUE, foxBMS checks CAN timing. A valid request must come every 100ms, within the 95-150ms window.
  *
 */
-#define CHECK_CAN_TIMING                     TRUE
+#define CHECK_CAN_TIMING                     FALSE
 
 /**
  * If set to TRUE, balancing is deactivated completely.
@@ -309,7 +319,7 @@
  * \par Default:
  * 3
 */
-#define BS_NR_OF_VOLTAGES_FROM_CURRENT_SENSOR      0
+#define BS_NR_OF_VOLTAGES_FROM_CURRENT_SENSOR      3
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -319,7 +329,7 @@
  * \par Default:
  * 3
 */
-#define BS_NR_OF_VOLTAGES_FROM_MCU_ADC      3
+#define BS_NR_OF_VOLTAGES_FROM_MCU_ADC      1
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -342,7 +352,7 @@
  * 1
 */
  #define BS_SEPARATE_POWERLINES 0
-/* #define BS_SEPARATE_POWERLINES 1 */
+/*#define BS_SEPARATE_POWERLINES 1*/
 
 #if BS_NR_OF_CONTACTORS > 3 && BS_SEPARATE_POWERLINES == 0
 #error "Configuration mismatch: Can't use only one powerline with more than 3 contactors"

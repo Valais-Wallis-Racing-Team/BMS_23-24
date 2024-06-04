@@ -63,6 +63,8 @@
 
 /*================== Macros and Definitions ===============================*/
 
+#define IS_TEST
+
 /**
  * @ingroup CONFIG_GENERAL
  * enables checking of flash checksum at startup.
@@ -93,8 +95,8 @@
  * \par Default:
  * 0
 */
-/*#define BUILD_MODULE_ENABLE_RS485           1*/
-#define BUILD_MODULE_ENABLE_RS485          0
+#define BUILD_MODULE_ENABLE_RS485           0
+/* #define BUILD_MODULE_ENABLE_RS485          0 */
 
 /**
  * @ingroup CONFIG_GENERAL
@@ -148,6 +150,7 @@
 */
 #define BUILD_MODULE_ENABLE_ISOGUARD          0
 
+
 /**
  * @ingroup CONFIG_GENERAL
  * enables printf debugging with serial interface
@@ -157,7 +160,7 @@
  * 0
 */
 
-#define BUILD_MODULE_DEBUGPRINTF          1
+#define BUILD_MODULE_DEBUGPRINTF          0
 /* #define BUILD_MODULE_DEBUGPRINTF          0 */
 
 /**

@@ -109,8 +109,12 @@ void ENG_Init(void) {
 
 void ENG_Cyclic_1ms(void) {
     SYS_Trigger();
+#if BUILD_MODULE_ENABLE_ISOGUARD != 0
     ILCK_Trigger();
+#endif
+#if BS_NR_OF_MODULES != 0
     LTC_Trigger();
+#endif
 }
 
 void ENG_Cyclic_10ms(void) {

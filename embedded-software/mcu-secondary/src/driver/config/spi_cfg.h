@@ -71,7 +71,7 @@
 /**
  * Wait time in [us] during initialization.
  */
-#define SPI_WAKEUP_WAIT_TIME        0
+#define SPI_WAKEUP_WAIT_TIME        1
 
 #define SPI_NSS_PORT1   IO_PIN_BMS_INTERFACE_SPI_NSS
 #define SPI_NSS_PORT2   IO_PIN_TO_OTHER_MCU_INTERFACE_SPI_NSS

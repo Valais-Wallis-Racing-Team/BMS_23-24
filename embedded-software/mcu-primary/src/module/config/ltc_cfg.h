@@ -97,7 +97,7 @@
  * Total number of multiplexer used per LTC-IC
  * (1 temperature multiplexer + 2 user multiplexers)
  */
-#define LTC_N_MUX_PER_LTC               3
+#define LTC_N_MUX_PER_LTC               1
 
 /**
  * Number of user multiplexer used per LTC-IC
@@ -113,7 +113,7 @@
 /**
  * Number of multiplexer measurements per LTC cycle
  */
-#define LTC_NUMBER_OF_MUX_MEASUREMENTS_PER_CYCLE 8
+#define LTC_NUMBER_OF_MUX_MEASUREMENTS_PER_CYCLE 	8
 
 /**
  * Number of multiplexed channels per LTC-IC

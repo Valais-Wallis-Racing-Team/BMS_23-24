@@ -40,13 +40,13 @@
  */
 
 /**
- * @file    epcos_b57861s0103f045.h
- * @author  foxBMS Team
- * @date    30.10.2018 (date of creation)
+ * @file    vishay_NTCLE413E2103F106A.h
+ * @author  foxBMS Team and Mattia_Bétrisey
+ * @date    08.03.2024 (date of creation)
  * @ingroup TSENSORS
- * @prefix  B57861S0103F045
+ * @prefix  NTCLE413E2103F106A
  *
- * @brief   Resistive divider used for measuring temperature used for testing
+ * @brief   Resistive divider used for measuring temperature used for the formula student car
  *
  *          Vsupply
  *             |
@@ -67,8 +67,8 @@
  *
  */
 
-#ifndef EPCOS_B57861S0103F045_H_
-#define EPCOS_B57861S0103F045_H_
+#ifndef VISHAY_NTCLE413E2103F106A_H_
+#define VISHAY_NTCLE413E2103F106A_H_
 
 /*================== Includes ===============================================*/
 #include "general.h"
@@ -82,18 +82,18 @@
  * FALSE: NTC is positioned below the voltage tap for the ADC voltage.
  * This equals resistor R2 in the above circuit diagram
  */
-#define B57861S0103F045_POSITION_IN_RESISTOR_DIVIDER_IS_R1        (FALSE)
+#define NTCLE413E2103F106A_POSITION_IN_RESISTOR_DIVIDER_IS_R1        (FALSE)
 
 /**
  * Resistor divider supply voltage in volt
  */
-#define B57861S0103F045_RESISTOR_DIVIDER_SUPPLY_VOLTAGE_V         (3.0f)
+#define NTCLE413E2103F106A_RESISTOR_DIVIDER_SUPPLY_VOLTAGE_V         (3.0f)
 
 /**
  * Resistance value of the other resistor (not the NTC) in the resistor
  * divider in kOhm.
  */
-#define B57861S0103F045_RESISTOR_DIVIDER_RESISTANCE_R1_R2_Ohm       (10000.0f)
+#define NTCLE413E2103F106A_RESISTOR_DIVIDER_RESISTANCE_R1_R2_Ohm       (10000.0f)
 
 /*================== Extern Constant and Variable Declarations ==============*/
 /*
@@ -105,7 +105,7 @@
  *          shorted or got disconnected. The caller of this functions needs to
  *          check for these return values to prevent invalid data.
  */
-extern float B57861S0103F045_GetTempFromLUT(uint16_t vadc_mV);
+extern float NTCLE413E2103F106A_GetTempFromLUT(uint16_t vadc_mV);
 
 /*
  * @brief   returns temperature based on measured ADC voltage
@@ -114,8 +114,8 @@ extern float B57861S0103F045_GetTempFromLUT(uint16_t vadc_mV);
  *
  * @return  corresponding temperature in &deg;C
  */
-extern float B57861S0103F045_GetTempFromPolynom(uint16_t vadc_mV);
+extern float NTCLE413E2103F106A_GetTempFromPolynom(uint16_t vadc_mV);
 
 /*================== Extern Function Prototypes =============================*/
 
-#endif /* EPCOS_B57861S0103F045_H_ */
+#endif /* VISHAY_NTCLE413E2103F106A_H_ */

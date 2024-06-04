@@ -88,7 +88,7 @@
  * \par Range:
  * [1.0,2.0]
 */
-#define BAD_SWITCHOFF_CURRENT_POS 100000.0f
+#define BAD_SWITCHOFF_CURRENT_POS 300000.0f
 
 /**
  * @ingroup CONFIG_CONTACTOR
@@ -105,7 +105,7 @@
  * \par Range:
  * [-2.0,-1.0]
 */
-#define BAD_SWITCHOFF_CURRENT_NEG -1000000.0f
+#define BAD_SWITCHOFF_CURRENT_NEG -3000000.0f
 
 /*
  * The number of defines per contactor must be the same as the length
@@ -116,6 +116,19 @@
  *      #define CONT_MAIN_PLUS_CONTROL      IO_PIN_CONTACTOR_0_CONTROL
  *      #define CONT_MAIN_PLUS_FEEDBACK     IO_PIN_CONTACTOR_0_FEEDBACK
  */
+#ifdef IS_TEST
+
+#define CONT_MAIN_PLUS_CONTROL                  IO_PIN_CONTACTOR_2_CONTROL
+#define CONT_MAIN_PLUS_FEEDBACK                 IO_PIN_CONTACTOR_0_FEEDBACK
+
+#define CONT_PRECHARGE_PLUS_CONTROL             IO_PIN_CONTACTOR_1_CONTROL
+#define CONT_PRECHARGE_PLUS_FEEDBACK            IO_PIN_CONTACTOR_1_FEEDBACK
+
+#define CONT_MAIN_MINUS_CONTROL                 IO_PIN_CONTACTOR_0_CONTROL
+#define CONT_MAIN_MINUS_FEEDBACK                IO_PIN_CONTACTOR_2_FEEDBACK
+
+#else
+
 #define CONT_MAIN_PLUS_CONTROL                  IO_PIN_CONTACTOR_0_CONTROL
 #define CONT_MAIN_PLUS_FEEDBACK                 IO_PIN_CONTACTOR_0_FEEDBACK
 
@@ -124,7 +137,7 @@
 
 #define CONT_MAIN_MINUS_CONTROL                 IO_PIN_CONTACTOR_2_CONTROL
 #define CONT_MAIN_MINUS_FEEDBACK                IO_PIN_CONTACTOR_2_FEEDBACK
-
+#endif
 #if BS_SEPARATE_POWERLINES == 1
 #define CONT_CHARGE_MAIN_PLUS_CONTROL           IO_PIN_CONTACTOR_3_CONTROL
 #define CONT_CHARGE_MAIN_PLUS_FEEDBACK          IO_PIN_CONTACTOR_3_FEEDBACK
@@ -174,13 +187,13 @@
  * Delay between open first and second contactor
  */
 
-#define CONT_DELAY_BETWEEN_OPENING_CONTACTORS_MS        ((50) * (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_DELAY_BETWEEN_OPENING_CONTACTORS_MS        ((100) * (CONT_TASK_CYCLE_CONTEXT_MS))
 
 /**
  * Delay after opening second contactor
  */
 
-#define CONT_DELAY_AFTER_OPENING_SECOND_CONTACTORS_MS   ((50) *  (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_DELAY_AFTER_OPENING_SECOND_CONTACTORS_MS   ((200) *  (CONT_TASK_CYCLE_CONTEXT_MS))
 
 
 /**
@@ -206,13 +219,13 @@
 /**
  * Delay after closing main minus in ms
  */
-#define CONT_STATEMACH_WAIT_AFTER_CLOSING_MINUS_MS ((50) * (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_STATEMACH_WAIT_AFTER_CLOSING_MINUS_MS ((100) * (CONT_TASK_CYCLE_CONTEXT_MS))
 
 /**
  * Delay after closing precharge in ms
  */
 
-#define CONT_STATEMACH_WAIT_AFTER_CLOSING_PRECHARGE_MS ((100) * (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_STATEMACH_WAIT_AFTER_CLOSING_PRECHARGE_MS ((200) * (CONT_TASK_CYCLE_CONTEXT_MS))
 
 /**
  * Delay after closing main plus in ms
@@ -248,7 +261,7 @@
  * \par Unit:
  * mA
 */
-#define CONT_PRECHARGE_CURRENT_THRESHOLD_mA     50  /* mA */
+#define CONT_PRECHARGE_CURRENT_THRESHOLD_mA     2000  /* mA */
 
 
 /*================== Charge precharge configuration ====================*/
@@ -261,7 +274,7 @@
 /**
  * Delay after closing charge minus in ms
  */
-#define CONT_STATEMACH_CHARGE_WAIT_AFTER_CLOSING_MINUS_MS ((50) * (CONT_TASK_CYCLE_CONTEXT_MS))
+#define CONT_STATEMACH_CHARGE_WAIT_AFTER_CLOSING_MINUS_MS ((100) * (CONT_TASK_CYCLE_CONTEXT_MS))
 
 /**
  * Delay after closing charge precharge in ms

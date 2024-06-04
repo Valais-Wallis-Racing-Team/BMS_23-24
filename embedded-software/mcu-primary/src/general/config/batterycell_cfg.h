@@ -77,7 +77,7 @@
  * \par Default:
  * 55
 */
-#define BC_TEMPMAX_DISCHARGE_MSL      60
+#define BC_TEMPMAX_DISCHARGE_MSL      55
 #define BC_TEMPMAX_DISCHARGE_RSL      55
 #define BC_TEMPMAX_DISCHARGE_MOL      55
 
@@ -95,8 +95,8 @@
  * -20
 */
 #define BC_TEMPMIN_DISCHARGE_MSL      -20
-#define BC_TEMPMIN_DISCHARGE_RSL      -15
-#define BC_TEMPMIN_DISCHARGE_MOL      -10
+#define BC_TEMPMIN_DISCHARGE_RSL      -20
+#define BC_TEMPMIN_DISCHARGE_MOL      -20
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -111,9 +111,9 @@
  * \par Default:
  * 45
 */
-#define BC_TEMPMAX_CHARGE_MSL     45
-#define BC_TEMPMAX_CHARGE_RSL     40
-#define BC_TEMPMAX_CHARGE_MOL     35
+#define BC_TEMPMAX_CHARGE_MSL     55
+#define BC_TEMPMAX_CHARGE_RSL     55
+#define BC_TEMPMAX_CHARGE_MOL     55
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -129,8 +129,8 @@
  * 0
 */
 #define BC_TEMPMIN_CHARGE_MSL     -20
-#define BC_TEMPMIN_CHARGE_RSL     -15
-#define BC_TEMPMIN_CHARGE_MOL     -10
+#define BC_TEMPMIN_CHARGE_RSL     -20
+#define BC_TEMPMIN_CHARGE_MOL     -20
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -145,7 +145,7 @@
  * \par Default:
  * 2800
 */
-#define BC_VOLTMAX_MSL      4200
+#define BC_VOLTMAX_MSL      4100
 #define BC_VOLTMAX_RSL      4100
 #define BC_VOLTMAX_MOL      4100
 
@@ -174,9 +174,9 @@
  * \par Default:
  * 1700
 */
-#define BC_VOLTMIN_MSL      2800
-#define BC_VOLTMIN_RSL      3000
-#define BC_VOLTMIN_MOL      3000
+#define BC_VOLTMIN_MSL      2500
+#define BC_VOLTMIN_RSL      2500
+#define BC_VOLTMIN_MOL      2500
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -207,8 +207,8 @@
  * 180000
 */
 #define BC_CURRENTMAX_DISCHARGE_MSL     180000
-#define BC_CURRENTMAX_DISCHARGE_RSL     150000
-#define BC_CURRENTMAX_DISCHARGE_MOL     150000
+#define BC_CURRENTMAX_DISCHARGE_RSL     180000
+#define BC_CURRENTMAX_DISCHARGE_MOL     180000
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -223,9 +223,9 @@
  * \par Default:
  * 180000
 */
-#define BC_CURRENTMAX_CHARGE_MSL        18000
-#define BC_CURRENTMAX_CHARGE_RSL        15000
-#define BC_CURRENTMAX_CHARGE_MOL        15000
+#define BC_CURRENTMAX_CHARGE_MSL        54000
+#define BC_CURRENTMAX_CHARGE_RSL        54000
+#define BC_CURRENTMAX_CHARGE_MOL        54000
 
 /*
  * the cell capacity used for SOC calculation, in this case Ah counting

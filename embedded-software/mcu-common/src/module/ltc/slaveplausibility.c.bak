@@ -71,7 +71,6 @@
 /*================== Extern Function Implementations ========================*/
 extern STD_RETURN_TYPE_e PL_CheckVoltageMinMax(DATA_BLOCK_CELLVOLTAGE_s *ptrCellvoltage) {
     STD_RETURN_TYPE_e retval = E_OK;
-
     /* Pointer validity check */
     if (ptrCellvoltage != NULL_PTR) {
         /* Iterate over all modules */

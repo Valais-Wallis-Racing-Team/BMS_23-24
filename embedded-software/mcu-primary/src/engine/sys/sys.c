@@ -459,7 +459,7 @@ void SYS_Trigger(void) {
 
                 if (sys_state.substate == SYS_ENTRY) {
                     sys_state.InitCounter = 0;
-                    CANS_Enable_Periodic(TRUE);
+                    CANS_Enable_Periodic(FALSE);
 #if CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
                     /* If triggered mode is used, CAN trigger message needs to
                      * be transmitted and current sensor response has to be
@@ -503,7 +503,7 @@ void SYS_Trigger(void) {
                 SYS_SAVELASTSTATES();
 
                 if (CURRENT_SENSOR_PRESENT == FALSE) {
-                    CANS_Enable_Periodic(TRUE);
+                	CANS_Enable_Periodic(FALSE);
                     SOC_Init(FALSE);
                 }
 
@@ -552,7 +552,7 @@ void SYS_Trigger(void) {
         /****************************ERROR*************************************/
         case SYS_STATEMACH_ERROR:
             SYS_SAVELASTSTATES();
-            CANS_Enable_Periodic(TRUE);
+            CANS_Enable_Periodic(FALSE);
             sys_state.timer = SYS_STATEMACH_LONGTIME_MS;
             break;
         /***************************DEFAULT CASE*************************************/
