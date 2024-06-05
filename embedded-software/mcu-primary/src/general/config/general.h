@@ -64,6 +64,9 @@
 /*================== Macros and Definitions ===============================*/
 
 #define IS_TEST
+#define NO_CONTACTOR_ERROR
+
+#define NO_INTERLOCK_ERROR
 
 /**
  * @ingroup CONFIG_GENERAL

@@ -475,7 +475,8 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
     }
 
     /* Check system error flags */
-    if (error_flags.main_plus                 == 1 ||
+    if (
+    	error_flags.main_plus                 == 1 ||
         error_flags.main_minus                == 1 ||
         error_flags.precharge                 == 1 ||
         error_flags.charge_main_plus          == 1 ||
