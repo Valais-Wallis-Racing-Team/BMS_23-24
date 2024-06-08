@@ -77,7 +77,7 @@
  * \par Default:
  * 2
 */
-#define BS_NR_OF_MODULES                           6
+#define BS_NR_OF_MODULES                           8
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -87,7 +87,11 @@
  * \par Default:
  * 12
 */
-#define BS_NR_OF_BAT_CELLS_PER_MODULE               12
+#define BS_NR_OF_BAT_CELLS_PER_MODULE               11
+
+//#define LAST_CELL_NOT_PLUGGED
+#define LAST_CELL_NOT_PLUGGED1
+
 
 #if BS_NR_OF_BAT_CELLS_PER_MODULE <= 12
     #define BS_MAX_SUPPORTED_CELLS         12

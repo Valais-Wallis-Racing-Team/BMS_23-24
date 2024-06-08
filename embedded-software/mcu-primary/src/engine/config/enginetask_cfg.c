@@ -136,7 +136,9 @@ void ENG_Init(void) {
 
 void ENG_Cyclic_1ms(void) {
     MEAS_Ctrl();
+#if BS_NR_OF_MODULES != 0
     LTC_Trigger();
+#endif
     EEPR_Trigger();
 }
 

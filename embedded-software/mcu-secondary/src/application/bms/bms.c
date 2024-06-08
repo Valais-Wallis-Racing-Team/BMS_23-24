@@ -283,7 +283,9 @@ void BMS_Trigger(void) {
             BMS_SAVELASTSTATES();
 
             if (bms_state.substate == BMS_ENTRY) {
+#if BUILD_MODULE_ENABLE_ISOGUARD != 0
                 ILCK_SetStateRequest(ILCK_STATE_CLOSE_REQUEST);
+#endif
                 bms_state.timer = BMS_STATEMACH_MEDIUMTIME_MS;
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS_INTERLOCK;
                 break;
@@ -317,7 +319,9 @@ void BMS_Trigger(void) {
             BMS_SAVELASTSTATES();
 
             if (bms_state.substate == BMS_ENTRY) {
+#if BUILD_MODULE_ENABLE_ISOGUARD != 0
                 ILCK_SetStateRequest(ILCK_STATE_OPEN_REQUEST);
+#endif
                 bms_state.timer = BMS_STATEMACH_MEDIUMTIME_MS;
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
                 break;
@@ -326,11 +330,13 @@ void BMS_Trigger(void) {
                     /* we stay already in requested state, nothing to do */
                 } else {
                     if (SECONDARY_OUT_OF_ERROR_STATE == TRUE) {
+#if BUILD_MODULE_ENABLE_ISOGUARD != 0
                         ILCK_SetStateRequest(ILCK_STATE_CLOSE_REQUEST);
                         bms_state.timer = BMS_STATEMACH_MEDIUMTIME_MS;
                         bms_state.substate = BMS_CHECK_INTERLOCK_CLOSE_AFTER_ERROR;
                         bms_state.state = BMS_STATEMACH_STANDBY;
                         bms_state.substate = BMS_ENTRY;
+#endif
                     }
                     break;
                 }
@@ -469,7 +475,8 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
     }
 
     /* Check system error flags */
-    if (error_flags.main_plus                 == 1 ||
+    if (
+    	error_flags.main_plus                 == 1 ||
         error_flags.main_minus                == 1 ||
         error_flags.precharge                 == 1 ||
         error_flags.charge_main_plus          == 1 ||

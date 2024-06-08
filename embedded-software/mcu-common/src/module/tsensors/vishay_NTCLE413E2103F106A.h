@@ -93,7 +93,7 @@
  * Resistance value of the other resistor (not the NTC) in the resistor
  * divider in kOhm.
  */
-#define NTCLE413E2103F106A_RESISTOR_DIVIDER_RESISTANCE_R1_R2_Ohm       (10000.0f)
+#define NTCLE413E2103F106A_RESISTOR_DIVIDER_RESISTANCE_R1_R2_Ohm       (5000.0f)
 
 /*================== Extern Constant and Variable Declarations ==============*/
 /*

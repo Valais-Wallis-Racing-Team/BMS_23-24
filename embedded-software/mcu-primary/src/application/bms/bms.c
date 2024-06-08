@@ -368,7 +368,11 @@ void BMS_Trigger(void) {
                     bms_state.state = BMS_STATEMACH_ERROR;
                     bms_state.substate = BMS_ENTRY;
                     break;
-                } else {
+                } else if (BMS_CheckInterlockError() == E_NOT_OK){
+            	    bms_state.timer = BMS_STATEMACH_A_BIT_LONGERTIME_MS;
+            	    bms_state.substate = BMS_ENTRY;
+            	    break;
+            	} else {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.substate = BMS_INTERLOCK_CHECKED;
                     break;
@@ -389,7 +393,7 @@ void BMS_Trigger(void) {
                     break;
                 }
             } else if (bms_state.substate == BMS_CHECK_STATE_REQUESTS) {
-                if (BMS_CheckCANRequests() == BMS_REQ_ID_NORMAL) {
+            	if (BMS_CheckCANRequests() == BMS_REQ_ID_NORMAL && BMS_CheckInterlockError() == E_OK) {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.state = BMS_STATEMACH_PRECHARGE;
                     bms_state.substate = BMS_ENTRY;
@@ -435,6 +439,11 @@ void BMS_Trigger(void) {
                     bms_state.state = BMS_STATEMACH_ERROR;
                     bms_state.substate = BMS_ENTRY;
                     break;
+                } else if(BMS_CheckInterlockError() == E_NOT_OK) {
+                	bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
+                	bms_state.state = BMS_STATEMACH_STANDBY;
+                	bms_state.substate = BMS_ENTRY;
+                	break;
                 } else {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.substate = BMS_CHECK_STATE_REQUESTS;
@@ -497,6 +506,11 @@ void BMS_Trigger(void) {
                     bms_state.state = BMS_STATEMACH_ERROR;
                     bms_state.substate = BMS_ENTRY;
                     break;
+                } else if(BMS_CheckInterlockError() == E_NOT_OK) {
+                	bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
+                	bms_state.state = BMS_STATEMACH_STANDBY;
+                	bms_state.substate = BMS_ENTRY;
+                	break;
                 } else {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.substate = BMS_CHECK_STATE_REQUESTS;
@@ -640,7 +654,7 @@ void BMS_Trigger(void) {
             if (bms_state.substate == BMS_ENTRY) {
                 BAL_SetStateRequest(BAL_STATE_NOBALANCING_REQUEST);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
-                CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
+                //CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
 #endif
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
 #if BUILD_MODULE_ENABLE_ILCK == 1
@@ -1246,7 +1260,6 @@ static void BMS_CheckSlaveTemperatures(void) {
  */
 static void BMS_CheckOpenSenseWire(void) {
     uint8_t openWireDetected = 0;
-
     /* Iterate over all modules */
     for (uint8_t m = 0; m < BS_NR_OF_MODULES; m++) {
         /* Iterate over all voltage sense wires: cells per module + 1 */
@@ -1259,6 +1272,9 @@ static void BMS_CheckOpenSenseWire(void) {
             }
         }
     }
+#ifdef LAST_CELL_NOT_PLUGGED
+    openWireDetected = openWireDetected-BS_NR_OF_MODULES;
+#endif
     /* Set error if open wire detected */
     if (openWireDetected == 0u) {
         DIAG_Handler(DIAG_CH_OPEN_WIRE, DIAG_EVENT_OK, 0);
@@ -1266,6 +1282,20 @@ static void BMS_CheckOpenSenseWire(void) {
         DIAG_Handler(DIAG_CH_OPEN_WIRE, DIAG_EVENT_NOK, 0);
     }
 }
+
+static STD_RETURN_TYPE_e BMS_CheckInterlockError(void) {
+    STD_RETURN_TYPE_e retVal = E_OK;  /* is set to E_NOT_OK if error detected */
+    DATA_BLOCK_ERRORSTATE_s error_flags;
+    DB_ReadBlock(&error_flags, DATA_BLOCK_ID_ERRORSTATE);
+
+    if (error_flags.interlock == 1)
+    {
+    	retVal = E_NOT_OK;
+    }
+    return retVal;
+}
+
+
 
 
 /**
@@ -1303,15 +1333,19 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
     /* Check system error flags */
     if (error_flags.currentOnOpenPowerline    == 1 ||
         error_flags.deepDischargeDetected     == 1 ||
+#ifndef NO_CONTACTOR_ERROR
         error_flags.main_plus                 == 1 ||
         error_flags.main_minus                == 1 ||
         error_flags.precharge                 == 1 ||
         error_flags.charge_main_plus          == 1 ||
         error_flags.charge_main_minus         == 1 ||
         error_flags.charge_precharge          == 1 ||
+#endif
         error_flags.fuse_state_normal         == 1 ||
         error_flags.fuse_state_charge         == 1 ||
+#ifndef NO_INTERLOCK_ERROR
         error_flags.interlock                 == 1 ||
+#endif
         error_flags.crc_error                 == 1 ||
         error_flags.mux_error                 == 1 ||
         error_flags.spi_error                 == 1 ||
@@ -1383,3 +1417,4 @@ static void BMS_UpdateBatsysState(DATA_BLOCK_CURRENT_SENSOR_s *curSensor) {
 BMS_CURRENT_FLOW_STATE_e BMS_GetBatterySystemState(void) {
     return bms_state.currentFlowState;
 }
+
