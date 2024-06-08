@@ -90,8 +90,6 @@
 #define LTC_SAVELASTSTATES()    ltc_state.laststate = ltc_state.state; \
                                 ltc_state.lastsubstate = ltc_state.substate
 
-#if BS_NR_OF_MODULES != 0
-
 /*================== Constant and Variable Definitions ====================*/
 
 static uint8_t ltc_used_cells_index = 0;
@@ -405,12 +403,7 @@ extern void LTC_SaveVoltages(void) {
 
     /* Use only valid cell voltages for calculating mean voltage */
     for (i=0; i < BS_NR_OF_MODULES; i++) {
-#ifdef LAST_CELL_NOT_PLUGGED
-    	for (j=0; j < BS_NR_OF_BAT_CELLS_PER_MODULE-1; j++) {
-#else
         for (j=0; j < BS_NR_OF_BAT_CELLS_PER_MODULE; j++) {
-#endif
-
             if ((ltc_cellvoltage.valid_volt[i] & (0x01 << j)) == 0) {
                 /* Cell voltage is valid -> use this voltage for subsequent calculations */
                 nrValidCellVoltages++;
@@ -1933,19 +1926,11 @@ void LTC_Trigger(void) {
                 for (uint8_t m = 0; m < BS_NR_OF_MODULES; m++) {
                     /* Open-wire at C0: cell_pup(0) == 0 */
                     if (ltc_openwire_pup_buffer[0 + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)] == 0) {
-#ifdef LAST_CELL_NOT_PLUGGED
-                    	ltc_openwire.openwire[0 + (m*(BS_NR_OF_BAT_CELLS_PER_MODULE))] = 0;
-#else
                         ltc_openwire.openwire[0 + (m*(BS_NR_OF_BAT_CELLS_PER_MODULE))] = 1;
-#endif
                     }
                     /* Open-wire at Cmax: cell_pdown(BS_NR_OF_BAT_CELLS_PER_MODULE-1) == 0 */
                     if (ltc_openwire_pdown_buffer[((BS_NR_OF_BAT_CELLS_PER_MODULE-1) + (m*BS_NR_OF_BAT_CELLS_PER_MODULE))] == 0) {
-#ifdef LAST_CELL_NOT_PLUGGED
-                    	ltc_openwire.openwire[BS_NR_OF_BAT_CELLS_PER_MODULE + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)] = 0;
-#else
                         ltc_openwire.openwire[BS_NR_OF_BAT_CELLS_PER_MODULE + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)] = 1;
-#endif
                     }
                 }
 
@@ -1959,7 +1944,6 @@ void LTC_Trigger(void) {
                     for (uint8_t c = 1; c < BS_NR_OF_BAT_CELLS_PER_MODULE-1; c++) {
                         if (ltc_openwire_delta[c + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)] < -400) {
                             ltc_openwire.openwire[c + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)] = 1;
-                            printf(ltc_openwire.openwire[c + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)]);
                         }
                     }
                 }
@@ -2425,11 +2409,9 @@ static STD_RETURN_TYPE_e LTC_BalanceControl(uint8_t registerSet) {
             if (ltc_balancing_control.balancing_state[j*(BS_NR_OF_BAT_CELLS_PER_MODULE)+10] == 1) {
                 ltc_TXBuffer[5+(i)*6]|=0x04;
             }
-#ifdef LAST_CELL_NOT_PLUGGED
             if (ltc_balancing_control.balancing_state[j*(BS_NR_OF_BAT_CELLS_PER_MODULE)+11] == 1) {
                 ltc_TXBuffer[5+(i)*6]|=0x08;
             }
-#endif
         }
         retVal = LTC_TX((uint8_t*)ltc_cmdWRCFG, ltc_TXBuffer, ltc_TXPECbuffer);
     } else if (registerSet == 1) {  /* cells 13 to 15/18 WRCFG2 */
@@ -3568,4 +3550,3 @@ extern STD_RETURN_TYPE_e LTC_GetMuxSequenceState(void) {
 
     return (retval);
 }
-#endif

@@ -606,11 +606,7 @@ void CONT_Trigger(void) {
                 cont_state.substate = CONT_PRECHARGE_CHECK_VOLTAGES;
                 break;
             } else if (cont_state.substate == CONT_PRECHARGE_CHECK_VOLTAGES) {
-#ifdef IS_TEST
-            	retVal = E_OK;
-#else
                 retVal = CONT_CheckPrecharge(CONT_POWERLINE_NORMAL);
-#endif
                 if (retVal == E_OK) {
                     CONT_CLOSEPLUS();
                     cont_state.timer = CONT_STATEMACH_WAIT_AFTER_CLOSING_PLUS_MS;

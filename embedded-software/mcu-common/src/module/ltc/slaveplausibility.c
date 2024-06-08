@@ -57,7 +57,6 @@
 #include "diag.h"
 #include "foxmath.h"
 
-#if BS_NR_OF_MODULES != 0
 /*================== Macros and Definitions =================================*/
 
 /*================== Static Constant and Variable Definitions ===============*/
@@ -103,11 +102,7 @@ extern STD_RETURN_TYPE_e PL_CheckVoltageSpread(DATA_BLOCK_CELLVOLTAGE_s *ptrCell
         /* Iterate over all modules */
         for (uint16_t mod = 0; mod < BS_NR_OF_MODULES; mod++) {
             /* Iterate over all cells */
-#ifdef LAST_CELL_NOT_PLUGGED
-        	for (uint16_t cell = 0; cell < BS_NR_OF_BAT_CELLS_PER_MODULE-1; cell++) {
-#else
             for (uint16_t cell = 0; cell < BS_NR_OF_BAT_CELLS_PER_MODULE; cell++) {
-#endif
                 /* Cell voltage deviation from average cell voltage too large */
                 diff = (averageCellVolt_mV - ptrCellvoltage->voltage[(mod*BS_NR_OF_BAT_CELLS_PER_MODULE) + cell]);
                 if (abs(diff) > SPL_CELL_VOLTAGE_AVG_TOLERANCE_mV) {
@@ -156,4 +151,3 @@ extern STD_RETURN_TYPE_e PL_CheckTempMinMax(DATA_BLOCK_CELLTEMPERATURE_s *ptrCel
     }
     return retval;
 }
-#endif

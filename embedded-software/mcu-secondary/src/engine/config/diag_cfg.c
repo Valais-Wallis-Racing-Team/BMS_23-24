@@ -246,7 +246,6 @@ static void DIAG_overvoltage(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
  * @brief  diagnosis callback function for undervoltage events
  */
 static void DIAG_undervoltage(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
-#if BS_NR_OF_MODULES != 0
     if (ch_id == DIAG_CH_CELLVOLTAGE_UNDERVOLTAGE_MSL) {
         if (event == DIAG_EVENT_RESET) {
             msl_flags.under_voltage = 0;
@@ -255,9 +254,6 @@ static void DIAG_undervoltage(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
             msl_flags.under_voltage = 1;
         }
     }
-#else
-    msl_flags.under_voltage = 0;
-#endif
 }
 
 /**
@@ -320,7 +316,6 @@ static void DIAG_undertemperature_discharge(DIAG_CH_ID_e ch_id, DIAG_EVENT_e eve
  * @brief  diagnosis callback function for LTC module related events
  */
 static void DIAG_error_ltc(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
-#if BS_NR_OF_MODULES != 0
     if (ch_id == DIAG_CH_LTC_SPI) {
         if (event == DIAG_EVENT_RESET) {
             error_flags.spi_error = 0;
@@ -350,12 +345,6 @@ static void DIAG_error_ltc(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
             error_flags.ltc_config_error = 1;
         }
     }
-#else
-    error_flags.spi_error = 0;
-    error_flags.crc_error = 0;
-    error_flags.mux_error = 0;
-    error_flags.ltc_config_error = 0;
-#endif
 }
 
 /**

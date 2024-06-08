@@ -63,11 +63,6 @@
 
 /*================== Macros and Definitions ===============================*/
 
-#define IS_TEST
-#define NO_CONTACTOR_ERROR
-
-#define NO_INTERLOCK_ERROR
-
 /**
  * @ingroup CONFIG_GENERAL
  * enables checking of flash checksum at startup.
@@ -163,7 +158,7 @@
  * 0
 */
 
-#define BUILD_MODULE_DEBUGPRINTF          0
+#define BUILD_MODULE_DEBUGPRINTF          1
 /* #define BUILD_MODULE_DEBUGPRINTF          0 */
 
 /**

@@ -57,7 +57,7 @@ def build(bld):
            os.path.join('tsensors', 'epcos_b57251v5103j060.c'),
            os.path.join('tsensors', 'epcos_b57861s0103f045.c'),
            os.path.join('tsensors', 'vishay_ntcalug01a103g.c'),
-		   os.path.join('tsensors', 'vishay_NTCLE413E2103F106A.c'),
+
            os.path.join('..', '..', '..', bld.env.mcu_dir, 'src', 'module', 'config', 'interlock_cfg.c'),
            os.path.join('..', '..', '..', bld.env.mcu_dir, 'src', 'module', 'config', 'ltc_cfg.c'),
            os.path.join('..', '..', '..', bld.env.mcu_dir, 'src', 'module', 'config', 'meas_cfg.c'),

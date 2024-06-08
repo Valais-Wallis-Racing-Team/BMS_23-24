@@ -81,7 +81,6 @@ static uint32_t cans_getRecommendedOperatingCurrent(uint32_t, void *);
 static uint32_t cans_getMaxAllowedPower(uint32_t, void *);
 static uint32_t cans_getpower(uint32_t, void *);
 static uint32_t cans_getcurr(uint32_t, void *);
-static uint32_t cans_setcurrCaptor(uint32_t, void *);//function added for retreaving IVT values from db and sendig through can0
 static uint32_t cans_getPackVoltage(uint32_t, void *);
 static uint32_t cans_getminmaxvolt(uint32_t, void *);
 static uint32_t cans_getminmaxtemp(uint32_t, void *);
@@ -106,7 +105,6 @@ static uint32_t cans_gettriggercurrent(uint32_t sigIdx, void *value);
 /*================== Extern Constant and Variable Definitions ===============*/
 
 const CANS_signal_s cans_CAN0_signals_tx[] = {
-
     { {CAN0_MSG_SystemState_0}, 0, 3, 0, 7, 1, 0, littleEndian, &cans_getcanerr },  /*!< CAN0_SIG_GS0_general_error, */
     { {CAN0_MSG_SystemState_0}, 8, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getcanerr },  /*!< CAN0_SIG_GS0_current_state, */
     { {CAN0_MSG_SystemState_0}, 16, 3, 0, 7, 1, 0, littleEndian, &cans_getcanerr },  /*!< CAN0_SIG_GS0_error_overtemp_charge, */
@@ -195,7 +193,7 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
 
     { {CAN0_MSG_PackVoltage}, 0, 32, 0, UINT32_MAX, 1, 0, littleEndian, &cans_getPackVoltage },  /*!< CAN0_SIG_PackVolt_Battery */
     { {CAN0_MSG_PackVoltage}, 32, 32, 0, UINT32_MAX, 1, 0, littleEndian, &cans_getPackVoltage },  /*!< CAN0_SIG_PackVolt_PowerNet */
-#if BS_NR_OF_MODULES != 0
+
     /* Module 0 cell voltages */
     { {CAN0_MSG_Mod0_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_valid_0_2 */
     { {CAN0_MSG_Mod0_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_0 */
@@ -213,14 +211,14 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod0_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_9 */
     { {CAN0_MSG_Mod0_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_10 */
     { {CAN0_MSG_Mod0_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_11 */
-    //{ {CAN0_MSG_Mod0_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod0_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_12 */
-    //{ {CAN0_MSG_Mod0_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_13 */
-    //{ {CAN0_MSG_Mod0_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_14 */
-    //{ {CAN0_MSG_Mod0_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod0_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_15 */
-    //{ {CAN0_MSG_Mod0_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_16 */
-    //{ {CAN0_MSG_Mod0_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_17 */
+    { {CAN0_MSG_Mod0_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_valid_12_14 */
+    { {CAN0_MSG_Mod0_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_12 */
+    { {CAN0_MSG_Mod0_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_13 */
+    { {CAN0_MSG_Mod0_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_14 */
+    { {CAN0_MSG_Mod0_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_valid_15_17 */
+    { {CAN0_MSG_Mod0_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_15 */
+    { {CAN0_MSG_Mod0_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_16 */
+    { {CAN0_MSG_Mod0_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod0_volt_17 */
 
     /* Module 0 cell temperatures */
     { {CAN0_MSG_Mod0_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_volt_valid_0_2 */
@@ -235,10 +233,10 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod0_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_6 */
     { {CAN0_MSG_Mod0_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_7 */
     { {CAN0_MSG_Mod0_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_8 */
-    //{ {CAN0_MSG_Mod0_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod0_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_9 */
-    //{ {CAN0_MSG_Mod0_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_10 */
-    //{ {CAN0_MSG_Mod0_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_11 */
+    { {CAN0_MSG_Mod0_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_volt_valid_9_11 */
+    { {CAN0_MSG_Mod0_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_9 */
+    { {CAN0_MSG_Mod0_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_10 */
+    { {CAN0_MSG_Mod0_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod0_temp_11 */
 
     /* Module 1 cell voltages */
     { {CAN0_MSG_Mod1_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_valid_0_2 */
@@ -257,16 +255,16 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod1_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_9 */
     { {CAN0_MSG_Mod1_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_10 */
     { {CAN0_MSG_Mod1_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_11 */
-    //{ {CAN0_MSG_Mod1_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod1_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_12 */
-    //{ {CAN0_MSG_Mod1_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_13 */
-    //{ {CAN0_MSG_Mod1_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_14 */
-    //{ {CAN0_MSG_Mod1_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod1_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_15 */
-    //{ {CAN0_MSG_Mod1_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_16 */
-    //{ {CAN0_MSG_Mod1_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_17 */
+    { {CAN0_MSG_Mod1_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_valid_12_14 */
+    { {CAN0_MSG_Mod1_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_12 */
+    { {CAN0_MSG_Mod1_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_13 */
+    { {CAN0_MSG_Mod1_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_14 */
+    { {CAN0_MSG_Mod1_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_valid_15_17 */
+    { {CAN0_MSG_Mod1_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_15 */
+    { {CAN0_MSG_Mod1_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_16 */
+    { {CAN0_MSG_Mod1_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod1_volt_17 */
 
-    /* Module 0 cell temperatures */
+    /* Module 1 cell temperatures */
     { {CAN0_MSG_Mod1_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_volt_valid_0_2 */
     { {CAN0_MSG_Mod1_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_0 */
     { {CAN0_MSG_Mod1_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_1 */
@@ -279,10 +277,10 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod1_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_6 */
     { {CAN0_MSG_Mod1_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_7 */
     { {CAN0_MSG_Mod1_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_8 */
-    //{ {CAN0_MSG_Mod1_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod1_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_9 */
-    //{ {CAN0_MSG_Mod1_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_10 */
-    //{ {CAN0_MSG_Mod1_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_11 */
+    { {CAN0_MSG_Mod1_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_volt_valid_9_11 */
+    { {CAN0_MSG_Mod1_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_9 */
+    { {CAN0_MSG_Mod1_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_10 */
+    { {CAN0_MSG_Mod1_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod1_temp_11 */
 
     /* Module 2 cell voltages */
     { {CAN0_MSG_Mod2_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_valid_0_2 */
@@ -301,16 +299,16 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod2_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_9 */
     { {CAN0_MSG_Mod2_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_10 */
     { {CAN0_MSG_Mod2_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_11 */
-    //{ {CAN0_MSG_Mod2_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod2_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_12 */
-    //{ {CAN0_MSG_Mod2_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_13 */
-    //{ {CAN0_MSG_Mod2_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_14 */
-    //{ {CAN0_MSG_Mod2_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod2_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_15 */
-    //{ {CAN0_MSG_Mod2_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_16 */
-    //{ {CAN0_MSG_Mod2_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_17 */
+    { {CAN0_MSG_Mod2_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_valid_12_14 */
+    { {CAN0_MSG_Mod2_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_12 */
+    { {CAN0_MSG_Mod2_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_13 */
+    { {CAN0_MSG_Mod2_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_14 */
+    { {CAN0_MSG_Mod2_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_valid_15_17 */
+    { {CAN0_MSG_Mod2_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_15 */
+    { {CAN0_MSG_Mod2_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_16 */
+    { {CAN0_MSG_Mod2_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod2_volt_17 */
 
-    /* Module 0 cell temperatures */
+    /* Module 2 cell temperatures */
     { {CAN0_MSG_Mod2_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_volt_valid_0_2 */
     { {CAN0_MSG_Mod2_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_0 */
     { {CAN0_MSG_Mod2_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_1 */
@@ -323,10 +321,10 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod2_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_6 */
     { {CAN0_MSG_Mod2_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_7 */
     { {CAN0_MSG_Mod2_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_8 */
-    //{ {CAN0_MSG_Mod2_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod2_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_9 */
-    //{ {CAN0_MSG_Mod2_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_10 */
-    //{ {CAN0_MSG_Mod2_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_11 */
+    { {CAN0_MSG_Mod2_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_volt_valid_9_11 */
+    { {CAN0_MSG_Mod2_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_9 */
+    { {CAN0_MSG_Mod2_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_10 */
+    { {CAN0_MSG_Mod2_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod2_temp_11 */
 
     /* Module 3 cell voltages */
     { {CAN0_MSG_Mod3_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_valid_0_2 */
@@ -345,16 +343,16 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod3_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_9 */
     { {CAN0_MSG_Mod3_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_10 */
     { {CAN0_MSG_Mod3_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_11 */
-    //{ {CAN0_MSG_Mod3_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod3_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_12 */
-    //{ {CAN0_MSG_Mod3_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_13 */
-    //{ {CAN0_MSG_Mod3_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_14 */
-    //{ {CAN0_MSG_Mod3_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod3_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_15 */
-    //{ {CAN0_MSG_Mod3_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_16 */
-    //{ {CAN0_MSG_Mod3_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_17 */
+    { {CAN0_MSG_Mod3_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_valid_12_14 */
+    { {CAN0_MSG_Mod3_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_12 */
+    { {CAN0_MSG_Mod3_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_13 */
+    { {CAN0_MSG_Mod3_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_14 */
+    { {CAN0_MSG_Mod3_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_valid_15_17 */
+    { {CAN0_MSG_Mod3_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_15 */
+    { {CAN0_MSG_Mod3_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_16 */
+    { {CAN0_MSG_Mod3_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod3_volt_17 */
 
-    /* Module 0 cell temperatures */
+    /* Module 3 cell temperatures */
     { {CAN0_MSG_Mod3_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_volt_valid_0_2 */
     { {CAN0_MSG_Mod3_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_0 */
     { {CAN0_MSG_Mod3_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_1 */
@@ -367,10 +365,10 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod3_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_6 */
     { {CAN0_MSG_Mod3_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_7 */
     { {CAN0_MSG_Mod3_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_8 */
-    //{ {CAN0_MSG_Mod3_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod3_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_9 */
-    //{ {CAN0_MSG_Mod3_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_10 */
-    //{ {CAN0_MSG_Mod3_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_11 */
+    { {CAN0_MSG_Mod3_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_volt_valid_9_11 */
+    { {CAN0_MSG_Mod3_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_9 */
+    { {CAN0_MSG_Mod3_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_10 */
+    { {CAN0_MSG_Mod3_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod3_temp_11 */
 
     /* Module 4 cell voltages */
     { {CAN0_MSG_Mod4_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_valid_0_2 */
@@ -389,16 +387,16 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod4_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_9 */
     { {CAN0_MSG_Mod4_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_10 */
     { {CAN0_MSG_Mod4_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_11 */
-    //{ {CAN0_MSG_Mod4_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod4_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_12 */
-    //{ {CAN0_MSG_Mod4_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_13 */
-    //{ {CAN0_MSG_Mod4_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_14 */
-    //{ {CAN0_MSG_Mod4_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod4_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_15 */
-    //{ {CAN0_MSG_Mod4_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_16 */
-    //{ {CAN0_MSG_Mod4_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod4_volt_17 */
+    { {CAN0_MSG_Mod4_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_valid_12_14 */
+    { {CAN0_MSG_Mod4_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_12 */
+    { {CAN0_MSG_Mod4_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_13 */
+    { {CAN0_MSG_Mod4_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_14 */
+    { {CAN0_MSG_Mod4_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_valid_15_17 */
+    { {CAN0_MSG_Mod4_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_15 */
+    { {CAN0_MSG_Mod4_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_16 */
+    { {CAN0_MSG_Mod4_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_17 */
 
-    /* Module 0 cell temperatures */
+    /* Module 4 cell temperatures */
     { {CAN0_MSG_Mod4_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_volt_valid_0_2 */
     { {CAN0_MSG_Mod4_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_0 */
     { {CAN0_MSG_Mod4_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_1 */
@@ -411,10 +409,10 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod4_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_6 */
     { {CAN0_MSG_Mod4_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_7 */
     { {CAN0_MSG_Mod4_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_8 */
-    //{ {CAN0_MSG_Mod4_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod4_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_9 */
-    //{ {CAN0_MSG_Mod4_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_10 */
-    //{ {CAN0_MSG_Mod4_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_11 */
+    { {CAN0_MSG_Mod4_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_volt_valid_9_11 */
+    { {CAN0_MSG_Mod4_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_9 */
+    { {CAN0_MSG_Mod4_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_10 */
+    { {CAN0_MSG_Mod4_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod4_temp_11 */
 
     /* Module 5 cell voltages */
     { {CAN0_MSG_Mod5_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_valid_0_2 */
@@ -433,14 +431,14 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod5_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_9 */
     { {CAN0_MSG_Mod5_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_10 */
     { {CAN0_MSG_Mod5_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_11 */
-    //{ {CAN0_MSG_Mod5_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod5_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_12 */
-    //{ {CAN0_MSG_Mod5_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_13 */
-    //{ {CAN0_MSG_Mod5_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_14 */
-    //{ {CAN0_MSG_Mod5_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod5_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_15 */
-    //{ {CAN0_MSG_Mod5_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_16 */
-    //{ {CAN0_MSG_Mod5_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_17 */
+    { {CAN0_MSG_Mod5_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_valid_12_14 */
+    { {CAN0_MSG_Mod5_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_12 */
+    { {CAN0_MSG_Mod5_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_13 */
+    { {CAN0_MSG_Mod5_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_14 */
+    { {CAN0_MSG_Mod5_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_valid_15_17 */
+    { {CAN0_MSG_Mod5_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_15 */
+    { {CAN0_MSG_Mod5_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_16 */
+    { {CAN0_MSG_Mod5_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod5_volt_17 */
 
     /* Module 5 cell temperatures */
     { {CAN0_MSG_Mod5_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_volt_valid_0_2 */
@@ -455,10 +453,10 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod5_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_6 */
     { {CAN0_MSG_Mod5_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_7 */
     { {CAN0_MSG_Mod5_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_8 */
-    //{ {CAN0_MSG_Mod5_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod5_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_9 */
-    //{ {CAN0_MSG_Mod5_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_10 */
-    //{ {CAN0_MSG_Mod5_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_11 */
+    { {CAN0_MSG_Mod5_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_volt_valid_9_11 */
+    { {CAN0_MSG_Mod5_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_9 */
+    { {CAN0_MSG_Mod5_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_10 */
+    { {CAN0_MSG_Mod5_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod5_temp_11 */
 
     /* Module 6 cell voltages */
     { {CAN0_MSG_Mod6_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_valid_0_2 */
@@ -477,14 +475,14 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod6_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_9 */
     { {CAN0_MSG_Mod6_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_10 */
     { {CAN0_MSG_Mod6_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_11 */
-    //{ {CAN0_MSG_Mod6_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod6_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_12 */
-    //{ {CAN0_MSG_Mod6_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_13 */
-    //{ {CAN0_MSG_Mod6_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_14 */
-    //{ {CAN0_MSG_Mod6_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod6_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_15 */
-    //{ {CAN0_MSG_Mod6_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_16 */
-    //{ {CAN0_MSG_Mod6_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_17 */
+    { {CAN0_MSG_Mod6_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_valid_12_14 */
+    { {CAN0_MSG_Mod6_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_12 */
+    { {CAN0_MSG_Mod6_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_13 */
+    { {CAN0_MSG_Mod6_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_14 */
+    { {CAN0_MSG_Mod6_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_valid_15_17 */
+    { {CAN0_MSG_Mod6_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_15 */
+    { {CAN0_MSG_Mod6_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_16 */
+    { {CAN0_MSG_Mod6_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod6_volt_17 */
 
     /* Module 6 cell temperatures */
     { {CAN0_MSG_Mod6_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_volt_valid_0_2 */
@@ -499,10 +497,10 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod6_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_6 */
     { {CAN0_MSG_Mod6_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_7 */
     { {CAN0_MSG_Mod6_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_8 */
-    //{ {CAN0_MSG_Mod6_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod6_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_9 */
-    //{ {CAN0_MSG_Mod6_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_10 */
-    //{ {CAN0_MSG_Mod6_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_11 */
+    { {CAN0_MSG_Mod6_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_volt_valid_9_11 */
+    { {CAN0_MSG_Mod6_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_9 */
+    { {CAN0_MSG_Mod6_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_10 */
+    { {CAN0_MSG_Mod6_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod6_temp_11 */
 
     /* Module 7 cell voltages */
     { {CAN0_MSG_Mod7_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_valid_0_2 */
@@ -521,14 +519,14 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod7_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_9 */
     { {CAN0_MSG_Mod7_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_10 */
     { {CAN0_MSG_Mod7_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_11 */
-    //{ {CAN0_MSG_Mod7_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod7_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_12 */
-    //{ {CAN0_MSG_Mod7_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_13 */
-    //{ {CAN0_MSG_Mod7_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_14 */
-    //{ {CAN0_MSG_Mod7_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod7_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_15 */
-    //{ {CAN0_MSG_Mod7_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_16 */
-    //{ {CAN0_MSG_Mod7_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_17 */
+    { {CAN0_MSG_Mod7_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_valid_12_14 */
+    { {CAN0_MSG_Mod7_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_12 */
+    { {CAN0_MSG_Mod7_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_13 */
+    { {CAN0_MSG_Mod7_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_14 */
+    { {CAN0_MSG_Mod7_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_valid_15_17 */
+    { {CAN0_MSG_Mod7_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_15 */
+    { {CAN0_MSG_Mod7_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_16 */
+    { {CAN0_MSG_Mod7_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod7_volt_17 */
 
     /* Module 7 cell temperatures */
     { {CAN0_MSG_Mod7_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_volt_valid_0_2 */
@@ -543,233 +541,222 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
     { {CAN0_MSG_Mod7_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_6 */
     { {CAN0_MSG_Mod7_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_7 */
     { {CAN0_MSG_Mod7_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_8 */
-    //{ {CAN0_MSG_Mod7_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod7_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_9 */
-    //{ {CAN0_MSG_Mod7_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_10 */
-    //{ {CAN0_MSG_Mod7_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_11 */
+    { {CAN0_MSG_Mod7_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_volt_valid_9_11 */
+    { {CAN0_MSG_Mod7_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_9 */
+    { {CAN0_MSG_Mod7_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_10 */
+    { {CAN0_MSG_Mod7_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod7_temp_11 */
 
-    /* Module 8 cell voltages */
-    { {CAN0_MSG_Mod8_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_valid_0_2 */
-    { {CAN0_MSG_Mod8_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_0 */
-    { {CAN0_MSG_Mod8_Cellvolt_0}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_1 */
-    { {CAN0_MSG_Mod8_Cellvolt_0}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_2 */
-    { {CAN0_MSG_Mod8_Cellvolt_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_valid_3_5 */
-    { {CAN0_MSG_Mod8_Cellvolt_1}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_3 */
-    { {CAN0_MSG_Mod8_Cellvolt_1}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_4 */
-    { {CAN0_MSG_Mod8_Cellvolt_1}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_5 */
-    { {CAN0_MSG_Mod8_Cellvolt_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_valid_6_8 */
-    { {CAN0_MSG_Mod8_Cellvolt_2}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_6 */
-    { {CAN0_MSG_Mod8_Cellvolt_2}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_7 */
-    { {CAN0_MSG_Mod8_Cellvolt_2}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_8 */
-    { {CAN0_MSG_Mod8_Cellvolt_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_valid_9_11 */
-    { {CAN0_MSG_Mod8_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_9 */
-    { {CAN0_MSG_Mod8_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_10 */
-    { {CAN0_MSG_Mod8_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_11 */
-    //{ {CAN0_MSG_Mod8_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod8_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_12 */
-    //{ {CAN0_MSG_Mod8_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_13 */
-    //{ {CAN0_MSG_Mod8_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_14 */
-    //{ {CAN0_MSG_Mod8_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod8_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_15 */
-    //{ {CAN0_MSG_Mod8_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_16 */
-    //{ {CAN0_MSG_Mod8_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod8_volt_17 */
+	/* Module 8 cell voltages */
+	{ {CAN0_MSG_Mod8_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_valid_0_2 */
+	{ {CAN0_MSG_Mod8_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_0 */
+	{ {CAN0_MSG_Mod8_Cellvolt_0}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_1 */
+	{ {CAN0_MSG_Mod8_Cellvolt_0}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_2 */
+	{ {CAN0_MSG_Mod8_Cellvolt_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_valid_3_5 */
+	{ {CAN0_MSG_Mod8_Cellvolt_1}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_3 */
+	{ {CAN0_MSG_Mod8_Cellvolt_1}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_4 */
+	{ {CAN0_MSG_Mod8_Cellvolt_1}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_5 */
+	{ {CAN0_MSG_Mod8_Cellvolt_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_valid_6_8 */
+	{ {CAN0_MSG_Mod8_Cellvolt_2}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_6 */
+	{ {CAN0_MSG_Mod8_Cellvolt_2}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_7 */
+	{ {CAN0_MSG_Mod8_Cellvolt_2}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_8 */
+	{ {CAN0_MSG_Mod8_Cellvolt_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_valid_9_11 */
+	{ {CAN0_MSG_Mod8_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_9 */
+	{ {CAN0_MSG_Mod8_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_10 */
+	{ {CAN0_MSG_Mod8_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_11 */
+	{ {CAN0_MSG_Mod8_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_valid_12_14 */
+	{ {CAN0_MSG_Mod8_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_12 */
+	{ {CAN0_MSG_Mod8_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_13 */
+	{ {CAN0_MSG_Mod8_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_14 */
+	{ {CAN0_MSG_Mod8_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_valid_15_17 */
+	{ {CAN0_MSG_Mod8_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_15 */
+	{ {CAN0_MSG_Mod8_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_16 */
+	{ {CAN0_MSG_Mod8_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod8_volt_17 */
 
-    /* Module 8 cell temperatures */
-    { {CAN0_MSG_Mod8_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_volt_valid_0_2 */
-    { {CAN0_MSG_Mod8_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_0 */
-    { {CAN0_MSG_Mod8_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_1 */
-    { {CAN0_MSG_Mod8_Celltemp_0}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_2 */
-    { {CAN0_MSG_Mod8_Celltemp_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_volt_valid_3_5 */
-    { {CAN0_MSG_Mod8_Celltemp_1}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_3 */
-    { {CAN0_MSG_Mod8_Celltemp_1}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_4 */
-    { {CAN0_MSG_Mod8_Celltemp_1}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_5 */
-    { {CAN0_MSG_Mod8_Celltemp_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_volt_valid_6_8 */
-    { {CAN0_MSG_Mod8_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_6 */
-    { {CAN0_MSG_Mod8_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_7 */
-    { {CAN0_MSG_Mod8_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_8 */
-    //{ {CAN0_MSG_Mod8_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod8_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_9 */
-    //{ {CAN0_MSG_Mod8_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_10 */
-    //{ {CAN0_MSG_Mod8_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod8_temp_11 */
+	/* Module 8 cell temperatures */
+	{ {CAN0_MSG_Mod8_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod8_volt_valid_0_2 */
+	{ {CAN0_MSG_Mod8_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_0 */
+	{ {CAN0_MSG_Mod8_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_1 */
+	{ {CAN0_MSG_Mod8_Celltemp_0}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_2 */
+	{ {CAN0_MSG_Mod8_Celltemp_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod8_volt_valid_3_5 */
+	{ {CAN0_MSG_Mod8_Celltemp_1}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_3 */
+	{ {CAN0_MSG_Mod8_Celltemp_1}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_4 */
+	{ {CAN0_MSG_Mod8_Celltemp_1}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_5 */
+	{ {CAN0_MSG_Mod8_Celltemp_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod8_volt_valid_6_8 */
+	{ {CAN0_MSG_Mod8_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_6 */
+	{ {CAN0_MSG_Mod8_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_7 */
+	{ {CAN0_MSG_Mod8_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_8 */
+	{ {CAN0_MSG_Mod8_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod8_volt_valid_9_11 */
+	{ {CAN0_MSG_Mod8_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_9 */
+	{ {CAN0_MSG_Mod8_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_10 */
+	{ {CAN0_MSG_Mod8_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod8_temp_11 */
 
-    /* Module 9 cell voltages */
-    { {CAN0_MSG_Mod9_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_valid_0_2 */
-    { {CAN0_MSG_Mod9_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_0 */
-    { {CAN0_MSG_Mod9_Cellvolt_0}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_1 */
-    { {CAN0_MSG_Mod9_Cellvolt_0}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_2 */
-    { {CAN0_MSG_Mod9_Cellvolt_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_valid_3_5 */
-    { {CAN0_MSG_Mod9_Cellvolt_1}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_3 */
-    { {CAN0_MSG_Mod9_Cellvolt_1}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_4 */
-    { {CAN0_MSG_Mod9_Cellvolt_1}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_5 */
-    { {CAN0_MSG_Mod9_Cellvolt_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_valid_6_8 */
-    { {CAN0_MSG_Mod9_Cellvolt_2}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_6 */
-    { {CAN0_MSG_Mod9_Cellvolt_2}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_7 */
-    { {CAN0_MSG_Mod9_Cellvolt_2}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_8 */
-    { {CAN0_MSG_Mod9_Cellvolt_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_valid_9_11 */
-    { {CAN0_MSG_Mod9_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_9 */
-    { {CAN0_MSG_Mod9_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_10 */
-    { {CAN0_MSG_Mod9_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_11 */
-    //{ {CAN0_MSG_Mod9_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod9_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_12 */
-    //{ {CAN0_MSG_Mod9_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_13 */
-    //{ {CAN0_MSG_Mod9_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_14 */
-    //{ {CAN0_MSG_Mod9_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod9_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_15 */
-    //{ {CAN0_MSG_Mod9_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_16 */
-    //{ {CAN0_MSG_Mod9_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod9_volt_17 */
+	/* Module 9 cell voltages */
+	{ {CAN0_MSG_Mod9_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_valid_0_2 */
+	{ {CAN0_MSG_Mod9_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_0 */
+	{ {CAN0_MSG_Mod9_Cellvolt_0}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_1 */
+	{ {CAN0_MSG_Mod9_Cellvolt_0}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_2 */
+	{ {CAN0_MSG_Mod9_Cellvolt_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_valid_3_5 */
+	{ {CAN0_MSG_Mod9_Cellvolt_1}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_3 */
+	{ {CAN0_MSG_Mod9_Cellvolt_1}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_4 */
+	{ {CAN0_MSG_Mod9_Cellvolt_1}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_5 */
+	{ {CAN0_MSG_Mod9_Cellvolt_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_valid_6_8 */
+	{ {CAN0_MSG_Mod9_Cellvolt_2}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_6 */
+	{ {CAN0_MSG_Mod9_Cellvolt_2}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_7 */
+	{ {CAN0_MSG_Mod9_Cellvolt_2}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_8 */
+	{ {CAN0_MSG_Mod9_Cellvolt_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_valid_9_11 */
+	{ {CAN0_MSG_Mod9_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_9 */
+	{ {CAN0_MSG_Mod9_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_10 */
+	{ {CAN0_MSG_Mod9_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_11 */
+	{ {CAN0_MSG_Mod9_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_valid_12_14 */
+	{ {CAN0_MSG_Mod9_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_12 */
+	{ {CAN0_MSG_Mod9_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_13 */
+	{ {CAN0_MSG_Mod9_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_14 */
+	{ {CAN0_MSG_Mod9_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_valid_15_17 */
+	{ {CAN0_MSG_Mod9_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_15 */
+	{ {CAN0_MSG_Mod9_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_16 */
+	{ {CAN0_MSG_Mod9_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod9_volt_17 */
 
-    /* Module 9 cell temperatures */
-    { {CAN0_MSG_Mod9_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_volt_valid_0_2 */
-    { {CAN0_MSG_Mod9_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_0 */
-    { {CAN0_MSG_Mod9_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_1 */
-    { {CAN0_MSG_Mod9_Celltemp_0}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_2 */
-    { {CAN0_MSG_Mod9_Celltemp_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_volt_valid_3_5 */
-    { {CAN0_MSG_Mod9_Celltemp_1}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_3 */
-    { {CAN0_MSG_Mod9_Celltemp_1}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_4 */
-    { {CAN0_MSG_Mod9_Celltemp_1}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_5 */
-    { {CAN0_MSG_Mod9_Celltemp_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_volt_valid_6_8 */
-    { {CAN0_MSG_Mod9_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_6 */
-    { {CAN0_MSG_Mod9_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_7 */
-    { {CAN0_MSG_Mod9_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_8 */
-    //{ {CAN0_MSG_Mod9_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod9_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_9 */
-    //{ {CAN0_MSG_Mod9_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_10 */
-    //{ {CAN0_MSG_Mod9_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod9_temp_11 */
+	/* Module 9 cell temperatures */
+	{ {CAN0_MSG_Mod9_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod9_volt_valid_0_2 */
+	{ {CAN0_MSG_Mod9_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_0 */
+	{ {CAN0_MSG_Mod9_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_1 */
+	{ {CAN0_MSG_Mod9_Celltemp_0}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_2 */
+	{ {CAN0_MSG_Mod9_Celltemp_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod9_volt_valid_3_5 */
+	{ {CAN0_MSG_Mod9_Celltemp_1}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_3 */
+	{ {CAN0_MSG_Mod9_Celltemp_1}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_4 */
+	{ {CAN0_MSG_Mod9_Celltemp_1}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_5 */
+	{ {CAN0_MSG_Mod9_Celltemp_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod9_volt_valid_6_8 */
+	{ {CAN0_MSG_Mod9_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_6 */
+	{ {CAN0_MSG_Mod9_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_7 */
+	{ {CAN0_MSG_Mod9_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_8 */
+	{ {CAN0_MSG_Mod9_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod9_volt_valid_9_11 */
+	{ {CAN0_MSG_Mod9_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_9 */
+	{ {CAN0_MSG_Mod9_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_10 */
+	{ {CAN0_MSG_Mod9_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod9_temp_11 */
 
-    /* Module 10 cell voltages */
-    { {CAN0_MSG_Mod10_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_valid_0_2 */
-    { {CAN0_MSG_Mod10_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_0 */
-    { {CAN0_MSG_Mod10_Cellvolt_0}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_1 */
-    { {CAN0_MSG_Mod10_Cellvolt_0}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_2 */
-    { {CAN0_MSG_Mod10_Cellvolt_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_valid_3_5 */
-    { {CAN0_MSG_Mod10_Cellvolt_1}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_3 */
-    { {CAN0_MSG_Mod10_Cellvolt_1}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_4 */
-    { {CAN0_MSG_Mod10_Cellvolt_1}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_5 */
-    { {CAN0_MSG_Mod10_Cellvolt_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_valid_6_8 */
-    { {CAN0_MSG_Mod10_Cellvolt_2}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_6 */
-    { {CAN0_MSG_Mod10_Cellvolt_2}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_7 */
-    { {CAN0_MSG_Mod10_Cellvolt_2}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_8 */
-    { {CAN0_MSG_Mod10_Cellvolt_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_valid_9_11 */
-    { {CAN0_MSG_Mod10_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_9 */
-    { {CAN0_MSG_Mod10_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_10 */
-    { {CAN0_MSG_Mod10_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_11 */
-    //{ {CAN0_MSG_Mod10_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod10_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_12 */
-    //{ {CAN0_MSG_Mod10_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_13 */
-    //{ {CAN0_MSG_Mod10_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_14 */
-    //{ {CAN0_MSG_Mod10_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod10_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_15 */
-    //{ {CAN0_MSG_Mod10_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_16 */
-    //{ {CAN0_MSG_Mod10_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod10_volt_17 */
+	/* Module 10 cell voltages */
+	{ {CAN0_MSG_Mod10_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_valid_0_2 */
+	{ {CAN0_MSG_Mod10_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_0 */
+	{ {CAN0_MSG_Mod10_Cellvolt_0}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_1 */
+	{ {CAN0_MSG_Mod10_Cellvolt_0}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_2 */
+	{ {CAN0_MSG_Mod10_Cellvolt_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_valid_3_5 */
+	{ {CAN0_MSG_Mod10_Cellvolt_1}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_3 */
+	{ {CAN0_MSG_Mod10_Cellvolt_1}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_4 */
+	{ {CAN0_MSG_Mod10_Cellvolt_1}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_5 */
+	{ {CAN0_MSG_Mod10_Cellvolt_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_valid_6_8 */
+	{ {CAN0_MSG_Mod10_Cellvolt_2}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_6 */
+	{ {CAN0_MSG_Mod10_Cellvolt_2}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_7 */
+	{ {CAN0_MSG_Mod10_Cellvolt_2}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_8 */
+	{ {CAN0_MSG_Mod10_Cellvolt_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_valid_9_11 */
+	{ {CAN0_MSG_Mod10_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_9 */
+	{ {CAN0_MSG_Mod10_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_10 */
+	{ {CAN0_MSG_Mod10_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_11 */
+	{ {CAN0_MSG_Mod10_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_valid_12_14 */
+	{ {CAN0_MSG_Mod10_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_12 */
+	{ {CAN0_MSG_Mod10_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_13 */
+	{ {CAN0_MSG_Mod10_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_14 */
+	{ {CAN0_MSG_Mod10_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_valid_15_17 */
+	{ {CAN0_MSG_Mod10_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod10_volt_15 */
+	{ {CAN0_MSG_Mod10_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_16 */
+	{ {CAN0_MSG_Mod10_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod10_volt_17 */
 
-    /* Module 10 cell temperatures */
-    { {CAN0_MSG_Mod10_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_volt_valid_0_2 */
-    { {CAN0_MSG_Mod10_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_0 */
-    { {CAN0_MSG_Mod10_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_1 */
-    { {CAN0_MSG_Mod10_Celltemp_0}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_2 */
-    { {CAN0_MSG_Mod10_Celltemp_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_volt_valid_3_5 */
-    { {CAN0_MSG_Mod10_Celltemp_1}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_3 */
-    { {CAN0_MSG_Mod10_Celltemp_1}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_4 */
-    { {CAN0_MSG_Mod10_Celltemp_1}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_5 */
-    { {CAN0_MSG_Mod10_Celltemp_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_volt_valid_6_8 */
-    { {CAN0_MSG_Mod10_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_6 */
-    { {CAN0_MSG_Mod10_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_7 */
-    { {CAN0_MSG_Mod10_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_8 */
-    //{ {CAN0_MSG_Mod10_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod10_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_9 */
-    //{ {CAN0_MSG_Mod10_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_10 */
-    //{ {CAN0_MSG_Mod10_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod10_temp_11 */
+	/* Module 10 cell temperatures */
+	{ {CAN0_MSG_Mod10_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod10_volt_valid_0_2 */
+	{ {CAN0_MSG_Mod10_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_0 */
+	{ {CAN0_MSG_Mod10_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_1 */
+	{ {CAN0_MSG_Mod10_Celltemp_0}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_2 */
+	{ {CAN0_MSG_Mod10_Celltemp_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod10_volt_valid_3_5 */
+	{ {CAN0_MSG_Mod10_Celltemp_1}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_3 */
+	{ {CAN0_MSG_Mod10_Celltemp_1}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_4 */
+	{ {CAN0_MSG_Mod10_Celltemp_1}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_5 */
+	{ {CAN0_MSG_Mod10_Celltemp_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod10_volt_valid_6_8 */
+	{ {CAN0_MSG_Mod10_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_6 */
+	{ {CAN0_MSG_Mod10_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_7 */
+	{ {CAN0_MSG_Mod10_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_8 */
+	{ {CAN0_MSG_Mod10_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod10_volt_valid_9_11 */
+	{ {CAN0_MSG_Mod10_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_9 */
+	{ {CAN0_MSG_Mod10_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_10 */
+	{ {CAN0_MSG_Mod10_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod10_temp_11 */
 
-    /* Module 11 cell voltages */
-    { {CAN0_MSG_Mod11_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_valid_0_2 */
-    { {CAN0_MSG_Mod11_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_0 */
-    { {CAN0_MSG_Mod11_Cellvolt_0}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_1 */
-    { {CAN0_MSG_Mod11_Cellvolt_0}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_2 */
-    { {CAN0_MSG_Mod11_Cellvolt_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_valid_3_5 */
-    { {CAN0_MSG_Mod11_Cellvolt_1}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_3 */
-    { {CAN0_MSG_Mod11_Cellvolt_1}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_4 */
-    { {CAN0_MSG_Mod11_Cellvolt_1}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_5 */
-    { {CAN0_MSG_Mod11_Cellvolt_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_valid_6_8 */
-    { {CAN0_MSG_Mod11_Cellvolt_2}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_6 */
-    { {CAN0_MSG_Mod11_Cellvolt_2}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_7 */
-    { {CAN0_MSG_Mod11_Cellvolt_2}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_8 */
-    { {CAN0_MSG_Mod11_Cellvolt_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_valid_9_11 */
-    { {CAN0_MSG_Mod11_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_9 */
-    { {CAN0_MSG_Mod11_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_10 */
-    { {CAN0_MSG_Mod11_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_11 */
-    //{ {CAN0_MSG_Mod11_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_valid_12_14 */
-    //{ {CAN0_MSG_Mod11_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_12 */
-    //{ {CAN0_MSG_Mod11_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_13 */
-    //{ {CAN0_MSG_Mod11_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_14 */
-    //{ {CAN0_MSG_Mod11_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_valid_15_17 */
-    //{ {CAN0_MSG_Mod11_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_15 */
-    //{ {CAN0_MSG_Mod11_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_16 */
-    //{ {CAN0_MSG_Mod11_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  /*!< CAN0_SIG_Mod11_volt_17 */
+	/* Module 11 cell voltages */
+	{ {CAN0_MSG_Mod11_Cellvolt_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_valid_0_2 */
+	{ {CAN0_MSG_Mod11_Cellvolt_0}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_0 */
+	{ {CAN0_MSG_Mod11_Cellvolt_0}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_1 */
+	{ {CAN0_MSG_Mod11_Cellvolt_0}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_2 */
+	{ {CAN0_MSG_Mod11_Cellvolt_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_valid_3_5 */
+	{ {CAN0_MSG_Mod11_Cellvolt_1}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_3 */
+	{ {CAN0_MSG_Mod11_Cellvolt_1}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_4 */
+	{ {CAN0_MSG_Mod11_Cellvolt_1}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_5 */
+	{ {CAN0_MSG_Mod11_Cellvolt_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_valid_6_8 */
+	{ {CAN0_MSG_Mod11_Cellvolt_2}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_6 */
+	{ {CAN0_MSG_Mod11_Cellvolt_2}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_7 */
+	{ {CAN0_MSG_Mod11_Cellvolt_2}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_8 */
+	{ {CAN0_MSG_Mod11_Cellvolt_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_valid_9_11 */
+	{ {CAN0_MSG_Mod11_Cellvolt_3}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_9 */
+	{ {CAN0_MSG_Mod11_Cellvolt_3}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_10 */
+	{ {CAN0_MSG_Mod11_Cellvolt_3}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_11 */
+	{ {CAN0_MSG_Mod11_Cellvolt_4}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_valid_12_14 */
+	{ {CAN0_MSG_Mod11_Cellvolt_4}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_12 */
+	{ {CAN0_MSG_Mod11_Cellvolt_4}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_13 */
+	{ {CAN0_MSG_Mod11_Cellvolt_4}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_14 */
+	{ {CAN0_MSG_Mod11_Cellvolt_5}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_valid_15_17 */
+	{ {CAN0_MSG_Mod11_Cellvolt_5}, 8, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  		/*!< CAN0_SIG_Mod11_volt_15 */
+	{ {CAN0_MSG_Mod11_Cellvolt_5}, 24, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_16 */
+	{ {CAN0_MSG_Mod11_Cellvolt_5}, 40, 16, 0, UINT16_MAX, 1, 0, littleEndian, &cans_getvolt },  	/*!< CAN0_SIG_Mod11_volt_17 */
+	/* Module 11 cell temperatures */
+	{ {CAN0_MSG_Mod11_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod11_volt_valid_0_2 */
+	{ {CAN0_MSG_Mod11_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_0 */
+	{ {CAN0_MSG_Mod11_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_1 */
+	{ {CAN0_MSG_Mod11_Celltemp_0}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_2 */
+	{ {CAN0_MSG_Mod11_Celltemp_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod11_volt_valid_3_5 */
+	{ {CAN0_MSG_Mod11_Celltemp_1}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_3 */
+	{ {CAN0_MSG_Mod11_Celltemp_1}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_4 */
+	{ {CAN0_MSG_Mod11_Celltemp_1}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_5 */
+	{ {CAN0_MSG_Mod11_Celltemp_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod11_volt_valid_6_8 */
+	{ {CAN0_MSG_Mod11_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_6 */
+	{ {CAN0_MSG_Mod11_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_7 */
+	{ {CAN0_MSG_Mod11_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_8 */
+	{ {CAN0_MSG_Mod11_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  		/*!< CAN0_SIG_Mod11_volt_valid_9_11 */
+	{ {CAN0_MSG_Mod11_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_9 */
+	{ {CAN0_MSG_Mod11_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_10 */
+	{ {CAN0_MSG_Mod11_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  	/*!< CAN0_SIG_Mod11_temp_11 */
 
-    /* Module 11 cell temperatures */
-    { {CAN0_MSG_Mod11_Celltemp_0}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_volt_valid_0_2 */
-    { {CAN0_MSG_Mod11_Celltemp_0}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_0 */
-    { {CAN0_MSG_Mod11_Celltemp_0}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_1 */
-    { {CAN0_MSG_Mod11_Celltemp_0}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_2 */
-    { {CAN0_MSG_Mod11_Celltemp_1}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_volt_valid_3_5 */
-    { {CAN0_MSG_Mod11_Celltemp_1}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_3 */
-    { {CAN0_MSG_Mod11_Celltemp_1}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_4 */
-    { {CAN0_MSG_Mod11_Celltemp_1}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_5 */
-    { {CAN0_MSG_Mod11_Celltemp_2}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_volt_valid_6_8 */
-    { {CAN0_MSG_Mod11_Celltemp_2}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_6 */
-    { {CAN0_MSG_Mod11_Celltemp_2}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_7 */
-    { {CAN0_MSG_Mod11_Celltemp_2}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_8 */
-    //{ {CAN0_MSG_Mod11_Celltemp_3}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_volt_valid_9_11 */
-    //{ {CAN0_MSG_Mod11_Celltemp_3}, 8, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_9 */
-    //{ {CAN0_MSG_Mod11_Celltemp_3}, 24, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_10 */
-    //{ {CAN0_MSG_Mod11_Celltemp_3}, 40, 16, -128, 527.35, 100, 128, littleEndian, &cans_gettemp },  /*!< CAN0_SIG_Mod11_temp_11 */
-
-
-#endif
-
-	{ {CAN0_MSG_IVT_Current}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_MuxID */
-	{ {CAN0_MSG_IVT_Current}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_Status */
-	{ {CAN0_MSG_IVT_Current}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS0_I_Measurement */
-	{ {CAN0_MSG_IVT_Voltage_1}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_MuxID */
-	{ {CAN0_MSG_IVT_Voltage_1}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_Status */
-	{ {CAN0_MSG_IVT_Voltage_1}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS1_U1_Measurement */
-	{ {CAN0_MSG_IVT_Voltage_2}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_MuxID */
-	{ {CAN0_MSG_IVT_Voltage_2}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_Status */
-	{ {CAN0_MSG_IVT_Voltage_2}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor, },  /* CAN0_SIG_ISENS2_U2_Measurement */
-	{ {CAN0_MSG_IVT_Voltage_3}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_MuxID */
-	{ {CAN0_MSG_IVT_Voltage_3}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_Status */
-	{ {CAN0_MSG_IVT_Voltage_3}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor, },  /* CAN0_SIG_ISENS3_U3_Measurement */
-	{ {CAN0_MSG_IVT_Temperature}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_MuxID */
-	{ {CAN0_MSG_IVT_Temperature}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_Status */
-	{ {CAN0_MSG_IVT_Temperature}, 16, 32, INT32_MIN, INT32_MAX, 0.1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS4_T_Measurement */
-	{ {CAN0_MSG_IVT_Power}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_MuxID */
-	{ {CAN0_MSG_IVT_Power}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_Status */
-	{ {CAN0_MSG_IVT_Power}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS5_P_Measurement */
-	{ {CAN0_MSG_IVT_CoulombCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_MuxID */
-	{ {CAN0_MSG_IVT_CoulombCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_Status */
-	{ {CAN0_MSG_IVT_CoulombCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS6_CC_Measurement */
-	{ {CAN0_MSG_IVT_EnergyCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_MuxID */
-	{ {CAN0_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_Status */
-	{ {CAN0_MSG_IVT_EnergyCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS7_EC_Measurement */
-
-	//telemetry values
-	{ {CAN0_MSG_BatInfo0_Tele}, 0, 32, 0, UINT32_MAX, 1, 0, littleEndian, &cans_getPackVoltage },  /*!< CAN0_SIG_PackVolt_Battery */
-	{ {CAN0_MSG_BatInfo0_Tele}, 32, 32, INT32_MIN, INT32_MAX, 1, 0, littleEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS0_I_Measurement */ //to modify values in between
-	{ {CAN0_MSG_BatInfo1_Tele}, 0, 32, INT32_MIN, INT32_MAX, 1, 0, littleEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS5_P_Measurement */
-	{ {CAN0_MSG_BatInfo1_Tele}, 16, 16, -128, 527.35, 100, 128, littleEndian, &cans_getminmaxtemp },  /*!< CAN0_SIG_Celltemp_mean */
-
+#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
+        {{CAN0_MSG_BMS_CurrentTrigger}, 0, 32, 0, 0, 1, 0, &cans_gettriggercurrent }  /*!< CAN0_SIG_ISA_Trigger */
+#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 };
 
 
 const CANS_signal_s cans_CAN1_signals_tx[] = {
-#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-        {{CAN1_MSG_BMS_CurrentTrigger}, 0, 32, 0, 0, 1, 0, &cans_gettriggercurrent }  /*!< CAN0_SIG_ISA_Trigger */
-#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 };
 
 
 const CANS_signal_s cans_CAN0_signals_rx[] = {
     { {CAN0_MSG_StateRequest}, 8, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_setstaterequest },
+    { {CAN0_MSG_IVT_Current}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_MuxID */
+    { {CAN0_MSG_IVT_Current}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_Status */
+    { {CAN0_MSG_IVT_Current}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS0_I_Measurement */
+    { {CAN0_MSG_IVT_Voltage_1}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_MuxID */
+    { {CAN0_MSG_IVT_Voltage_1}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_Status */
+    { {CAN0_MSG_IVT_Voltage_1}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS1_U1_Measurement */
+    { {CAN0_MSG_IVT_Voltage_2}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_MuxID */
+    { {CAN0_MSG_IVT_Voltage_2}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_Status */
+    { {CAN0_MSG_IVT_Voltage_2}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr, },  /* CAN0_SIG_ISENS2_U2_Measurement */
+    { {CAN0_MSG_IVT_Voltage_3}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_MuxID */
+    { {CAN0_MSG_IVT_Voltage_3}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_Status */
+    { {CAN0_MSG_IVT_Voltage_3}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr, },  /* CAN0_SIG_ISENS3_U3_Measurement */
+    { {CAN0_MSG_IVT_Temperature}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_MuxID */
+    { {CAN0_MSG_IVT_Temperature}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_Status */
+    { {CAN0_MSG_IVT_Temperature}, 16, 32, INT32_MIN, INT32_MAX, 0.1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS4_T_Measurement */
+    { {CAN0_MSG_IVT_Power}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_MuxID */
+    { {CAN0_MSG_IVT_Power}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_Status */
+    { {CAN0_MSG_IVT_Power}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS5_P_Measurement */
+    { {CAN0_MSG_IVT_CoulombCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_MuxID */
+    { {CAN0_MSG_IVT_CoulombCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_Status */
+    { {CAN0_MSG_IVT_CoulombCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS6_CC_Measurement */
+    { {CAN0_MSG_IVT_EnergyCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_MuxID */
+    { {CAN0_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_Status */
+    { {CAN0_MSG_IVT_EnergyCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS7_EC_Measurement */
     { {CAN0_MSG_DEBUG}, 0, 64, 0, UINT64_MAX, 1, 0, littleEndian, &cans_setdebug },  /* CAN0_SIG_DEBUG_Data */
     { {CAN0_MSG_GetReleaseVersion}, 0, 64, 0, UINT64_MAX, 1, 0, littleEndian, &cans_setSWversion }  /* CAN0_SIG_DEBUG_Data */
 };
@@ -817,7 +804,7 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
     uint32_t tmp = 0;
     uint32_t tmpVal = 0;
     float canData = 0;
-#if BS_NR_OF_MODULES != 0
+
     /* first signal to transmit cell voltages */
     if (sigIdx == CAN0_SIG_Mod0_volt_valid_0_2) {
         DB_ReadBlock(&volt_tab, DATA_BLOCK_ID_CELLVOLTAGE);
@@ -943,12 +930,12 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
                 }
                 tmpVal = 0x07 & tmp;
                 break;
-/*
+
             case CAN0_SIG_Mod0_volt_valid_12_14:
             case CAN0_SIG_Mod1_volt_valid_12_14:
             case CAN0_SIG_Mod2_volt_valid_12_14:
             case CAN0_SIG_Mod3_volt_valid_12_14:
-            case CAN0_SIG_Mod4_volt_valid_12_14:  // Valid flags for cell voltages 12 - 14
+            case CAN0_SIG_Mod4_volt_valid_12_14:  /* Valid flags for cell voltages 12 - 14 */
             case CAN0_SIG_Mod5_volt_valid_12_14:
             case CAN0_SIG_Mod6_volt_valid_12_14:
             case CAN0_SIG_Mod7_volt_valid_12_14:
@@ -968,7 +955,7 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
             case CAN0_SIG_Mod1_volt_valid_15_17:
             case CAN0_SIG_Mod2_volt_valid_15_17:
             case CAN0_SIG_Mod3_volt_valid_15_17:
-            case CAN0_SIG_Mod4_volt_valid_15_17:  // Valid flags for cell voltages 15 - 17
+            case CAN0_SIG_Mod4_volt_valid_15_17:  /* Valid flags for cell voltages 15 - 17 */
             case CAN0_SIG_Mod5_volt_valid_15_17:
             case CAN0_SIG_Mod6_volt_valid_15_17:
             case CAN0_SIG_Mod7_volt_valid_15_17:
@@ -982,7 +969,7 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
                     tmp = volt_tab.valid_volt[modIdx] >> 15;
                 }
                 tmpVal = 0x07 & tmp;
-                break;*/
+                break;
 
             case CAN0_SIG_Mod0_volt_0:
             case CAN0_SIG_Mod0_volt_1:
@@ -1165,7 +1152,7 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
                     tmpVal = volt_tab.voltage[(modIdx * BS_NR_OF_BAT_CELLS_PER_MODULE) + cellIdx];
                 }
                 break;
-/*
+
             case CAN0_SIG_Mod0_volt_12:
             case CAN0_SIG_Mod0_volt_13:
             case CAN0_SIG_Mod0_volt_14:
@@ -1202,11 +1189,11 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
             case CAN0_SIG_Mod11_volt_12:
             case CAN0_SIG_Mod11_volt_13:
             case CAN0_SIG_Mod11_volt_14:
-                cellIdx--;  // Because cell 0 - valid flag = 1, decrement by one to get the right index
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_3_5
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_6_8
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_9_11
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_12_14
+                cellIdx--;  /* Because cell 0 - valid flag = 1, decrement by one to get the right index */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_3_5 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_6_8 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_9_11 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_12_14 */
                 if ((modIdx * BS_NR_OF_BAT_CELLS_PER_MODULE) + cellIdx >= BS_NR_OF_BAT_CELLS) {
                     tmpVal = CAN_DEFAULT_VOLTAGE;
                 } else {
@@ -1250,18 +1237,18 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
             case CAN0_SIG_Mod11_volt_15:
             case CAN0_SIG_Mod11_volt_16:
             case CAN0_SIG_Mod11_volt_17:
-                cellIdx--;  // Because cell 0 - valid flag = 1, decrement by one to get the right index
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_3_5
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_6_8
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_9_11
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_12_14
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_volt_valid_15_17
+                cellIdx--;  /* Because cell 0 - valid flag = 1, decrement by one to get the right index */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_3_5 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_6_8 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_9_11 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_12_14 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_volt_valid_15_17 */
                 if ((modIdx * BS_NR_OF_BAT_CELLS_PER_MODULE) + cellIdx >= BS_NR_OF_BAT_CELLS) {
                     tmpVal = CAN_DEFAULT_VOLTAGE;
                 } else {
                     tmpVal = volt_tab.voltage[(modIdx * BS_NR_OF_BAT_CELLS_PER_MODULE) + cellIdx];
                 }
-                break;*/
+                break;
 
             default:
                 break;
@@ -1271,7 +1258,7 @@ static uint32_t cans_getvolt(uint32_t sigIdx, void *value) {
         /* Apply offset and factor */
         *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
     }
-#endif
+
     return 0;
 }
 
@@ -1282,7 +1269,7 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
     uint32_t tmp = 0;
     float tmpVal = 0;
     float canData = 0;
-#if BS_NR_OF_MODULES != 0
+
     /* first signal to transmit cell temperatures */
     if (sigIdx == CAN0_SIG_Mod0_temp_valid_0_2) {
         DB_ReadBlock(&temp_tab, DATA_BLOCK_ID_CELLTEMPERATURE);
@@ -1388,7 +1375,7 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
                 }
                 tmpVal = 0x07 & tmp;
                 break;
-/*
+
             case CAN0_SIG_Mod0_temp_valid_9_11:
             case CAN0_SIG_Mod1_temp_valid_9_11:
             case CAN0_SIG_Mod2_temp_valid_9_11:
@@ -1407,7 +1394,7 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
                     tmp = temp_tab.valid_temperature[modIdx] >> 9;
                 }
                 tmpVal = 0x07 & tmp;
-                break;*/
+                break;
 
             case CAN0_SIG_Mod0_temp_0:
             case CAN0_SIG_Mod0_temp_1:
@@ -1555,7 +1542,7 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
                 }
 #endif
                 break;
-/*
+
             case CAN0_SIG_Mod0_temp_9:
             case CAN0_SIG_Mod0_temp_10:
             case CAN0_SIG_Mod0_temp_11:
@@ -1592,10 +1579,10 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
             case CAN0_SIG_Mod11_temp_9:
             case CAN0_SIG_Mod11_temp_10:
             case CAN0_SIG_Mod11_temp_11:
-                cellIdx--;  // Because cell 0 - valid flag = 1, decrement by one to get the right index
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_temp_valid_3_5
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_temp_valid_6_8
-                cellIdx--;  // Because of signal: CAN0_SIG_Modx_temp_valid_9_11
+                cellIdx--;  /* Because cell 0 - valid flag = 1, decrement by one to get the right index */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_3_5 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_6_8 */
+                cellIdx--;  /* Because of signal: CAN0_SIG_Modx_temp_valid_9_11 */
 #if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
                 if ((modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx >= BS_NR_OF_TEMP_SENSORS) {
 #endif
@@ -1605,7 +1592,7 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
                     tmpVal = temp_tab.temperature[(modIdx * BS_NR_OF_TEMP_SENSORS_PER_MODULE) + cellIdx];
                 }
 #endif
-                break;*/
+                break;
 
             default:
                 break;
@@ -1615,7 +1602,7 @@ uint32_t cans_gettemp(uint32_t sigIdx, void *value) {
         /* Apply offset and factor */
         *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
     }
-#endif
+
     return 0;
 }
 
@@ -1712,17 +1699,11 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                     canRSL_tab.over_current_charge_pl1     == 1 ||
                     canRSL_tab.over_current_discharge_pl1  == 1 ||
                     canRSL_tab.over_voltage                == 1 ||
-#if BS_NR_OF_MODULES != 0
                     canRSL_tab.under_voltage               == 1 ||
-#endif
                     canRSL_tab.over_temperature_charge     == 1 ||
-                    canRSL_tab.over_temperature_discharge  == 1
-#if BS_NR_OF_MODULES != 0
-					||
+                    canRSL_tab.over_temperature_discharge  == 1 ||
                     canRSL_tab.under_temperature_charge    == 1 ||
-                    canRSL_tab.under_temperature_discharge == 1
-#endif
-                	) {
+                    canRSL_tab.under_temperature_discharge == 1) {
                     /* set flag if error detected */
                     tmp |= 0x01 << 1;
                 }
@@ -1734,17 +1715,11 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                     canMOL_tab.over_current_charge_pl1     == 1 ||
                     canMOL_tab.over_current_discharge_pl1  == 1 ||
                     canMOL_tab.over_voltage                == 1 ||
-#if BS_NR_OF_MODULES != 0
                     canMOL_tab.under_voltage               == 1 ||
-#endif
                     canMOL_tab.over_temperature_charge     == 1 ||
-                    canMOL_tab.over_temperature_discharge  == 1
-#if BS_NR_OF_MODULES != 0
-					||
+                    canMOL_tab.over_temperature_discharge  == 1 ||
                     canMOL_tab.under_temperature_charge    == 1 ||
-                    canMOL_tab.under_temperature_discharge == 1
-#endif
-                	) {
+                    canMOL_tab.under_temperature_discharge == 1) {
                     /* set flag if error detected */
                     tmp |= 0x01 << 2;
                 }
@@ -1762,7 +1737,6 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.over_temperature_charge;
                 *(uint32_t *)value = tmp;
                 break;
-#if BS_NR_OF_MODULES != 0
             case CAN0_SIG_GS0_error_undertemp_charge:
                 tmp = 0;
                 tmp |= canMOL_tab.under_temperature_charge << 2;
@@ -1770,7 +1744,6 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.under_temperature_charge;
                 *(uint32_t *)value = tmp;
                 break;
-#endif
             case CAN0_SIG_GS0_error_overtemp_discharge:
                 tmp = 0;
                 tmp |= canMOL_tab.over_temperature_discharge << 2;
@@ -1778,7 +1751,6 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.over_temperature_discharge;
                 *(uint32_t *)value = tmp;
                 break;
-#if BS_NR_OF_MODULES != 0
             case CAN0_SIG_GS0_error_undertemp_discharge:
                 tmp = 0;
                 tmp |= canMOL_tab.under_temperature_discharge << 2;
@@ -1786,7 +1758,6 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.under_temperature_discharge;
                 *(uint32_t *)value = tmp;
                 break;
-#endif
             case CAN0_SIG_GS0_error_overcurrent_charge:
                 tmp = 0;
                 tmp |= canMOL_tab.over_current_charge_cell << 2;
@@ -1820,7 +1791,6 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canMSL_tab.over_voltage;
                 *(uint32_t *)value = tmp;
                 break;
-#if BS_NR_OF_MODULES != 0
             case CAN0_SIG_GS1_error_undervoltage:
                 tmp = 0;
                 tmp |= canMOL_tab.under_voltage << 2;
@@ -1831,7 +1801,6 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
             case CAN0_SIG_GS1_error_deep_discharge:
                 *(uint32_t *)value = canerr_tab.deepDischargeDetected;
                 break;
-#endif
             case CAN0_SIG_GS1_error_temperature_MCU0:
                 *(uint32_t *)value = canerr_tab.mcuDieTemperature;
                 break;
@@ -1884,7 +1853,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 }
                 *(uint32_t *)value = tmp;
                 break;
-#if BS_NR_OF_MODULES != 0
+
             case CAN0_SIG_GS2_lowCoinCellVolt:
                 *(uint32_t *)value = canerr_tab.coinCellVoltage;
                 break;
@@ -1901,7 +1870,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 tmp |= canerr_tab.ltc_config_error << 3;
                 *(uint32_t *)value = tmp;
                 break;
-#endif
+
             case CAN0_SIG_GS2_plausibilityCheck:
                 *(uint32_t *)value = canerr_tab.plausibilityCheck;
                 break;
@@ -2058,7 +2027,6 @@ uint32_t cans_getminmaxtemp(uint32_t sigIdx, void *value) {
     if (value != NULL_PTR) {
         switch (sigIdx) {
         case CAN0_SIG_Celltemp_mean:
-        case CAN0_MSG_BatInfo1_Tele:
             /* First signal that is called */
             DB_ReadBlock(&minmax_temp_tab, DATA_BLOCK_ID_MINMAX);
 
@@ -2240,7 +2208,6 @@ static uint32_t cans_getPackVoltage(uint32_t sigIdx, void *value) {
     if (value != NULL_PTR) {
        switch (sigIdx) {
            case CAN0_SIG_PackVolt_Battery:
-           case CAN0_MSG_BatInfo0_Tele:
                /* first signal to call function */
                DB_ReadBlock(&packVolt_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                /* Check limits */
@@ -2266,72 +2233,6 @@ static uint32_t cans_getPackVoltage(uint32_t sigIdx, void *value) {
 }
 
 
-static uint32_t cans_setcurrCaptor(uint32_t sigIdx, void *value){ // function to read values from current sensor
-	uint32_t retVal = 0;
-	float canData = 0;
-	static DATA_BLOCK_CURRENT_SENSOR_s current_tab_for_send;
-
-	if (value != NULL_PTR) {
-	   switch (sigIdx) {
-	       case CAN0_SIG_IVT_Current_Measurement:
-	       case CAN0_MSG_BatInfo0_Tele:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
-	           canData = cans_checkLimits((float)current_tab_for_send.current, sigIdx);
-	           /* Apply offset and factor */
-	           *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
-	           break;
-	       case CAN0_SIG_IVT_Voltage_1_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
-	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[0], sigIdx);
-	       	   /* Apply offset and factor */
-	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
-	       	   break;
-	       case CAN0_SIG_IVT_Voltage_2_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
-	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[1], sigIdx);
-	       	   /* Apply offset and factor */
-	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
-	       	   break;
-	       case CAN0_SIG_IVT_Voltage_3_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
-	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[2], sigIdx);
-	       	   /* Apply offset and factor */
-	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
-	       	   break;
-	       case CAN0_SIG_IVT_Temperature_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
-	       	   canData = cans_checkLimits((float)current_tab_for_send.temperature, sigIdx);
-	       	   /* Apply offset and factor */
-	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
-	       	   break;
-	       case CAN0_SIG_IVT_Power_Measurement:
-	       case CAN0_MSG_BatInfo1_Tele:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
-	       	   canData = cans_checkLimits((float)current_tab_for_send.power, sigIdx);
-	       	   /* Apply offset and factor */
-	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
-	       	   break;
-	       case CAN0_SIG_IVT_CC_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
-	       	   canData = cans_checkLimits((float)current_tab_for_send.current_counter, sigIdx);
-	       	   /* Apply offset and factor */
-	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
-	       	   break;
-	       case CAN0_SIG_IVT_EC_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
-	       	   canData = cans_checkLimits((float)current_tab_for_send.energy_counter, sigIdx);
-	       	   /* Apply offset and factor */
-	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
-	       	   break;
-	       default:
-	           *(uint32_t *)value = 0;
-	           break;
-	       }
-	}
-	return retVal;
-}
-
-
 static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
     int32_t currentValue;
     int32_t temperatureValue;
@@ -2341,32 +2242,32 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
     int32_t voltageValue[3];
     uint32_t idx = 0;
     uint8_t dummy = 0;
-#ifndef IS_TEST
+
     if (value != NULL_PTR) {
         switch (sigIdx) {
-        	case CAN1_SIG_IVT_Current_Status:
-        	case CAN1_SIG_IVT_Voltage_1_Status:
-        	case CAN1_SIG_IVT_Voltage_2_Status:
-        	case CAN1_SIG_IVT_Voltage_3_Status:
-        	case CAN1_SIG_IVT_Temperature_Status:
-        	case CAN1_SIG_IVT_Power_Status:
-        	case CAN1_SIG_IVT_CC_Status:
-        	case CAN1_SIG_IVT_EC_Status:
+            case CAN0_SIG_IVT_Current_Status:
+            case CAN0_SIG_IVT_Voltage_1_Status:
+            case CAN0_SIG_IVT_Voltage_2_Status:
+            case CAN0_SIG_IVT_Voltage_3_Status:
+            case CAN0_SIG_IVT_Temperature_Status:
+            case CAN0_SIG_IVT_Power_Status:
+            case CAN0_SIG_IVT_CC_Status:
+            case CAN0_SIG_IVT_EC_Status:
                 dummy = *(uint32_t *)value & 0x000000FF;
                 dummy &= 0xF0;   /* only high nibble contains diag info */
                 if ((dummy & 0x10) == TRUE) {
                     /* Overcurrent detected. This feature is currently not supported. */
                 }
                 if ((dummy & 0x20) == TRUE) {
-                    if (sigIdx == CAN1_SIG_IVT_Current_Status) {
+                    if (sigIdx == CAN0_SIG_IVT_Current_Status) {
                         cans_current_tab.state_current = 1;
-                    } else if (sigIdx == CAN1_SIG_IVT_Voltage_1_Status || sigIdx == CAN1_SIG_IVT_Voltage_2_Status || sigIdx == CAN1_SIG_IVT_Voltage_3_Status) {
+                    } else if (sigIdx == CAN0_SIG_IVT_Voltage_1_Status || sigIdx == CAN0_SIG_IVT_Voltage_2_Status || sigIdx == CAN0_SIG_IVT_Voltage_3_Status) {
                         cans_current_tab.state_voltage = 1;
-                    } else if (sigIdx == CAN1_SIG_IVT_Temperature_Status) {
+                    } else if (sigIdx == CAN0_SIG_IVT_Temperature_Status) {
                         cans_current_tab.state_temperature = 1;
-                    } else if (sigIdx == CAN1_SIG_IVT_Power_Status) {
+                    } else if (sigIdx == CAN0_SIG_IVT_Power_Status) {
                         cans_current_tab.state_power = 1;
-                    } else if (sigIdx == CAN1_SIG_IVT_CC_Status) {
+                    } else if (sigIdx == CAN0_SIG_IVT_CC_Status) {
                         cans_current_tab.state_cc = 1;
                     } else {
                         cans_current_tab.state_ec = 1;
@@ -2389,7 +2290,8 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
                 }
 
                 break;
-                case CAN1_SIG_IVT_Current_Measurement:
+
+                case CAN0_SIG_IVT_Current_Measurement:
                 /* case CAN1_SIG_ISENS0_I_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     currentValue = *(int32_t*)value;
                     cans_current_tab.current = (currentValue);
@@ -2398,41 +2300,41 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
                     cans_current_tab.timestamp_cur = OS_getOSSysTick();
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN1_SIG_IVT_Voltage_1_Measurement:
+                case CAN0_SIG_IVT_Voltage_1_Measurement:
                 /* case CAN1_SIG_ISENS1_U1_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     idx = 0;
                     voltageValue[idx] = *(int32_t*)value;
                     cans_current_tab.voltage[idx] = (float)(voltageValue[idx])*cans_CAN0_signals_rx[sigIdx].factor;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN1_SIG_IVT_Voltage_2_Measurement:
+                case CAN0_SIG_IVT_Voltage_2_Measurement:
                 /* case CAN1_SIG_ISENS2_U2_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     idx = 1;
                     voltageValue[idx] = *(int32_t*)value;
                     cans_current_tab.voltage[idx] = (float)(voltageValue[idx])*cans_CAN0_signals_rx[sigIdx].factor;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN1_SIG_IVT_Voltage_3_Measurement:
+                case CAN0_SIG_IVT_Voltage_3_Measurement:
                 /* case CAN1_SIG_ISENS3_U3_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     idx = 2;
                     voltageValue[idx] = *(int32_t*)value;
                     cans_current_tab.voltage[idx]=(float)(voltageValue[idx])*cans_CAN0_signals_rx[sigIdx].factor;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN1_SIG_IVT_Temperature_Measurement:
+                case CAN0_SIG_IVT_Temperature_Measurement:
                 /* case CAN1_SIG_ISENS4_T_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     temperatureValue = *(int32_t*)value;
                     cans_current_tab.temperature = (float)(temperatureValue)*cans_CAN0_signals_rx[sigIdx].factor;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN1_SIG_IVT_Power_Measurement:
+                case CAN0_SIG_IVT_Power_Measurement:
                 /* case CAN1_SIG_ISENS5_P_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     powerValue = *(int32_t*)value;
                     cans_current_tab.power = (float)(powerValue);
                     cans_current_tab.newPower++;
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN1_SIG_IVT_CC_Measurement:
+                case CAN0_SIG_IVT_CC_Measurement:
                 /* case CAN1_SIG_ISENS6_CC_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     currentcounterValue = *(int32_t*)value;
                     cans_current_tab.previous_timestamp_cc = cans_current_tab.timestamp_cc;
@@ -2440,16 +2342,14 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
                     cans_current_tab.current_counter = (float)(currentcounterValue);
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
-                case CAN1_SIG_IVT_EC_Measurement:
+                case CAN0_SIG_IVT_EC_Measurement:
                 /* case CAN1_SIG_ISENS7_EC_Measurement:  uncommented because identical position in CAN0 and CAN1 rx signal struct */
                     energycounterValue = *(int32_t*)value;
                     cans_current_tab.energy_counter = (float)(energycounterValue);
                     DB_WriteBlock(&cans_current_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                     break;
         }
-
     }
-#endif
     return 0;
 }
 
@@ -2539,7 +2439,7 @@ uint32_t cans_setdebug(uint32_t sigIdx, void *value) {
                 break;
             case 0xD0:
 				//stop transmission of everything
-            	//and only sends 0x112, 0x060 and 0x069
+            	//and only sends 0x112 TODO
             	CANS_Enable_Periodic(FALSE);
 				break;
             case 0xF0:

@@ -342,168 +342,151 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x201, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 3 4 5 */
         { 0x202, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 6 7 8 */
         { 0x203, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 9 10 11 */
-        //{ 0x204, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 12 13 14 */
-        //{ 0x205, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 15 16 17 */
+        { 0x204, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 12 13 14 */
+        { 0x205, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 15 16 17 */
 
         { 0x210, 8, 200, 30, NULL_PTR },  /*!< Cell temperatures module 0 cells 0 1 2 */
         { 0x211, 8, 200, 30, NULL_PTR },  /*!< Cell temperatures module 0 cells 3 4 5 */
         { 0x212, 8, 200, 30, NULL_PTR },  /*!< Cell temperatures module 0 cells 6 7 8 */
-        //{ 0x213, 8, 200, 30, NULL_PTR },  /*!< Cell temperatures module 0 cells 9 10 11 */
+        { 0x213, 8, 200, 30, NULL_PTR },  /*!< Cell temperatures module 0 cells 9 10 11 */
 
         { 0x220, 8, 200, 40, NULL_PTR },  /*!< Cell voltages module 1 cells 0 1 2 */
         { 0x221, 8, 200, 40, NULL_PTR },  /*!< Cell voltages module 1 cells 3 4 5 */
         { 0x222, 8, 200, 40, NULL_PTR },  /*!< Cell voltages module 1 cells 6 7 8 */
         { 0x223, 8, 200, 40, NULL_PTR },  /*!< Cell voltages module 1 cells 9 10 11 */
-		//{ 0x224, 8, 200, 40, NULL_PTR },  /*!< Cell voltages module 1 cells 12 13 14 */
-		//{ 0x225, 8, 200, 40, NULL_PTR },  /*!< Cell voltages module 1 cells 15 16 17 */
+        { 0x224, 8, 200, 40, NULL_PTR },  /*!< Cell voltages module 1 cells 12 13 14 */
+        { 0x225, 8, 200, 40, NULL_PTR },  /*!< Cell voltages module 1 cells 15 16 17 */
 
         { 0x230, 8, 200, 50, NULL_PTR },  /*!< Cell temperatures module 1 cells 0 1 2 */
         { 0x231, 8, 200, 50, NULL_PTR },  /*!< Cell temperatures module 1 cells 3 4 5 */
         { 0x232, 8, 200, 50, NULL_PTR },  /*!< Cell temperatures module 1 cells 6 7 8 */
-		//{ 0x233, 8, 200, 50, NULL_PTR },  /*!< Cell temperatures module 1 cells 9 10 11 */
+        { 0x233, 8, 200, 50, NULL_PTR },  /*!< Cell temperatures module 1 cells 9 10 11 */
 
         { 0x240, 8, 200, 60, NULL_PTR },  /*!< Cell voltages module 2 cells 0 1 2 */
         { 0x241, 8, 200, 60, NULL_PTR },  /*!< Cell voltages module 2 cells 3 4 5 */
         { 0x242, 8, 200, 60, NULL_PTR },  /*!< Cell voltages module 2 cells 6 7 8 */
         { 0x243, 8, 200, 60, NULL_PTR },  /*!< Cell voltages module 2 cells 9 10 11 */
-		//{ 0x244, 8, 200, 60, NULL_PTR },  /*!< Cell voltages module 2 cells 12 13 14 */
-		//{ 0x245, 8, 200, 60, NULL_PTR },  /*!< Cell voltages module 2 cells 15 16 17 */
+        { 0x244, 8, 200, 60, NULL_PTR },  /*!< Cell voltages module 2 cells 12 13 14 */
+        { 0x245, 8, 200, 60, NULL_PTR },  /*!< Cell voltages module 2 cells 15 16 17 */
 
         { 0x250, 8, 200, 70, NULL_PTR },  /*!< Cell temperatures module 2 cells 0 1 2 */
         { 0x251, 8, 200, 70, NULL_PTR },  /*!< Cell temperatures module 2 cells 3 4 5 */
         { 0x252, 8, 200, 70, NULL_PTR },  /*!< Cell temperatures module 2 cells 6 7 8 */
-		//{ 0x253, 8, 200, 70, NULL_PTR },  /*!< Cell temperatures module 2 cells 9 10 11 */
+        { 0x253, 8, 200, 70, NULL_PTR },  /*!< Cell temperatures module 2 cells 9 10 11 */
 
         { 0x260, 8, 200, 80, NULL_PTR },  /*!< Cell voltages module 3 cells 0 1 2 */
         { 0x261, 8, 200, 80, NULL_PTR },  /*!< Cell voltages module 3 cells 3 4 5 */
         { 0x262, 8, 200, 80, NULL_PTR },  /*!< Cell voltages module 3 cells 6 7 8 */
         { 0x263, 8, 200, 80, NULL_PTR },  /*!< Cell voltages module 3 cells 9 10 11 */
-		//{ 0x264, 8, 200, 80, NULL_PTR },  /*!< Cell voltages module 3 cells 12 13 14 */
-		//{ 0x265, 8, 200, 80, NULL_PTR },  /*!< Cell voltages module 3 cells 15 16 17 */
+        { 0x264, 8, 200, 80, NULL_PTR },  /*!< Cell voltages module 3 cells 12 13 14 */
+        { 0x265, 8, 200, 80, NULL_PTR },  /*!< Cell voltages module 3 cells 15 16 17 */
 
         { 0x270, 8, 200, 90, NULL_PTR },  /*!< Cell temperatures module 3 cells 0 1 2 */
         { 0x271, 8, 200, 90, NULL_PTR },  /*!< Cell temperatures module 3 cells 3 4 5 */
         { 0x272, 8, 200, 90, NULL_PTR },  /*!< Cell temperatures module 3 cells 6 7 8 */
-		//{ 0x273, 8, 200, 90, NULL_PTR },  /*!< Cell temperatures module 3 cells 9 10 11 */
+        { 0x273, 8, 200, 90, NULL_PTR },  /*!< Cell temperatures module 3 cells 9 10 11 */
 
         { 0x280, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 0 1 2 */
         { 0x281, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 3 4 5 */
         { 0x282, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 6 7 8 */
         { 0x283, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 9 10 11 */
-		//{ 0x284, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 12 13 14 */
-		//{ 0x285, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 15 16 17 */
+        { 0x284, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 12 13 14 */
+        { 0x285, 8, 200, 100, NULL_PTR },  /*!< Cell voltages module 4 cells 15 16 17 */
 
         { 0x290, 8, 200, 110, NULL_PTR },  /*!< Cell temperatures module 4 cells 0 1 2 */
         { 0x291, 8, 200, 110, NULL_PTR },  /*!< Cell temperatures module 4 cells 3 4 5 */
         { 0x292, 8, 200, 110, NULL_PTR },  /*!< Cell temperatures module 4 cells 6 7 8 */
-		//{ 0x293, 8, 200, 110, NULL_PTR },  /*!< Cell temperatures module 4 cells 9 10 11 */
+        { 0x293, 8, 200, 110, NULL_PTR },  /*!< Cell temperatures module 4 cells 9 10 11 */
 
         { 0x2A0, 8, 200, 120, NULL_PTR },  /*!< Cell voltages module 5 cells 0 1 2 */
         { 0x2A1, 8, 200, 120, NULL_PTR },  /*!< Cell voltages module 5 cells 3 4 5 */
         { 0x2A2, 8, 200, 120, NULL_PTR },  /*!< Cell voltages module 5 cells 6 7 8 */
         { 0x2A3, 8, 200, 120, NULL_PTR },  /*!< Cell voltages module 5 cells 9 10 11 */
-		//{ 0x2A4, 8, 200, 120, NULL_PTR },  /*!< Cell voltages module 5 cells 12 13 14 */
-		//{ 0x2A5, 8, 200, 120, NULL_PTR },  /*!< Cell voltages module 5 cells 15 16 17 */
+        { 0x2A4, 8, 200, 120, NULL_PTR },  /*!< Cell voltages module 5 cells 12 13 14 */
+        { 0x2A5, 8, 200, 120, NULL_PTR },  /*!< Cell voltages module 5 cells 15 16 17 */
 
         { 0x2B0, 8, 200, 130, NULL_PTR },  /*!< Cell temperatures module 5 cells 0 1 2 */
         { 0x2B1, 8, 200, 130, NULL_PTR },  /*!< Cell temperatures module 5 cells 3 4 5 */
         { 0x2B2, 8, 200, 130, NULL_PTR },  /*!< Cell temperatures module 5 cells 6 7 8 */
-		//{ 0x2B3, 8, 200, 130, NULL_PTR },  /*!< Cell temperatures module 5 cells 9 10 11 */
+        { 0x2B3, 8, 200, 130, NULL_PTR },  /*!< Cell temperatures module 5 cells 9 10 11 */
 
         { 0x2C0, 8, 200, 140, NULL_PTR },  /*!< Cell voltages module 6 cells 0 1 2 */
         { 0x2C1, 8, 200, 140, NULL_PTR },  /*!< Cell voltages module 6 cells 3 4 5 */
         { 0x2C2, 8, 200, 140, NULL_PTR },  /*!< Cell voltages module 6 cells 6 7 8 */
         { 0x2C3, 8, 200, 140, NULL_PTR },  /*!< Cell voltages module 6 cells 9 10 11 */
-		//{ 0x2C4, 8, 200, 140, NULL_PTR },  /*!< Cell voltages module 6 cells 12 13 14 */
-		//{ 0x2C5, 8, 200, 140, NULL_PTR },  /*!< Cell voltages module 6 cells 15 16 17 */
+        { 0x2C4, 8, 200, 140, NULL_PTR },  /*!< Cell voltages module 6 cells 12 13 14 */
+        { 0x2C5, 8, 200, 140, NULL_PTR },  /*!< Cell voltages module 6 cells 15 16 17 */
 
         { 0x2D0, 8, 200, 150, NULL_PTR },  /*!< Cell temperatures module 6 cells 0 1 2 */
         { 0x2D1, 8, 200, 150, NULL_PTR },  /*!< Cell temperatures module 6 cells 3 4 5 */
         { 0x2D2, 8, 200, 150, NULL_PTR },  /*!< Cell temperatures module 6 cells 6 7 8 */
-		//{ 0x2D3, 8, 200, 150, NULL_PTR },  /*!< Cell temperatures module 6 cells 9 10 11 */
+        { 0x2D3, 8, 200, 150, NULL_PTR },  /*!< Cell temperatures module 6 cells 9 10 11 */
 
         { 0x2E0, 8, 200, 160, NULL_PTR },  /*!< Cell voltages module 7 cells 0 1 2 */
         { 0x2E1, 8, 200, 160, NULL_PTR },  /*!< Cell voltages module 7 cells 3 4 5 */
         { 0x2E2, 8, 200, 160, NULL_PTR },  /*!< Cell voltages module 7 cells 6 7 8 */
         { 0x2E3, 8, 200, 160, NULL_PTR },  /*!< Cell voltages module 7 cells 9 10 11 */
-		//{ 0x2E4, 8, 200, 160, NULL_PTR },  /*!< Cell voltages module 7 cells 12 13 14 */
-		//{ 0x2E5, 8, 200, 160, NULL_PTR },  /*!< Cell voltages module 7 cells 15 16 17 */
+        { 0x2E4, 8, 200, 160, NULL_PTR },  /*!< Cell voltages module 7 cells 12 13 14 */
+        { 0x2E5, 8, 200, 160, NULL_PTR },  /*!< Cell voltages module 7 cells 15 16 17 */
 
         { 0x2F0, 8, 200, 170, NULL_PTR },  /*!< Cell temperatures module 7 cells 0 1 2 */
         { 0x2F1, 8, 200, 170, NULL_PTR },  /*!< Cell temperatures module 7 cells 3 4 5 */
         { 0x2F2, 8, 200, 170, NULL_PTR },  /*!< Cell temperatures module 7 cells 6 7 8 */
-		//{ 0x2F3, 8, 200, 170, NULL_PTR },  /*!< Cell temperatures module 7 cells 9 10 11 */
+        { 0x2F3, 8, 200, 170, NULL_PTR },  /*!< Cell temperatures module 7 cells 9 10 11 */
 
 		{ 0x300, 8, 200, 180, NULL_PTR },  /*!< Cell voltages module 8 cells 0 1 2 */
 		{ 0x301, 8, 200, 180, NULL_PTR },  /*!< Cell voltages module 8 cells 3 4 5 */
 		{ 0x302, 8, 200, 180, NULL_PTR },  /*!< Cell voltages module 8 cells 6 7 8 */
 		{ 0x303, 8, 200, 180, NULL_PTR },  /*!< Cell voltages module 8 cells 9 10 11 */
-		//{ 0x304, 8, 200, 180, NULL_PTR },  /*!< Cell voltages module 8 cells 12 13 14 */
-		//{ 0x305, 8, 200, 180, NULL_PTR },  /*!< Cell voltages module 8 cells 15 16 17 */
+		{ 0x304, 8, 200, 180, NULL_PTR },  /*!< Cell voltages module 8 cells 12 13 14 */
+		{ 0x305, 8, 200, 180, NULL_PTR },  /*!< Cell voltages module 8 cells 15 16 17 */
 
 		{ 0x310, 8, 200, 190, NULL_PTR },  /*!< Cell temperatures module 8 cells 0 1 2 */
 		{ 0x311, 8, 200, 190, NULL_PTR },  /*!< Cell temperatures module 8 cells 3 4 5 */
 		{ 0x312, 8, 200, 190, NULL_PTR },  /*!< Cell temperatures module 8 cells 6 7 8 */
-		//{ 0x313, 8, 200, 190, NULL_PTR },  /*!< Cell temperatures module 8 cells 9 10 11 */
+		{ 0x313, 8, 200, 190, NULL_PTR },  /*!< Cell temperatures module 8 cells 9 10 11 */
 
 		{ 0x320, 8, 200, 200, NULL_PTR },  /*!< Cell voltages module 9 cells 0 1 2 */
 		{ 0x321, 8, 200, 200, NULL_PTR },  /*!< Cell voltages module 9 cells 3 4 5 */
 		{ 0x322, 8, 200, 200, NULL_PTR },  /*!< Cell voltages module 9 cells 6 7 8 */
 		{ 0x323, 8, 200, 200, NULL_PTR },  /*!< Cell voltages module 9 cells 9 10 11 */
-		//{ 0x324, 8, 200, 200, NULL_PTR },  /*!< Cell voltages module 9 cells 12 13 14 */
-		//{ 0x325, 8, 200, 200, NULL_PTR },  /*!< Cell voltages module 9 cells 15 16 17 */
+		{ 0x324, 8, 200, 200, NULL_PTR },  /*!< Cell voltages module 9 cells 12 13 14 */
+		{ 0x325, 8, 200, 200, NULL_PTR },  /*!< Cell voltages module 9 cells 15 16 17 */
 
 		{ 0x330, 8, 200, 210, NULL_PTR },  /*!< Cell temperatures module 9 cells 0 1 2 */
 		{ 0x331, 8, 200, 210, NULL_PTR },  /*!< Cell temperatures module 9 cells 3 4 5 */
 		{ 0x332, 8, 200, 210, NULL_PTR },  /*!< Cell temperatures module 9 cells 6 7 8 */
-		//{ 0x333, 8, 200, 210, NULL_PTR },  /*!< Cell temperatures module 9 cells 9 10 11 */
+		{ 0x333, 8, 200, 210, NULL_PTR },  /*!< Cell temperatures module 9 cells 9 10 11 */
 
 		{ 0x340, 8, 200, 220, NULL_PTR },  /*!< Cell voltages module 10 cells 0 1 2 */
 		{ 0x341, 8, 200, 220, NULL_PTR },  /*!< Cell voltages module 10 cells 3 4 5 */
 		{ 0x342, 8, 200, 220, NULL_PTR },  /*!< Cell voltages module 10 cells 6 7 8 */
 		{ 0x343, 8, 200, 220, NULL_PTR },  /*!< Cell voltages module 10 cells 9 10 11 */
-		//{ 0x344, 8, 200, 220, NULL_PTR },  /*!< Cell voltages module 10 cells 12 13 14 */
-		//{ 0x345, 8, 200, 220, NULL_PTR },  /*!< Cell voltages module 10 cells 15 16 17 */
+		{ 0x344, 8, 200, 220, NULL_PTR },  /*!< Cell voltages module 10 cells 12 13 14 */
+		{ 0x345, 8, 200, 220, NULL_PTR },  /*!< Cell voltages module 10 cells 15 16 17 */
 
 		{ 0x350, 8, 200, 230, NULL_PTR },  /*!< Cell temperatures module 10 cells 0 1 2 */
 		{ 0x351, 8, 200, 230, NULL_PTR },  /*!< Cell temperatures module 10 cells 3 4 5 */
 		{ 0x352, 8, 200, 230, NULL_PTR },  /*!< Cell temperatures module 10 cells 6 7 8 */
-		//{ 0x353, 8, 200, 230, NULL_PTR },  /*!< Cell temperatures module 10 cells 9 10 11 */
+		{ 0x353, 8, 200, 230, NULL_PTR },  /*!< Cell temperatures module 10 cells 9 10 11 */
 
 		{ 0x360, 8, 200, 240, NULL_PTR },  /*!< Cell voltages module 11 cells 0 1 2 */
 		{ 0x361, 8, 200, 240, NULL_PTR },  /*!< Cell voltages module 11 cells 3 4 5 */
 		{ 0x362, 8, 200, 240, NULL_PTR },  /*!< Cell voltages module 11 cells 6 7 8 */
 		{ 0x363, 8, 200, 240, NULL_PTR },  /*!< Cell voltages module 11 cells 9 10 11 */
-		//{ 0x364, 8, 200, 240, NULL_PTR },  /*!< Cell voltages module 11 cells 12 13 14 */
-		//{ 0x365, 8, 200, 240, NULL_PTR },  /*!< Cell voltages module 11 cells 15 16 17 */
+		{ 0x364, 8, 200, 240, NULL_PTR },  /*!< Cell voltages module 11 cells 12 13 14 */
+		{ 0x365, 8, 200, 240, NULL_PTR },  /*!< Cell voltages module 11 cells 15 16 17 */
 
 		{ 0x370, 8, 200, 250, NULL_PTR },  /*!< Cell temperatures module 11 cells 0 1 2 */
 		{ 0x371, 8, 200, 250, NULL_PTR },  /*!< Cell temperatures module 11 cells 3 4 5 */
 		{ 0x372, 8, 200, 250, NULL_PTR },  /*!< Cell temperatures module 11 cells 6 7 8 */
-		//{ 0x373, 8, 200, 250, NULL_PTR },  /*!< Cell temperatures module 11 cells 9 10 11 */
+		{ 0x373, 8, 200, 250, NULL_PTR },  /*!< Cell temperatures module 11 cells 9 10 11 */
 
+#if CURRENT_SENSOR_CAN_CHANNEL == 0
 #ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-        { 0x35C, 8, 100, 250, NULL_PTR },   /*!< current sensor I   */
-        { 0x35D, 8, 100, 250, NULL_PTR },   /*!< current sensor U1  */
-        { 0x35E, 8, 100, 250, NULL_PTR },   /*!< current sensor U2  */
-        { 0x35F, 8, 100, 250, NULL_PTR },   /*!< current sensor U3  */
-        { 0x525, 8, 100, 250, NULL_PTR },    /*!< current sensor T in cyclic mode  */
-        { 0x526, 8, 100, 250, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
-        { 0x527, 8, 100, 250, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
-        { 0x528, 8, 100, 250, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
-#else /* CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC */
-        { 0x521, 8, 100, 250, NULL_PTR },    /*!< current sensor I in cyclic mode   */
-        { 0x522, 8, 100, 250, NULL_PTR },    /*!< current sensor U1 in cyclic mode  */
-        { 0x523, 8, 100, 250, NULL_PTR },    /*!< current sensor U2 in cyclic mode  */
-        { 0x524, 8, 100, 250, NULL_PTR },    /*!< current sensor U3 in cyclic mode  */
-        { 0x525, 8, 100, 250, NULL_PTR },    /*!< current sensor T in cyclic mode  */
-        { 0x526, 8, 100, 250, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
-        { 0x527, 8, 100, 250, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
-        { 0x528, 8, 100, 250, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
+        , { 0x35B, 8, 100, 20, NULL_PTR }  /*!< Current Sensor Trigger */
 #endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
-
-		{ 0x060, 8, 100, 250, NULL_PTR },	//first part of telemetry messages
-		{ 0x069, 8, 100, 250, NULL_PTR },	//second part of telemetry messages
+#endif
 
 };
 
@@ -530,6 +513,28 @@ CAN_MSG_RX_TYPE_s can0_RxMsgs[] = {
         { 0x120, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< state request      */
 
         { CAN_ID_SOFTWARE_RESET_MSG, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< software reset     */
+
+#if CURRENT_SENSOR_CAN_CHANNEL == 0
+#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
+        { 0x35C, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< current sensor I   */
+        { 0x35D, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< current sensor U1  */
+        { 0x35E, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< current sensor U2  */
+        { 0x35F, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< current sensor U3  */
+        { 0x525, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor T in cyclic mode  */
+        { 0x526, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor Power in cyclic mode  */
+        { 0x527, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor C-C in cyclic mode  */
+        { 0x528, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor E-C in cyclic mode  */
+#else /* CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC */
+        { 0x521, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor I in cyclic mode   */
+        { 0x522, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor U1 in cyclic mode  */
+        { 0x523, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor U2 in cyclic mode  */
+        { 0x524, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor U3 in cyclic mode  */
+        { 0x525, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor T in cyclic mode  */
+        { 0x526, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor Power in cyclic mode  */
+        { 0x527, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor C-C in cyclic mode  */
+        { 0x528, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor E-C in cyclic mode  */
+#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
+#endif
 
         { 0x100, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< debug message      */
         { 0x777, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< request SW version */

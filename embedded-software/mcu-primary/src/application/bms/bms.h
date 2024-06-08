@@ -205,9 +205,6 @@ extern  BMS_STATEMACH_e BMS_GetState(void);
  */
 STD_RETURN_TYPE_e BMS_GetInitializationState(void);
 
-
-
-static STD_RETURN_TYPE_e BMS_CheckInterlockError(void);
 /**
  * @brief   trigger function for the SYS driver state machine.
  *

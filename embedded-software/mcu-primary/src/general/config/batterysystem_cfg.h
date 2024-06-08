@@ -74,7 +74,7 @@
  * \par Default:
  * 2
 */
-#define BS_NR_OF_MODULES                           4
+#define BS_NR_OF_MODULES                           2
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -84,10 +84,7 @@
  * \par Default:
  * 12
 */
-#define BS_NR_OF_BAT_CELLS_PER_MODULE               11
-
-//#define LAST_CELL_NOT_PLUGGED
-#define LAST_CELL_NOT_PLUGGED1
+#define BS_NR_OF_BAT_CELLS_PER_MODULE               12
 
 #if BS_NR_OF_BAT_CELLS_PER_MODULE <= 12
     #define BS_MAX_SUPPORTED_CELLS         12
@@ -201,7 +198,7 @@
  * defines if the Isabellenhuette current sensor is connected on CAN0 or CAN1
  * 0 = CAN0 / 1 = CAN1
  */
-#define CURRENT_SENSOR_CAN_CHANNEL 			1
+#define CURRENT_SENSOR_CAN_CHANNEL 			0
 
 #if CURRENT_SENSOR_PRESENT == TRUE
 /**
@@ -226,9 +223,9 @@
  * or maximum operating limit (MOL) is violated, the respective flag will be
  * set.
  */
-#define BS_CURRENTMAX_CHARGE_PL0_MSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL0_RSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL0_MOL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL0_MSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL0_RSL_mA        (170000u)
+#define BS_CURRENTMAX_CHARGE_PL0_MOL_mA        (160000u)
 
 /**
  * @brief Maximum operation limit of current on the powerline 0 in
@@ -248,9 +245,9 @@
  * or maximum operating limit (MOL) is violated, the respective flag will be
  * set.
  */
-#define BS_CURRENTMAX_CHARGE_PL1_MSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL1_RSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL1_MOL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL1_MSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL1_RSL_mA        (170000u)
+#define BS_CURRENTMAX_CHARGE_PL1_MOL_mA        (160000u)
 
 /**
  * @brief Maximum operation limit of current of powerline 1 in
@@ -269,14 +266,14 @@
  * If set to TRUE, foxBMS checks CAN timing. A valid request must come every 100ms, within the 95-150ms window.
  *
 */
-#define CHECK_CAN_TIMING                     FALSE
+#define CHECK_CAN_TIMING                     TRUE
 
 /**
  * If set to TRUE, balancing is deactivated completely.
  * If set to FALSE, foxBMS checks when balancing must be done and activates it accordingly.
  *
 */
-#define BALANCING_DEFAULT_INACTIVE           FALSE
+#define BALANCING_DEFAULT_INACTIVE           TRUE
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM

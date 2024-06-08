@@ -71,7 +71,7 @@
 extern void PL_CheckPackvoltage(DATA_BLOCK_CELLVOLTAGE_s* ptrCellvolt, DATA_BLOCK_CURRENT_SENSOR_s* ptrCurSensor) {
     int32_t diff = 0;
     STD_RETURN_TYPE_e result = E_NOT_OK;
-#ifndef IS_TEST
+
     /* Pointer validity check */
     if (ptrCellvolt != NULL_PTR && ptrCurSensor != NULL_PTR) {
         /* Get deviation between these two measurements */
@@ -84,7 +84,4 @@ extern void PL_CheckPackvoltage(DATA_BLOCK_CELLVOLTAGE_s* ptrCellvolt, DATA_BLOC
     } else {
         /* Invalid pointer -> TODO: error handling */
     }
-#else
-    result = E_OK;
-#endif
 }

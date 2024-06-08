@@ -383,7 +383,6 @@ static void DIAG_overvoltage(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
  * @brief  diagnosis callback function for undervoltage events
  */
 static void DIAG_undervoltage(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
-#if BS_NR_OF_MODULES != 0
     if (ch_id == DIAG_CH_CELLVOLTAGE_UNDERVOLTAGE_MSL) {
         if (event == DIAG_EVENT_RESET) {
             msl_flags.under_voltage = 0;
@@ -406,11 +405,6 @@ static void DIAG_undervoltage(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
             mol_flags.under_voltage = 1;
         }
     }
-#else
-    msl_flags.under_voltage = 0;
-    rsl_flags.under_voltage = 0;
-    mol_flags.under_voltage = 0;
-#endif
 }
 
 /**
@@ -758,49 +752,33 @@ void DIAG_error_cancurrentsensor(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
  */
 static void DIAG_error_ltc(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
     if (ch_id == DIAG_CH_LTC_SPI) {
-#if BS_NR_OF_MODULES != 0
         if (event == DIAG_EVENT_RESET) {
             error_flags.spi_error = 0;
         }
         if (event == DIAG_EVENT_NOK) {
             error_flags.spi_error = 1;
         }
-#else
-        error_flags.spi_error = 0;
-#endif
     } else if (ch_id == DIAG_CH_LTC_PEC) {
-#if BS_NR_OF_MODULES != 0
         if (event == DIAG_EVENT_RESET) {
             error_flags.crc_error = 0;
         }
         if (event == DIAG_EVENT_NOK) {
             error_flags.crc_error = 1;
         }
-#else
-        error_flags.crc_error = 0;
-#endif
     } else if (ch_id == DIAG_CH_LTC_MUX) {
-#if BS_NR_OF_MODULES != 0
         if (event == DIAG_EVENT_RESET) {
             error_flags.mux_error = 0;
         }
         if (event == DIAG_EVENT_NOK) {
             error_flags.mux_error = 1;
         }
-#else
-        error_flags.mux_error = 0;
-#endif
     }  else if (ch_id == DIAG_CH_LTC_CONFIG) {
-#if BS_NR_OF_MODULES != 0
         if (event == DIAG_EVENT_RESET) {
             error_flags.ltc_config_error = 0;
         }
         if (event == DIAG_EVENT_NOK) {
             error_flags.ltc_config_error = 1;
         }
-#else
-        error_flags.ltc_config_error = 0;
-#endif
     }
 }
 
@@ -984,7 +962,6 @@ void DIAG_error_openWire(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
  */
 void DIAG_error_deep_discharge_detected(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) {
     if (ch_id == DIAG_CH_DEEP_DISCHARGE_DETECTED) {
-#if BS_NR_OF_MODULES != 0
         if (event == DIAG_EVENT_RESET) {
             error_flags.deepDischargeDetected = 0;
             RTC_DEEP_DISCHARGE_DETECTED = 0;
@@ -993,10 +970,6 @@ void DIAG_error_deep_discharge_detected(DIAG_CH_ID_e ch_id, DIAG_EVENT_e event) 
             error_flags.deepDischargeDetected = 1;
             RTC_DEEP_DISCHARGE_DETECTED = 1;
         }
-#else
-        error_flags.deepDischargeDetected = 0;
-        RTC_DEEP_DISCHARGE_DETECTED = 0;
-#endif
     }
 }
 

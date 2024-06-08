@@ -158,13 +158,9 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* AdcHandle) {
       adc_mcuTemp = adc_values[adc_channel_num];
     }
     adc_channel_num++;
-#if BS_NR_OF_VOLTAGES_FROM_MCU_ADC   !=  0
     if (adc_channel_num > BS_NR_OF_VOLTAGES_FROM_MCU_ADC - 1) {
       adc_channel_num = 0;
     }
-#else
-    adc_channel_num = 0;
-#endif
     /* Start new conversion */
     adc_conversion_state = ADC_CONVERT;
 }
@@ -190,10 +186,8 @@ extern float ADC_GetMCUTemp_C(void) {
  * @brief get voltage in mV
  */
 extern uint16_t ADC_GetValue(uint32_t value) {
-#if BS_NR_OF_VOLTAGES_FROM_MCU_ADC   !=  0
     if (value < BS_NR_OF_VOLTAGES_FROM_MCU_ADC) {
       return adc_values[value];
     }
-#endif
     return 0;
 }
