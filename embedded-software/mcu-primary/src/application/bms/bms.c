@@ -654,7 +654,7 @@ void BMS_Trigger(void) {
             if (bms_state.substate == BMS_ENTRY) {
                 BAL_SetStateRequest(BAL_STATE_NOBALANCING_REQUEST);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
-                //CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
+                CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
 #endif
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
 #if BUILD_MODULE_ENABLE_ILCK == 1
@@ -1314,6 +1314,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
     DB_ReadBlock(&msl_flags, DATA_BLOCK_ID_MSL);
 
     /* Check maximum safety limit flags */
+
     if (msl_flags.over_current_charge_cell    == 1 ||
         msl_flags.over_current_charge_pl0     == 1 ||
         msl_flags.over_current_charge_pl1     == 1 ||
@@ -1329,7 +1330,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         /* error detected */
         retVal = E_NOT_OK;
     }
-
+#ifndef NO_CONTACTOR_ERROR
     /* Check system error flags */
     if (error_flags.currentOnOpenPowerline    == 1 ||
         error_flags.deepDischargeDetected     == 1 ||
@@ -1360,6 +1361,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         /* error detected */
         retVal = E_NOT_OK;
     }
+#endif
 
     return retVal;
 }
