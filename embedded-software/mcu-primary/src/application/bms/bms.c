@@ -1330,7 +1330,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         /* error detected */
         retVal = E_NOT_OK;
     }
-#ifndef NO_CONTACTOR_ERROR
+
     /* Check system error flags */
     if (error_flags.currentOnOpenPowerline    == 1 ||
         error_flags.deepDischargeDetected     == 1 ||
@@ -1347,8 +1347,10 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
 #ifndef NO_INTERLOCK_ERROR
         error_flags.interlock                 == 1 ||
 #endif
+#ifndef NO_CRC_ERROR
         error_flags.crc_error                 == 1 ||
         error_flags.mux_error                 == 1 ||
+#endif
         error_flags.spi_error                 == 1 ||
         error_flags.ltc_config_error          == 1 ||
         error_flags.currentsensorresponding   == 1 ||
@@ -1361,7 +1363,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         /* error detected */
         retVal = E_NOT_OK;
     }
-#endif
+
 
     return retVal;
 }
