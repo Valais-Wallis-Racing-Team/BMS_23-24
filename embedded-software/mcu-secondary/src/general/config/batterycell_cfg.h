@@ -137,7 +137,7 @@
  * \par Default:
  * 2800
 */
-#define BC_VOLTMAX_MSL      4100
+#define BC_VOLTMAX_MSL      4200
 
 /**
  * @ingroup CONFIG_BATTERYCELL

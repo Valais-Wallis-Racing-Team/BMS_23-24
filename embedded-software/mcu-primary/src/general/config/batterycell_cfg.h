@@ -145,8 +145,8 @@
  * \par Default:
  * 2800
 */
-#define BC_VOLTMAX_MSL      4100
-#define BC_VOLTMAX_RSL      4100
+#define BC_VOLTMAX_MSL      4200
+#define BC_VOLTMAX_RSL      4150
 #define BC_VOLTMAX_MOL      4100
 
 /**

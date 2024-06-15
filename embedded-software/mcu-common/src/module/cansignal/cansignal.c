@@ -114,7 +114,7 @@ void CANS_MainFunction(void) {
     	        }
     	counter_ticksComplete++;
 
-    	/*i = 158;
+    	/*i = 123;
     	result = E_NOT_OK;
     	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
     	    	     Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
@@ -130,7 +130,7 @@ void CANS_MainFunction(void) {
     	}
     	counter_ticksComplete++;
 
-    	i = 159;
+    	i = 124;
     	result = E_NOT_OK;
     	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
     				Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };

@@ -492,14 +492,14 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x527, 8, 100, 250, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
         { 0x528, 8, 100, 250, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
 #else /* CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC */
-        { 0x521, 8, 100, 250, NULL_PTR },    /*!< current sensor I in cyclic mode   */
-        { 0x522, 8, 100, 250, NULL_PTR },    /*!< current sensor U1 in cyclic mode  */
-        { 0x523, 8, 100, 250, NULL_PTR },    /*!< current sensor U2 in cyclic mode  */
-        { 0x524, 8, 100, 250, NULL_PTR },    /*!< current sensor U3 in cyclic mode  */
-        { 0x525, 8, 100, 250, NULL_PTR },    /*!< current sensor T in cyclic mode  */
-        { 0x526, 8, 100, 250, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
-        { 0x527, 8, 100, 250, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
-        { 0x528, 8, 100, 250, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
+       // { 0x521, 8, 100, 250, NULL_PTR },    /*!< current sensor I in cyclic mode   */
+       // { 0x522, 8, 100, 250, NULL_PTR },    /*!< current sensor U1 in cyclic mode  */
+       // { 0x523, 8, 100, 250, NULL_PTR },    /*!< current sensor U2 in cyclic mode  */
+       // { 0x524, 8, 100, 250, NULL_PTR },    /*!< current sensor U3 in cyclic mode  */
+       // { 0x525, 8, 100, 250, NULL_PTR },    /*!< current sensor T in cyclic mode  */
+       // { 0x526, 8, 100, 250, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
+       // { 0x527, 8, 100, 250, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
+       // { 0x528, 8, 100, 250, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
 #endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 
 		{ 0x060, 8, 100, 250, NULL_PTR },	//first part of telemetry messages
