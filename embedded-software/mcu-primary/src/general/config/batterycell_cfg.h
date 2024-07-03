@@ -94,9 +94,9 @@
  * \par Default:
  * -20
 */
-#define BC_TEMPMIN_DISCHARGE_MSL      -20
-#define BC_TEMPMIN_DISCHARGE_RSL      -20
-#define BC_TEMPMIN_DISCHARGE_MOL      -20
+#define BC_TEMPMIN_DISCHARGE_MSL      2
+#define BC_TEMPMIN_DISCHARGE_RSL      2
+#define BC_TEMPMIN_DISCHARGE_MOL      2
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -128,9 +128,9 @@
  * \par Default:
  * 0
 */
-#define BC_TEMPMIN_CHARGE_MSL     -20
-#define BC_TEMPMIN_CHARGE_RSL     -20
-#define BC_TEMPMIN_CHARGE_MOL     -20
+#define BC_TEMPMIN_CHARGE_MSL     2
+#define BC_TEMPMIN_CHARGE_RSL     2
+#define BC_TEMPMIN_CHARGE_MOL     2
 
 /**
  * @ingroup CONFIG_BATTERYCELL

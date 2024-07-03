@@ -78,6 +78,8 @@
  * 55
 */
 #define BC_TEMPMAX_DISCHARGE_MSL      55
+#define BC_TEMPMAX_DISCHARGE_RSL      50
+#define BC_TEMPMAX_DISCHARGE_MOL      45
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -92,7 +94,9 @@
  * \par Default:
  * -20
 */
-#define BC_TEMPMIN_DISCHARGE_MSL      2  /* &deg;C */
+#define BC_TEMPMIN_DISCHARGE_MSL      -20
+#define BC_TEMPMIN_DISCHARGE_RSL      -15
+#define BC_TEMPMIN_DISCHARGE_MOL      -10
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -107,7 +111,9 @@
  * \par Default:
  * 45
 */
-#define BC_TEMPMAX_CHARGE_MSL     55
+#define BC_TEMPMAX_CHARGE_MSL     45
+#define BC_TEMPMAX_CHARGE_RSL     40
+#define BC_TEMPMAX_CHARGE_MOL     35
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -122,7 +128,9 @@
  * \par Default:
  * 0
 */
-#define BC_TEMPMIN_CHARGE_MSL     2
+#define BC_TEMPMIN_CHARGE_MSL     -20
+#define BC_TEMPMIN_CHARGE_RSL     -15
+#define BC_TEMPMIN_CHARGE_MOL     -10
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -137,7 +145,9 @@
  * \par Default:
  * 2800
 */
-#define BC_VOLTMAX_MSL      4200
+#define BC_VOLTMAX_MSL      2650
+#define BC_VOLTMAX_RSL      2600
+#define BC_VOLTMAX_MOL      2550
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -149,7 +159,8 @@
  * \par Default:
  * 2500
 */
-#define BC_VOLT_NOMINAL     3600
+#define BC_VOLT_NOMINAL     2500
+
 /**
  * @ingroup CONFIG_BATTERYCELL
  * Minimum cell voltage limit.
@@ -163,7 +174,24 @@
  * \par Default:
  * 1700
 */
-#define BC_VOLTMIN_MSL      2700
+#define BC_VOLTMIN_MSL      1700
+#define BC_VOLTMIN_RSL      1750
+#define BC_VOLTMIN_MOL      1780
+
+/**
+ * @ingroup CONFIG_BATTERYCELL
+ * Deep-discharge cell voltage limit.
+ * If this voltage limit is violated, the cell is faulty. The BMS won't allow
+ * a closing of the contactors until this cell is replaced. a replacement of
+ * the cell is confirmed by sending the respective CAN debug message
+ * \par Type:
+ * int
+ * \par Unit:
+ * mV
+ * \par Default:
+ * BC_VOLTMIN_MSL
+*/
+#define BC_VOLT_DEEP_DISCHARGE          BC_VOLTMIN_MSL
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -179,6 +207,8 @@
  * 180000
 */
 #define BC_CURRENTMAX_DISCHARGE_MSL     180000
+#define BC_CURRENTMAX_DISCHARGE_RSL     175000
+#define BC_CURRENTMAX_DISCHARGE_MOL     170000
 
 /**
  * @ingroup CONFIG_BATTERYCELL
@@ -193,7 +223,9 @@
  * \par Default:
  * 180000
 */
-#define BC_CURRENTMAX_CHARGE_MSL        54000
+#define BC_CURRENTMAX_CHARGE_MSL        180000
+#define BC_CURRENTMAX_CHARGE_RSL        175000
+#define BC_CURRENTMAX_CHARGE_MOL        170000
 
 /*
  * the cell capacity used for SOC calculation, in this case Ah counting
@@ -202,7 +234,12 @@
  * @default 3500
  * @group
  */
-#define BC_CAPACITY 18000
+#define BC_CAPACITY 3500
+
+#if BC_VOLTMIN_MSL < BC_VOLT_DEEP_DISCHARGE
+#error "Configuration error! - Maximum safety limit for under voltage can't be lower than deep-discharge limit"
+#endif
+
 #endif
 
 #endif /* BATTERYCELL_CFG_H_ */

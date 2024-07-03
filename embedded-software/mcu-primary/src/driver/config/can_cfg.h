@@ -169,7 +169,7 @@
  * \par Default:
  * 16
 */
-#define CAN0_TRANSMIT_BUFFER_LENGTH      (24U)
+#define CAN0_TRANSMIT_BUFFER_LENGTH      (32U)
 
 /**
  * @ingroup CONFIG_CAN
