@@ -334,9 +334,9 @@ void BMS_Trigger(void) {
                         ILCK_SetStateRequest(ILCK_STATE_CLOSE_REQUEST);
                         bms_state.timer = BMS_STATEMACH_MEDIUMTIME_MS;
                         bms_state.substate = BMS_CHECK_INTERLOCK_CLOSE_AFTER_ERROR;
+#endif
                         bms_state.state = BMS_STATEMACH_STANDBY;
                         bms_state.substate = BMS_ENTRY;
-#endif
                     }
                     break;
                 }
@@ -476,13 +476,13 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
 
     /* Check system error flags */
     if (
-    	error_flags.main_plus                 == 1 ||
-        error_flags.main_minus                == 1 ||
-        error_flags.precharge                 == 1 ||
-        error_flags.charge_main_plus          == 1 ||
-        error_flags.charge_main_minus         == 1 ||
-        error_flags.charge_precharge          == 1 ||
-        error_flags.interlock                 == 1 ||
+    	//error_flags.main_plus                 == 1 ||
+        //error_flags.main_minus                == 1 ||
+        //error_flags.precharge                 == 1 ||
+        //error_flags.charge_main_plus          == 1 ||
+        //error_flags.charge_main_minus         == 1 ||
+        //error_flags.charge_precharge          == 1 ||
+        //error_flags.interlock                 == 1 ||
         error_flags.crc_error                 == 1 ||
         error_flags.mux_error                 == 1 ||
         error_flags.spi_error                 == 1 ||

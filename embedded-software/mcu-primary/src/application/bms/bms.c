@@ -653,12 +653,19 @@ void BMS_Trigger(void) {
 
             if (bms_state.substate == BMS_ENTRY) {
                 BAL_SetStateRequest(BAL_STATE_NOBALANCING_REQUEST);
+
+                //bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
+                //bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
+#if BUILD_MODULE_ENABLE_ILCK == 1
+                //bms_state.substate = BMS_OPEN_INTERLOCK;
+                ILCK_SetStateRequest(ILCK_STATE_OPEN_REQUEST);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
                 CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
 #endif
+                nextOpenWireCheck = timestamp + LTC_ERROR_OPEN_WIRE_PERIOD_ms;
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
-#if BUILD_MODULE_ENABLE_ILCK == 1
-                bms_state.substate = BMS_OPEN_INTERLOCK;
+                bms_state.substate = BMS_CHECK_ERROR_FLAGS;
+                break;
 #else
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
 #endif
@@ -666,15 +673,15 @@ void BMS_Trigger(void) {
                 systemstate.bms_state = BMS_STATEMACH_ERROR;
                 DB_WriteBlock(&systemstate, DATA_BLOCK_ID_SYSTEMSTATE);
                 break;
-#if BUILD_MODULE_ENABLE_ILCK == 1
-            } else if (bms_state.substate == BMS_OPEN_INTERLOCK) {
+//#if BUILD_MODULE_ENABLE_ILCK == 1
+            }/* else if (bms_state.substate == BMS_OPEN_INTERLOCK) {
                 ILCK_SetStateRequest(ILCK_STATE_OPEN_REQUEST);
                 nextOpenWireCheck = timestamp + LTC_ERROR_OPEN_WIRE_PERIOD_ms;
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
                 break;
 #endif
-            } else if (bms_state.substate == BMS_CHECK_ERROR_FLAGS) {
+            } */else if (bms_state.substate == BMS_CHECK_ERROR_FLAGS) {
                 if (BMS_CheckAnyErrorFlagSet() == E_NOT_OK) {
                     /* we stay already in requested state */
                     if (nextOpenWireCheck <= timestamp) {
