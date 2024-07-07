@@ -336,7 +336,7 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x1E1, 8, 1000, 40, NULL_PTR },  /*!< Running average current 1 */
         { 0x1E2, 8, 1000, 40, NULL_PTR },  /*!< Running average current 2 */
 
-        { 0x064, 8, 100, 40, NULL_PTR },  /*!< Pack voltage */  									//to send
+        { 0x064, 8, 1000, 40, NULL_PTR },  /*!< Pack voltage */  									//to send
 
         { 0x200, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 0 1 2 */
         { 0x201, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 3 4 5 */
