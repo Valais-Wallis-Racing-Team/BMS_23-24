@@ -259,9 +259,6 @@ typedef enum {
 	CAN0_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
 	CAN0_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
 
-	CAN0_MSG_BatInfo0_Tele,
-	CAN0_MSG_BatInfo1_Tele,
-
 
     /* Insert here symbolic names for CAN1 messages */
 #ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
@@ -912,11 +909,6 @@ typedef enum {
 	CAN0_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
 	CAN0_SIG_IVT_EC_Status,                /*!< current sensor counter */
 	CAN0_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
-
-	CAN0_SIG_PackVolt_Battery_Tele,
-	CAN0_SIG_IVT_Current_Measurement_Tele,
-	CAN0_SIG_IVT_Power_Measurement_Tele,
-	CAN0_SIG_Celltemp_mean_Tele,
 
     CAN0_SIGNAL_NONE = 0xFFFF
 } CANS_CAN0_signalsTx_e;

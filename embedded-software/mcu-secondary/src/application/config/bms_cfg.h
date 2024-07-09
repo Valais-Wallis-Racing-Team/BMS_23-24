@@ -155,6 +155,8 @@
  */
 #define BMS_STATEMACH_LONGTIME_MS 100
 
+#define BMS_STATEMACH_A_BIT_LONGERTIME_MS 150
+
 /**
  * BMS statemachine very long time definition in ms
  */

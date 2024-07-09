@@ -65,6 +65,12 @@
 
 #define IS_TEST
 
+#define NO_CONTACTOR_ERROR
+
+#define NO_INTERLOCK_ERROR
+
+#define NO_CRC_ERROR
+
 /**
  * @ingroup CONFIG_GENERAL
  * enables checking of flash checksum at startup.

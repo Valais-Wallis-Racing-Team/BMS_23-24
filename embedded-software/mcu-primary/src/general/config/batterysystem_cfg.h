@@ -74,7 +74,7 @@
  * \par Default:
  * 2
 */
-#define BS_NR_OF_MODULES                           10
+#define BS_NR_OF_MODULES                           8
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM

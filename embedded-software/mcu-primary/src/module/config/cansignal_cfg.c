@@ -752,12 +752,6 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
 	{ {CAN0_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_Status */
 	{ {CAN0_MSG_IVT_EnergyCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS7_EC_Measurement */
 
-	//telemetry values
-	{ {CAN0_MSG_BatInfo0_Tele}, 0, 32, 0, UINT32_MAX, 1, 0, littleEndian, &cans_getPackVoltage },  /*!< CAN0_SIG_PackVolt_Battery */
-	{ {CAN0_MSG_BatInfo0_Tele}, 32, 32, INT32_MIN, INT32_MAX, 1, 0, littleEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS0_I_Measurement */ //to modify values in between
-	{ {CAN0_MSG_BatInfo1_Tele}, 0, 32, INT32_MIN, INT32_MAX, 1, 0, littleEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS5_P_Measurement */
-	{ {CAN0_MSG_BatInfo1_Tele}, 16, 16, -128, 527.35, 100, 128, littleEndian, &cans_getminmaxtemp },  /*!< CAN0_SIG_Celltemp_mean */
-
 };
 
 
@@ -2058,7 +2052,6 @@ uint32_t cans_getminmaxtemp(uint32_t sigIdx, void *value) {
     if (value != NULL_PTR) {
         switch (sigIdx) {
         case CAN0_SIG_Celltemp_mean:
-        case CAN0_SIG_Celltemp_mean_Tele:
             /* First signal that is called */
             DB_ReadBlock(&minmax_temp_tab, DATA_BLOCK_ID_MINMAX);
 
@@ -2240,7 +2233,6 @@ static uint32_t cans_getPackVoltage(uint32_t sigIdx, void *value) {
     if (value != NULL_PTR) {
        switch (sigIdx) {
            case CAN0_SIG_PackVolt_Battery:
-           case CAN0_SIG_PackVolt_Battery_Tele:
                /* first signal to call function */
                DB_ReadBlock(&packVolt_tab, DATA_BLOCK_ID_CURRENT_SENSOR);
                /* Check limits */
@@ -2274,7 +2266,6 @@ static uint32_t cans_setcurrCaptor(uint32_t sigIdx, void *value){ // function to
 	if (value != NULL_PTR) {
 	   switch (sigIdx) {
 	       case CAN0_SIG_IVT_Current_Measurement:
-	       case CAN0_SIG_IVT_Current_Measurement_Tele:
 	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	           canData = cans_checkLimits((float)current_tab_for_send.current, sigIdx);
 	           /* Apply offset and factor */
@@ -2305,7 +2296,6 @@ static uint32_t cans_setcurrCaptor(uint32_t sigIdx, void *value){ // function to
 	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	       	   break;
 	       case CAN0_SIG_IVT_Power_Measurement:
-	       case CAN0_SIG_IVT_Power_Measurement_Tele:
 	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	       	   canData = cans_checkLimits((float)current_tab_for_send.power, sigIdx);
 	       	   /* Apply offset and factor */
@@ -2341,7 +2331,6 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
     int32_t voltageValue[3];
     uint32_t idx = 0;
     uint8_t dummy = 0;
-#ifndef IS_TEST
     if (value != NULL_PTR) {
         switch (sigIdx) {
         	case CAN1_SIG_IVT_Current_Status:
@@ -2449,7 +2438,6 @@ static uint32_t cans_setcurr(uint32_t sigIdx, void *value) {
         }
 
     }
-#endif
     return 0;
 }
 

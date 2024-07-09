@@ -96,6 +96,7 @@ static BMS_STATE_REQUEST_e BMS_TransferStateRequest(void);
 static uint8_t BMS_CheckReEntrance(void);
 static uint8_t BMS_CheckCANRequests(void);
 static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void);
+static STD_RETURN_TYPE_e BMS_CheckInterlockError(void);
 static void BMS_GetMeasurementValues(void);
 static void BMS_CheckVoltages(void);
 static void BMS_CheckTemperatures(void);
@@ -295,7 +296,11 @@ void BMS_Trigger(void) {
                     bms_state.state = BMS_STATEMACH_ERROR;
                     bms_state.substate = BMS_ENTRY;
                     break;
-                } else {
+                } else if (BMS_CheckInterlockError() == E_NOT_OK){
+            	    bms_state.timer = BMS_STATEMACH_A_BIT_LONGERTIME_MS;
+            	    bms_state.substate = BMS_ENTRY;
+            	    break;
+            	} else {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.substate = BMS_INTERLOCK_CHECKED;
                     break;
@@ -444,6 +449,20 @@ static void BMS_CheckSlaveTemperatures(void) {
     /* TODO: to be implemented */
 }
 
+
+
+static STD_RETURN_TYPE_e BMS_CheckInterlockError(void) {
+    STD_RETURN_TYPE_e retVal = E_OK;  /* is set to E_NOT_OK if error detected */
+    DATA_BLOCK_ERRORSTATE_s error_flags;
+    DB_ReadBlock(&error_flags, DATA_BLOCK_ID_ERRORSTATE);
+
+    if (error_flags.interlock == 1)
+    {
+    	retVal = E_NOT_OK;
+    }
+    return retVal;
+}
+
 /**
  * @brief   Checks the error flags
  *
@@ -476,15 +495,21 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
 
     /* Check system error flags */
     if (
+#ifndef NO_CONTACTOR_ERROR
     	error_flags.main_plus                 == 1 ||
         error_flags.main_minus                == 1 ||
         error_flags.precharge                 == 1 ||
         error_flags.charge_main_plus          == 1 ||
         error_flags.charge_main_minus         == 1 ||
         error_flags.charge_precharge          == 1 ||
+#endif
+#ifndef NO_INTERLOCK_ERROR
         error_flags.interlock                 == 1 ||
+#endif
+#ifndef NO_CRC_ERROR
         error_flags.crc_error                 == 1 ||
         error_flags.mux_error                 == 1 ||
+#endif
         error_flags.spi_error                 == 1 ||
         error_flags.currentsensorresponding   == 1 ||
         error_flags.can_timing_cc             == 1 ||
