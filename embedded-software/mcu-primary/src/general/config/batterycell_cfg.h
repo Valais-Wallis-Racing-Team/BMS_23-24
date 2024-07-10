@@ -174,9 +174,9 @@
  * \par Default:
  * 1700
 */
-#define BC_VOLTMIN_MSL      2700
-#define BC_VOLTMIN_RSL      2700
-#define BC_VOLTMIN_MOL      2700
+#define BC_VOLTMIN_MSL      2500
+#define BC_VOLTMIN_RSL      2500
+#define BC_VOLTMIN_MOL      2500
 
 /**
  * @ingroup CONFIG_BATTERYCELL

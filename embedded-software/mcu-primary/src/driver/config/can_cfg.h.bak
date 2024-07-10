@@ -257,7 +257,7 @@
  * \par Default:
  * 0
 */
-#define CAN0_BUFFER_BYPASS_NUMBER_OF_IDs (0U)
+#define CAN0_BUFFER_BYPASS_NUMBER_OF_IDs (1U)
 
 /**
  * @ingroup CONFIG_CAN

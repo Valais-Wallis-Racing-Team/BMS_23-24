@@ -105,7 +105,6 @@ void APPL_Cyclic_10ms(void) {
     SOF_Calculation();
 
     ALGO_MonitorExecutionTime();
-    //DIAG_SysMonNotify(DIAG_SYSMON_APPL_CYCLIC_100ms, 0);        /* task is running, state = ok */
 }
 
 void APPL_Cyclic_100ms(void) {
