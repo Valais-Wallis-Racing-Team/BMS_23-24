@@ -250,14 +250,14 @@ typedef enum {
 	CAN0_MSG_Mod11_Celltemp_2,  /*!< Module 11 Cell temperatures 6-8 */
 	//CAN0_MSG_Mod11_Celltemp_3,  /*!< Module 11 Cell temperatures 9-11 */
 
-	CAN0_MSG_IVT_Current,                    /*!< current sensing */
-	CAN0_MSG_IVT_Voltage_1,                  /*!< current sensor voltage 1 */
-	CAN0_MSG_IVT_Voltage_2,                  /*!< current sensor voltage 2 */
-	CAN0_MSG_IVT_Voltage_3,                  /*!< current sensor voltage 3 */
-	CAN0_MSG_IVT_Temperature,                /*!< current sensor temperature */
-	CAN0_MSG_IVT_Power,                      /*!< current sensor power */
-	CAN0_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
-	CAN0_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
+	//CAN0_MSG_IVT_Current,                    /*!< current sensing */
+	//CAN0_MSG_IVT_Voltage_1,                  /*!< current sensor voltage 1 */
+	//CAN0_MSG_IVT_Voltage_2,                  /*!< current sensor voltage 2 */
+	//CAN0_MSG_IVT_Voltage_3,                  /*!< current sensor voltage 3 */
+	//CAN0_MSG_IVT_Temperature,                /*!< current sensor temperature */
+	//CAN0_MSG_IVT_Power,                      /*!< current sensor power */
+	//CAN0_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
+	//CAN0_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
 
 
     /* Insert here symbolic names for CAN1 messages */
@@ -885,30 +885,30 @@ typedef enum {
     //CAN0_SIG_Mod11_temp_10,
     //CAN0_SIG_Mod11_temp_11,
 
-	CAN0_SIG_IVT_Current_MuxID,            /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Current_Status,           /*!< current sensor counter */
-	CAN0_SIG_IVT_Current_Measurement,      /*!< current sensor measurement I */
-	CAN0_SIG_IVT_Voltage_1_MuxID,          /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Voltage_1_Status,         /*!< current sensor counter */
-	CAN0_SIG_IVT_Voltage_1_Measurement,    /*!< current sensor measurement U1 */
-	CAN0_SIG_IVT_Voltage_2_MuxID,          /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Voltage_2_Status,         /*!< current sensor counter */
-	CAN0_SIG_IVT_Voltage_2_Measurement,    /*!< current sensor measurement U2 */
-	CAN0_SIG_IVT_Voltage_3_MuxID,          /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Voltage_3_Status,         /*!< current sensor counter */
-	CAN0_SIG_IVT_Voltage_3_Measurement,    /*!< current sensor measurement U3 */
-	CAN0_SIG_IVT_Temperature_MuxID,        /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Temperature_Status,       /*!< current sensor counter */
-	CAN0_SIG_IVT_Temperature_Measurement,  /*!< current sensor measurement T */
-	CAN0_SIG_IVT_Power_MuxID,              /*!< current sensor measurement type */
-	CAN0_SIG_IVT_Power_Status,             /*!< current sensor counter */
-	CAN0_SIG_IVT_Power_Measurement,        /*!< current sensor measurement P */
-	CAN0_SIG_IVT_CC_MuxID,                 /*!< current sensor measurement type */
-	CAN0_SIG_IVT_CC_Status,                /*!< current sensor counter */
-	CAN0_SIG_IVT_CC_Measurement,           /*!< current sensor measurement C-C */
-	CAN0_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
-	CAN0_SIG_IVT_EC_Status,                /*!< current sensor counter */
-	CAN0_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
+	//CAN0_SIG_IVT_Current_MuxID,            /*!< current sensor measurement type */
+	//CAN0_SIG_IVT_Current_Status,           /*!< current sensor counter */
+	//CAN0_SIG_IVT_Current_Measurement,      /*!< current sensor measurement I */
+	//CAN0_SIG_IVT_Voltage_1_MuxID,          /*!< current sensor measurement type */
+	//CAN0_SIG_IVT_Voltage_1_Status,         /*!< current sensor counter */
+	//CAN0_SIG_IVT_Voltage_1_Measurement,    /*!< current sensor measurement U1 */
+	//CAN0_SIG_IVT_Voltage_2_MuxID,          /*!< current sensor measurement type */
+	//CAN0_SIG_IVT_Voltage_2_Status,         /*!< current sensor counter */
+	//CAN0_SIG_IVT_Voltage_2_Measurement,    /*!< current sensor measurement U2 */
+	//CAN0_SIG_IVT_Voltage_3_MuxID,          /*!< current sensor measurement type */
+	//CAN0_SIG_IVT_Voltage_3_Status,         /*!< current sensor counter */
+	//CAN0_SIG_IVT_Voltage_3_Measurement,    /*!< current sensor measurement U3 */
+	//CAN0_SIG_IVT_Temperature_MuxID,        /*!< current sensor measurement type */
+	//CAN0_SIG_IVT_Temperature_Status,       /*!< current sensor counter */
+	//CAN0_SIG_IVT_Temperature_Measurement,  /*!< current sensor measurement T */
+	//CAN0_SIG_IVT_Power_MuxID,              /*!< current sensor measurement type */
+	//CAN0_SIG_IVT_Power_Status,             /*!< current sensor counter */
+	//CAN0_SIG_IVT_Power_Measurement,        /*!< current sensor measurement P */
+	//CAN0_SIG_IVT_CC_MuxID,                 /*!< current sensor measurement type */
+	//CAN0_SIG_IVT_CC_Status,                /*!< current sensor counter */
+	//CAN0_SIG_IVT_CC_Measurement,           /*!< current sensor measurement C-C */
+	//CAN0_SIG_IVT_EC_MuxID,                 /*!< current sensor measurement type */
+	//CAN0_SIG_IVT_EC_Status,                /*!< current sensor counter */
+	//CAN0_SIG_IVT_EC_Measurement,           /*!< current sensor measurement E-C */
 
     CAN0_SIGNAL_NONE = 0xFFFF
 } CANS_CAN0_signalsTx_e;

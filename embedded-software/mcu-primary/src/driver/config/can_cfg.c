@@ -492,14 +492,14 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x527, 8, 100, 20, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
         { 0x528, 8, 100, 20, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
 #else /* CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC */
-       // { 0x521, 8, 100, 20, NULL_PTR },    /*!< current sensor I in cyclic mode   */
-       // { 0x522, 8, 100, 20, NULL_PTR },    /*!< current sensor U1 in cyclic mode  */
-       // { 0x523, 8, 100, 20, NULL_PTR },    /*!< current sensor U2 in cyclic mode  */
-       // { 0x524, 8, 100, 20, NULL_PTR },    /*!< current sensor U3 in cyclic mode  */
-       // { 0x525, 8, 100, 20, NULL_PTR },    /*!< current sensor T in cyclic mode  */
-       // { 0x526, 8, 100, 20, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
-       // { 0x527, 8, 100, 20, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
-       // { 0x528, 8, 100, 20, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
+       // { 0x521, 6, 1000, 20, NULL_PTR },    /*!< current sensor I in cyclic mode   */
+		// { 0x522, 6, 1000, 20, NULL_PTR },    /*!< current sensor U1 in cyclic mode  */
+		// { 0x523, 6, 1000, 20, NULL_PTR },    /*!< current sensor U2 in cyclic mode  */
+		// { 0x524, 6, 1000, 20, NULL_PTR },    /*!< current sensor U3 in cyclic mode  */
+		// { 0x525, 6, 1000, 20, NULL_PTR },    /*!< current sensor T in cyclic mode  */
+		// { 0x526, 6, 1000, 20, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
+		// { 0x527, 6, 1000, 20, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
+		// { 0x528, 6, 1000, 20, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
 #endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 
 };
@@ -538,23 +538,23 @@ CAN_MSG_RX_TYPE_s can1_RxMsgs[] = {
 
 #if CURRENT_SENSOR_CAN_CHANNEL == 1
 #ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-        { 0x35C, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< current sensor I   */
-        { 0x35D, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< current sensor U1  */
-        { 0x35E, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< current sensor U2  */
-        { 0x35F, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },   /*!< current sensor U3  */
-        { 0x525, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor T in cyclic mode  */
-        { 0x526, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor Power in cyclic mode  */
-        { 0x527, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor C-C in cyclic mode  */
-        { 0x528, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor E-C in cyclic mode  */
+        { 0x35C, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },   /*!< current sensor I   */
+        { 0x35D, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },   /*!< current sensor U1  */
+        { 0x35E, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },   /*!< current sensor U2  */
+        { 0x35F, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },   /*!< current sensor U3  */
+        { 0x525, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor T in cyclic mode  */
+        { 0x526, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor Power in cyclic mode  */
+        { 0x527, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor C-C in cyclic mode  */
+        { 0x528, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor E-C in cyclic mode  */
 #else /* CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC */
-        { 0x521, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor I in cyclic mode   */
-        { 0x522, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor U1 in cyclic mode  */
-        { 0x523, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor U2 in cyclic mode  */
-        { 0x524, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor U3 in cyclic mode  */
-        { 0x525, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor T in cyclic mode  */
-        { 0x526, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor Power in cyclic mode  */
-        { 0x527, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< current sensor C-C in cyclic mode  */
-        { 0x528, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL }     /*!< current sensor E-C in cyclic mode  */
+        { 0x521, 0xFFFF, 6, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor I in cyclic mode   */
+        { 0x522, 0xFFFF, 6, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor U1 in cyclic mode  */
+        { 0x523, 0xFFFF, 6, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor U2 in cyclic mode  */
+        { 0x524, 0xFFFF, 6, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor U3 in cyclic mode  */
+        { 0x525, 0xFFFF, 6, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor T in cyclic mode  */
+        { 0x526, 0xFFFF, 6, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor Power in cyclic mode  */
+        { 0x527, 0xFFFF, 6, 0, CAN_FILTER_FIFO1, NULL },    /*!< current sensor C-C in cyclic mode  */
+        { 0x528, 0xFFFF, 6, 0, CAN_FILTER_FIFO1, NULL }     /*!< current sensor E-C in cyclic mode  */
 #endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 #endif
 

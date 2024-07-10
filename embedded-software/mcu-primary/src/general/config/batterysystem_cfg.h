@@ -74,7 +74,7 @@
  * \par Default:
  * 2
 */
-#define BS_NR_OF_MODULES                           8
+#define BS_NR_OF_MODULES                           10
 
 /**
  * @ingroup CONFIG_BATTERYSYSTEM
@@ -196,7 +196,7 @@
  * If set to TRUE, foxBMS checks for the presence of a current sensor. If sensor stops responding during runtime, an error is raised
  *
 */
-#define CURRENT_SENSOR_PRESENT               FALSE
+#define CURRENT_SENSOR_PRESENT               TRUE
 /**
  * defines if the Isabellenhuette current sensor is connected on CAN0 or CAN1
  * 0 = CAN0 / 1 = CAN1
@@ -215,7 +215,7 @@
 /**
  * Delay in ms after which it is considered the current sensor is not responding anymore.
  */
-#define CURRENT_SENSOR_RESPONSE_TIMEOUT_MS         100
+#define CURRENT_SENSOR_RESPONSE_TIMEOUT_MS         200
 
 #endif /* CURRENT_SENSOR_PRESENT == TRUE */
 
@@ -226,9 +226,9 @@
  * or maximum operating limit (MOL) is violated, the respective flag will be
  * set.
  */
-#define BS_CURRENTMAX_CHARGE_PL0_MSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL0_RSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL0_MOL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL0_MSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL0_RSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL0_MOL_mA        (180000u)
 
 /**
  * @brief Maximum operation limit of current on the powerline 0 in
@@ -248,9 +248,9 @@
  * or maximum operating limit (MOL) is violated, the respective flag will be
  * set.
  */
-#define BS_CURRENTMAX_CHARGE_PL1_MSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL1_RSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL1_MOL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL1_MSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL1_RSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL1_MOL_mA        (180000u)
 
 /**
  * @brief Maximum operation limit of current of powerline 1 in
@@ -379,7 +379,7 @@
 /**
  * current sensor threshold for 0 current in mA as the sensor has a jitter.
  */
-#define BS_CS_THRESHOLD_NO_CURRENT_mA               (200u)
+#define BS_CS_THRESHOLD_NO_CURRENT_mA               (2000u)
 
 /**
  * maximum voltage drop over fuse. If the measured voltage difference

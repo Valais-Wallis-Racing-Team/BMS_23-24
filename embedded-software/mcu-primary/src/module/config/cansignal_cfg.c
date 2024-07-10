@@ -727,30 +727,30 @@ const CANS_signal_s cans_CAN0_signals_tx[] = {
 
 #endif
 
-	{ {CAN0_MSG_IVT_Current}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_MuxID */
-	{ {CAN0_MSG_IVT_Current}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_Status */
-	{ {CAN0_MSG_IVT_Current}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS0_I_Measurement */
-	{ {CAN0_MSG_IVT_Voltage_1}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_MuxID */
-	{ {CAN0_MSG_IVT_Voltage_1}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_Status */
-	{ {CAN0_MSG_IVT_Voltage_1}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS1_U1_Measurement */
-	{ {CAN0_MSG_IVT_Voltage_2}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_MuxID */
-	{ {CAN0_MSG_IVT_Voltage_2}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_Status */
-	{ {CAN0_MSG_IVT_Voltage_2}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor, },  /* CAN0_SIG_ISENS2_U2_Measurement */
-	{ {CAN0_MSG_IVT_Voltage_3}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_MuxID */
-	{ {CAN0_MSG_IVT_Voltage_3}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_Status */
-	{ {CAN0_MSG_IVT_Voltage_3}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor, },  /* CAN0_SIG_ISENS3_U3_Measurement */
-	{ {CAN0_MSG_IVT_Temperature}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_MuxID */
-	{ {CAN0_MSG_IVT_Temperature}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_Status */
-	{ {CAN0_MSG_IVT_Temperature}, 16, 32, INT32_MIN, INT32_MAX, 0.1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS4_T_Measurement */
-	{ {CAN0_MSG_IVT_Power}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_MuxID */
-	{ {CAN0_MSG_IVT_Power}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_Status */
-	{ {CAN0_MSG_IVT_Power}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS5_P_Measurement */
-	{ {CAN0_MSG_IVT_CoulombCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_MuxID */
-	{ {CAN0_MSG_IVT_CoulombCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_Status */
-	{ {CAN0_MSG_IVT_CoulombCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS6_CC_Measurement */
-	{ {CAN0_MSG_IVT_EnergyCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_MuxID */
-	{ {CAN0_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_Status */
-	{ {CAN0_MSG_IVT_EnergyCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS7_EC_Measurement */
+	//{ {CAN0_MSG_IVT_Current}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_MuxID */
+	//{ {CAN0_MSG_IVT_Current}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_Status */
+	//{ {CAN0_MSG_IVT_Current}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS0_I_Measurement */
+	//{ {CAN0_MSG_IVT_Voltage_1}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_MuxID */
+	//{ {CAN0_MSG_IVT_Voltage_1}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_Status */
+	//{ {CAN0_MSG_IVT_Voltage_1}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS1_U1_Measurement */
+	//{ {CAN0_MSG_IVT_Voltage_2}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_MuxID */
+	//{ {CAN0_MSG_IVT_Voltage_2}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_Status */
+	//{ {CAN0_MSG_IVT_Voltage_2}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor, },  /* CAN0_SIG_ISENS2_U2_Measurement */
+	//{ {CAN0_MSG_IVT_Voltage_3}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_MuxID */
+	//{ {CAN0_MSG_IVT_Voltage_3}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_Status */
+	//{ {CAN0_MSG_IVT_Voltage_3}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor, },  /* CAN0_SIG_ISENS3_U3_Measurement */
+	//{ {CAN0_MSG_IVT_Temperature}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_MuxID */
+	//{ {CAN0_MSG_IVT_Temperature}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_Status */
+	//{ {CAN0_MSG_IVT_Temperature}, 16, 32, INT32_MIN, INT32_MAX, 0.1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS4_T_Measurement */
+	//{ {CAN0_MSG_IVT_Power}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_MuxID */
+	//{ {CAN0_MSG_IVT_Power}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_Status */
+	//{ {CAN0_MSG_IVT_Power}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS5_P_Measurement */
+	//{ {CAN0_MSG_IVT_CoulombCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_MuxID */
+	//{ {CAN0_MSG_IVT_CoulombCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_Status */
+	//{ {CAN0_MSG_IVT_CoulombCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS6_CC_Measurement */
+	//{ {CAN0_MSG_IVT_EnergyCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_MuxID */
+	//{ {CAN0_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_Status */
+	//{ {CAN0_MSG_IVT_EnergyCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurrCaptor },  /* CAN0_SIG_ISENS7_EC_Measurement */
 
 };
 
@@ -770,28 +770,28 @@ const CANS_signal_s cans_CAN0_signals_rx[] = {
 
 const CANS_signal_s cans_CAN1_signals_rx[] = {
 	    { {CAN1_MSG_IVT_Current}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_MuxID */
-	    { {CAN1_MSG_IVT_Current}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS0_I_Status */
+	    { {CAN1_MSG_IVT_Current}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS0_I_Status */
 	    { {CAN1_MSG_IVT_Current}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS0_I_Measurement */
 	    { {CAN1_MSG_IVT_Voltage_1}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_MuxID */
-	    { {CAN1_MSG_IVT_Voltage_1}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS1_U1_Status */
+	    { {CAN1_MSG_IVT_Voltage_1}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS1_U1_Status */
 	    { {CAN1_MSG_IVT_Voltage_1}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS1_U1_Measurement */
 	    { {CAN1_MSG_IVT_Voltage_2}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_MuxID */
-	    { {CAN1_MSG_IVT_Voltage_2}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS2_U2_Status */
+	    { {CAN1_MSG_IVT_Voltage_2}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS2_U2_Status */
 	    { {CAN1_MSG_IVT_Voltage_2}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr, },  /* CAN0_SIG_ISENS2_U2_Measurement */
 	    { {CAN1_MSG_IVT_Voltage_3}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_MuxID */
-	    { {CAN1_MSG_IVT_Voltage_3}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS3_U3_Status */
+	    { {CAN1_MSG_IVT_Voltage_3}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS3_U3_Status */
 	    { {CAN1_MSG_IVT_Voltage_3}, 16, 32, 0, INT32_MAX, 1, 0, bigEndian, &cans_setcurr, },  /* CAN0_SIG_ISENS3_U3_Measurement */
 	    { {CAN1_MSG_IVT_Temperature}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_MuxID */
-	    { {CAN1_MSG_IVT_Temperature}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS4_T_Status */
+	    { {CAN1_MSG_IVT_Temperature}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS4_T_Status */
 	    { {CAN1_MSG_IVT_Temperature}, 16, 32, INT32_MIN, INT32_MAX, 0.1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS4_T_Measurement */
 	    { {CAN1_MSG_IVT_Power}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_MuxID */
-	    { {CAN1_MSG_IVT_Power}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS5_P_Status */
+	    { {CAN1_MSG_IVT_Power}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS5_P_Status */
 	    { {CAN1_MSG_IVT_Power}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS5_P_Measurement */
 	    { {CAN1_MSG_IVT_CoulombCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_MuxID */
-	    { {CAN1_MSG_IVT_CoulombCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS6_CC_Status */
+	    { {CAN1_MSG_IVT_CoulombCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS6_CC_Status */
 	    { {CAN1_MSG_IVT_CoulombCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS6_CC_Measurement */
 	    { {CAN1_MSG_IVT_EnergyCount}, 0, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_MuxID */
-	    { {CAN1_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, NULL_PTR },  /* CAN0_SIG_ISENS7_EC_Status */
+	    { {CAN1_MSG_IVT_EnergyCount}, 8, 8, 0, UINT8_MAX, 1, 0, bigEndian, &cans_setcurr },  /* CAN0_SIG_ISENS7_EC_Status */
 	    { {CAN1_MSG_IVT_EnergyCount}, 16, 32, INT32_MIN, INT32_MAX, 1, 0, bigEndian, &cans_setcurr }  /* CAN0_SIG_ISENS7_EC_Measurement */
 	};
 
@@ -2260,64 +2260,56 @@ static uint32_t cans_getPackVoltage(uint32_t sigIdx, void *value) {
 
 static uint32_t cans_setcurrCaptor(uint32_t sigIdx, void *value){ // function to read values from current sensor
 	uint32_t retVal = 0;
-	float canData = 0;
+	/*float canData = 0;
 	static DATA_BLOCK_CURRENT_SENSOR_s current_tab_for_send;
-
+	DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	if (value != NULL_PTR) {
 	   switch (sigIdx) {
 	       case CAN0_SIG_IVT_Current_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	           canData = cans_checkLimits((float)current_tab_for_send.current, sigIdx);
-	           /* Apply offset and factor */
+	           // Apply offset and factor
 	           *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	           break;
 	       case CAN0_SIG_IVT_Voltage_1_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[0], sigIdx);
-	       	   /* Apply offset and factor */
+	       	   // Apply offset and factor
 	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	       	   break;
 	       case CAN0_SIG_IVT_Voltage_2_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[1], sigIdx);
-	       	   /* Apply offset and factor */
+	       	   // Apply offset and factor
 	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	       	   break;
 	       case CAN0_SIG_IVT_Voltage_3_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	       	   canData = cans_checkLimits((float)current_tab_for_send.voltage[2], sigIdx);
-	       	   /* Apply offset and factor */
+	       	   // Apply offset and factor
 	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	       	   break;
 	       case CAN0_SIG_IVT_Temperature_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	       	   canData = cans_checkLimits((float)current_tab_for_send.temperature, sigIdx);
-	       	   /* Apply offset and factor */
+	       	   // Apply offset and factor
 	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	       	   break;
 	       case CAN0_SIG_IVT_Power_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	       	   canData = cans_checkLimits((float)current_tab_for_send.power, sigIdx);
-	       	   /* Apply offset and factor */
+	       	   //Apply offset and factor
 	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	       	   break;
 	       case CAN0_SIG_IVT_CC_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	       	   canData = cans_checkLimits((float)current_tab_for_send.current_counter, sigIdx);
-	       	   /* Apply offset and factor */
+	       	   // Apply offset and factor
 	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	       	   break;
 	       case CAN0_SIG_IVT_EC_Measurement:
-	    	   DB_ReadBlock(&current_tab_for_send, DATA_BLOCK_ID_CURRENT_SENSOR);
 	       	   canData = cans_checkLimits((float)current_tab_for_send.energy_counter, sigIdx);
-	       	   /* Apply offset and factor */
+	       	   //Apply offset and factor
 	       	   *(uint32_t *)value = (uint32_t)((canData + cans_CAN0_signals_tx[sigIdx].offset) * cans_CAN0_signals_tx[sigIdx].factor);
 	       	   break;
 	       default:
 	           *(uint32_t *)value = 0;
 	           break;
 	       }
-	}
+	}*/
 	return retVal;
 }
 
