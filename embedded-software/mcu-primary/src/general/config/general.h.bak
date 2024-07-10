@@ -63,8 +63,6 @@
 
 /*================== Macros and Definitions ===============================*/
 
-#define IS_TEST
-
 /**
  * @ingroup CONFIG_GENERAL
  * enables checking of flash checksum at startup.
@@ -73,7 +71,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_FLASHCHECKSUM           0
+#define BUILD_MODULE_ENABLE_FLASHCHECKSUM           1
 /* #define BUILD_MODULE_ENABLE_FLASHCHECKSUM           0 */
 
 /**
@@ -95,8 +93,8 @@
  * \par Default:
  * 0
 */
-/*#define BUILD_MODULE_ENABLE_RS485           1*/
-#define BUILD_MODULE_ENABLE_RS485          0
+#define BUILD_MODULE_ENABLE_RS485           1
+/* #define BUILD_MODULE_ENABLE_RS485          0 */
 
 /**
  * @ingroup CONFIG_GENERAL
@@ -106,8 +104,8 @@
  * \par Default:
  * 0
 */
-/* #define BUILD_MODULE_ENABLE_NVRAM           1 */
-#define BUILD_MODULE_ENABLE_NVRAM          0
+#define BUILD_MODULE_ENABLE_NVRAM           1
+/* #define BUILD_MODULE_ENABLE_NVRAM          0 */
 
 /**
  * @ingroup CONFIG_GENERAL
@@ -128,7 +126,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_CONTACTOR           0
+#define BUILD_MODULE_ENABLE_CONTACTOR           1
 
 /**
  * @ingroup CONFIG_GENERAL
@@ -148,7 +146,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_ISOGUARD          0
+#define BUILD_MODULE_ENABLE_ISOGUARD          1
 
 
 /**
@@ -160,9 +158,8 @@
  * 0
 */
 
-/* #define BUILD_MODULE_DEBUGPRINTF          1 */
-#define BUILD_MODULE_DEBUGPRINTF          0
-
+#define BUILD_MODULE_DEBUGPRINTF          1
+/* #define BUILD_MODULE_DEBUGPRINTF          0 */
 
 /**
  * @ingroup CONFIG_GENERAL
@@ -172,7 +169,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_RTC           0
+#define BUILD_MODULE_ENABLE_RTC           1
 /* #define BUILD_MODULE_ENABLE_RTC           0 */
 
 /**
@@ -181,8 +178,9 @@
   * at the expense of (maybe) slightly reduced system performance
 */
 
-/* #define BUILD_MODULE_ENABLE_RUNTIMESTATS  1 */
-#define BUILD_MODULE_ENABLE_RUNTIMESTATS 0
+#define BUILD_MODULE_ENABLE_RUNTIMESTATS  1
+/* #define BUILD_MODULE_ENABLE_RUNTIMESTATS 0 */
+
 
 /**
  * @ingroup CONFIG_GENERAL
@@ -192,7 +190,7 @@
  * \par Default:
  * 1
 */
-#define BUILD_MODULE_ENABLE_WATCHDOG        0
+#define BUILD_MODULE_ENABLE_WATCHDOG        1
 /* #define BUILD_MODULE_ENABLE_WATCHDOG      0 */
 
 /**
@@ -217,7 +215,7 @@
  * If this define is set to 1, task statistics will be computed
  * during runtime with diag_calc_runtime_stats().
  */
-#define BUILD_DIAG_ENABLE_TASK_STATISTICS        0
+#define BUILD_DIAG_ENABLE_TASK_STATISTICS        1
 /* #define BUILD_DIAG_ENABLE_TASK_STATISTICS      0 */
 
 /**
@@ -227,6 +225,14 @@
  * e.g. restarts.
  */
 #define MEM_BKP_SRAM    __attribute__((section (".BKP_RAMSection")))
+
+/**
+ * A variable defined as ``(type) MEM_BKP_SRAM (name)`` will be stored in the
+ * external SRAM which is backuped by a button cell. Therefore as long as the power
+ * supply is not disconnected, the variable value will be stored during
+ * e.g. restarts.
+ */
+#define MEM_EXT_SDRAM   __attribute__((section (".EXT_SDRAMSection")))
 
 
 /*================== Constant and Variable Definitions ====================*/

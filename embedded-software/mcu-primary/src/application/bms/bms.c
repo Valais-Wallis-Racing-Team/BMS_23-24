@@ -322,7 +322,6 @@ void BMS_Trigger(void) {
                     bms_state.substate = BMS_ENTRY;
                     break;
                 } else {
-                	//ILCK_SetStateRequest(ILCK_STATE_CLOSE_REQUEST);
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.substate = BMS_CHECK_STATE_REQUESTS;
                     break;

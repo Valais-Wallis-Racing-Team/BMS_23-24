@@ -83,6 +83,16 @@ static uint8_t CANS_CheckCanTiming(void);
 static void CANS_SetCurrentSensorPresent(uint8_t command);
 static void CANS_SetCurrentSensorCCPresent(uint8_t command);
 static uint32_t counter_ticksComplete = 0;
+
+static uint32_t messages_to_send[] = {
+	2,	 // interlock and contactor status
+    10,  // CELL_VOLTAGES_MIN_MAX_AVG
+    12,  // CELL_TEMPERATURES_MIN_MAX_AVG
+    15,  // RUNNING_AVG_POWER_0
+    18,  // RUNNING_AVG_CURRENT_0
+    21   // PACK_VOLTAGE
+};
+static uint32_t numMessagesToSend = sizeof(messages_to_send)/sizeof(messages_to_send[0]);
 /*================== Function Implementations =============================*/
 
 /*================== Public functions =====================================*/
@@ -90,17 +100,20 @@ void CANS_Init(void) {
     /* custom initialization could be made here. right now no need for any init */
 }
 
+
+
 void CANS_MainFunction(void) {
     (void)CANS_PeriodicReceive();
     CANS_CheckCanTiming();
     if (cans_state.periodic_enable == TRUE) {
         (void)CANS_PeriodicTransmit();
     }
-    else//modif pour envoyer le 0x112 tout le temps
+    else//modif pour envoyer le 0x112 et la tele tout le temps
     {
-    	uint32_t i = 2;
-    	STD_RETURN_TYPE_e result = E_NOT_OK;
-    	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
+
+    		uint32_t i = messages_to_send[0];
+    		STD_RETURN_TYPE_e result = E_NOT_OK;
+    		if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
     	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
     	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
     	            PduToSend.id = can_CAN0_messages_tx[i].ID;
@@ -111,40 +124,104 @@ void CANS_MainFunction(void) {
     	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
     	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
     	            }
-    	        }
-    	counter_ticksComplete++;
+    		}
+    		counter_ticksComplete++;
 
-    	/*i = 123;
+    		i = messages_to_send[1];
     	result = E_NOT_OK;
-    	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
-    	    	     Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
-    	    	     CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
-    	    	     PduToSend.id = can_CAN0_messages_tx[i].ID;
+    		    		if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
+    		    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
+    		    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
+    		    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
 
-    	    	     result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
-    	    	     DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
+    		    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
+    		    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
 
-    	    	     if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
-    	    	    	 can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
-    	    	     }
-    	}
-    	counter_ticksComplete++;
+    		    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
+    		    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
+    		    	            }
+    		    		}
+    		    		counter_ticksComplete++;
 
-    	i = 124;
-    	result = E_NOT_OK;
-    	if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
-    				Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
-    				CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
-    				PduToSend.id = can_CAN0_messages_tx[i].ID;
+    		    		i = messages_to_send[2];
+    		    		 result = E_NOT_OK;
+    		    		    		if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
+    		    		    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
+    		    		    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
+    		    		    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
 
-    				result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
-    				DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
+    		    		    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
+    		    		    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
 
-    				if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
-    					can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
-    	    	    }
-    	}
-    	counter_ticksComplete++;*/
+    		    		    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
+    		    		    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
+    		    		    	            }
+    		    		    		}
+    		    		    		counter_ticksComplete++;
+
+    		    		    		i = messages_to_send[3];
+    		    		    	 result = E_NOT_OK;
+    		    		    		    		if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
+    		    		    		    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
+    		    		    		    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
+    		    		    		    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
+
+    		    		    		    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
+    		    		    		    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
+
+    		    		    		    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
+    		    		    		    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
+    		    		    		    	            }
+    		    		    		    		}
+    		    		    		    		counter_ticksComplete++;
+
+    		    		    		    		i = messages_to_send[4];
+    		    		    		    		result = E_NOT_OK;
+    		    		    		    		    		if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
+    		    		    		    		    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
+    		    		    		    		    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
+    		    		    		    		    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
+
+    		    		    		    		    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
+    		    		    		    		    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
+
+    		    		    		    		    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
+    		    		    		    		    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
+    		    		    		    		    	            }
+    		    		    		    		    		}
+    		    		    		    		    		counter_ticksComplete++;
+    		    		    		    		    		i = messages_to_send[5];
+    		    		    		    		    		    		    		    		    		 result = E_NOT_OK;
+    		    		    		    		    		    		    		    		    		    		if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
+    		    		    		    		    		    		    		    		    		    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
+    		    		    		    		    		    		    		    		    		    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
+    		    		    		    		    		    		    		    		    		    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
+
+    		    		    		    		    		    		    		    		    		    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
+    		    		    		    		    		    		    		    		    		    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
+
+    		    		    		    		    		    		    		    		    		    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
+    		    		    		    		    		    		    		    		    		    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
+    		    		    		    		    		    		    		    		    		    	            }
+    		    		    		    		    		    		    		    		    		    		}
+    		    		    		    		    		    		    		    		    		    		counter_ticksComplete++;
+    		    		    		    		    		    		    		    		    		    		i = messages_to_send[5];
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		 result = E_NOT_OK;
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    		if (((counter_ticksComplete * CANS_TICK_MS) % (can_CAN0_messages_tx[i].repetition_time)) == can_CAN0_messages_tx[i].repetition_phase) {
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    	            Can_PduType PduToSend = { {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 0x0, 8 };
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    	            CANS_ComposeMessage(CAN_NODE0, (CANS_messagesTx_e)(i), PduToSend.sdu);
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    	            PduToSend.id = can_CAN0_messages_tx[i].ID;
+
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    	            result = CANS_AddMessage(CAN_NODE0, PduToSend.id, PduToSend.sdu, PduToSend.dlc, 0);
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    	            DIAG_checkEvent(result, DIAG_CH_CANS_CAN_MOD_FAILURE, 1);
+
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    	            if (can_CAN0_messages_tx[i].cbk_func != NULL_PTR && result == E_OK) {
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    	                can_CAN0_messages_tx[i].cbk_func(i, NULL_PTR);
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    	            }
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    		}
+    		    		    		    		    		    		    		    		    		    		    		    		    		    		    		counter_ticksComplete++;
+
+
     }
     DIAG_SysMonNotify(DIAG_SYSMON_CANS_ID, 0);  /* task is running, state = ok */
 }
