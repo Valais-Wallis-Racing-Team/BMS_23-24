@@ -665,7 +665,7 @@ void BMS_Trigger(void) {
                 nextOpenWireCheck = timestamp + LTC_ERROR_OPEN_WIRE_PERIOD_ms;
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
-                break;
+                
 #else
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
 #endif
@@ -1356,6 +1356,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
 #endif
 #ifndef NO_CRC_ERROR
         error_flags.crc_error                 == 1 ||
+
         error_flags.mux_error                 == 1 ||
 #endif
         error_flags.spi_error                 == 1 ||

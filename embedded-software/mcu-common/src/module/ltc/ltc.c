@@ -162,6 +162,8 @@ static const uint8_t ltc_cmdRDAUXB[4] = {0x00, 0x0E, 0x72, 0x9A};
 static const uint8_t ltc_cmdRDAUXC[4] = {0x00, 0x0D, 0x64, 0xFE};
 static const uint8_t ltc_cmdRDAUXD[4] = {0x00, 0x0F, 0xF9, 0xA8};
 
+
+
 /* static const uint8_t ltc_cmdMUTE[4] = {0x00, 0x28, 0xE8, 0x0E};                    !< MUTE discharging via S pins */
 /* static const uint8_t ltc_cmdUNMUTE[4] = {0x00, 0x29, 0x63, 0x3C};                  !< UN-MUTE discharging via S pins */
 
@@ -216,6 +218,11 @@ static uint8_t ltc_TXBuffer[LTC_N_BYTES_FOR_DATA_TRANSMISSION_DATA_ONLY];
 static uint8_t ltc_TXBufferClock[4+9];
 static uint8_t ltc_TXPECBufferClock[4+9];
 
+static uint8_t countFailBal = 0;
+static uint8_t countFailTemp = 0;
+static uint8_t countFailIo = 0;
+static uint8_t countFailTi = 0;
+static uint8_t countFailEeprom = 0;
 
 /*================== Function Prototypes ==================================*/
 /* Init functions */
@@ -402,9 +409,6 @@ extern void LTC_SaveVoltages(void) {
     STD_RETURN_TYPE_e retval_PLminmax = E_NOT_OK;
     STD_RETURN_TYPE_e retval_PLspread = E_NOT_OK;
     STD_RETURN_TYPE_e result = E_NOT_OK;
-#ifdef IS_TEST
-    DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
-#endif
     /* Perform min/max voltage plausibility check */
     retval_PLminmax = PL_CheckVoltageMinMax(&ltc_cellvoltage);
 
@@ -428,10 +432,10 @@ extern void LTC_SaveVoltages(void) {
                 }
 #ifdef IS_TEST
                 if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] < BC_VOLTMIN_MSL){
-                	cell_errors.under_voltage = 1;
+                	DIAG_Handler(DIAG_CH_CELLVOLTAGE_UNDERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
                 }
                 if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] > BC_VOLTMAX_MSL){
-                   	cell_errors.over_voltage = 1;
+                	DIAG_Handler(DIAG_CH_CELLVOLTAGE_OVERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
                 }
 #endif
             }
@@ -468,9 +472,6 @@ extern void LTC_SaveVoltages(void) {
 
     DB_WriteBlock(&ltc_cellvoltage, DATA_BLOCK_ID_CELLVOLTAGE);
     DB_WriteBlock(&ltc_minmax, DATA_BLOCK_ID_MINMAX);
-#ifdef IS_TEST
-    DB_WriteBlock(&cell_errors,DATA_BLOCK_ID_MSL);
-#endif
 }
 
 /**
@@ -1286,7 +1287,17 @@ void LTC_Trigger(void) {
                 }
 
                 if (LTC_RX_PECCheck(ltc_RXPECbuffer) != E_OK) {
-                    DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                	if(countFailBal==LTC_TRANSMIT_PECERRLIMIT){
+#endif
+                		DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                		countFailBal=0;
+                	} else {
+                		countFailBal++;
+                	}
+#endif
+
                 } else {
                     DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_OK, 0);
                     LTC_SaveBalancingFeedback(ltc_RXPECbuffer);
@@ -1395,7 +1406,17 @@ void LTC_Trigger(void) {
                 }
 
                 if (LTC_RX_PECCheck(ltc_RXPECbuffer) != E_OK) {
-                    DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                	if(countFailTemp==LTC_TRANSMIT_PECERRLIMIT){
+#endif
+                		DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                		countFailTemp=0;
+                	} else {
+                		countFailTemp++;
+                	}
+#endif
+
                 } else {
                     DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_OK, 0);
                     LTC_TempSensSaveTemp(ltc_RXPECbuffer);
@@ -1503,7 +1524,16 @@ void LTC_Trigger(void) {
                     }
 
                     if (LTC_RX_PECCheck(ltc_RXPECbuffer) != E_OK) {
-                        DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                	if(countFailIo==LTC_TRANSMIT_PECERRLIMIT){
+#endif
+                		 DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                		 countFailIo=0;
+                	} else {
+                		countFailIo++;
+                	}
+#endif
                     } else {
                         DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_OK, 0);
                         LTC_PortExpanderSaveValues(ltc_RXPECbuffer);
@@ -1674,7 +1704,16 @@ void LTC_Trigger(void) {
                 }
 
                 if (LTC_RX_PECCheck(ltc_RXPECbuffer) != E_OK) {
-                    DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                	if(countFailTi==LTC_TRANSMIT_PECERRLIMIT){
+#endif
+                		DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                		countFailTi=0;
+                	} else {
+                		countFailTi++;
+                	}
+#endif
                 } else {
                     DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_OK, 0);
                     LTC_PortExpanderSaveValues_TI(ltc_RXPECbuffer);
@@ -1778,7 +1817,17 @@ void LTC_Trigger(void) {
                 }
 
                 if (LTC_RX_PECCheck(ltc_RXPECbuffer) != E_OK) {
-                    DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                	if(countFailEeprom==LTC_TRANSMIT_PECERRLIMIT){
+#endif
+                		DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_NOK, 0);
+#ifdef IS_TEST
+                		countFailEeprom=0;
+                	} else {
+                		countFailEeprom++;
+                	}
+#endif
+
                 } else {
                     DIAG_Handler(DIAG_CH_LTC_PEC, DIAG_EVENT_OK, 0);
                     LTC_EEPROMSaveReadValue(ltc_RXPECbuffer);
@@ -1999,10 +2048,6 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
     uint8_t sensor_idx = 0;
     uint8_t ch_idx = 0;
     uint32_t bitmask = 0;
-#ifdef IS_TEST
-    DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
-#endif
-
     /* pointer to measurement Sequence of Mux- and Channel-Configurations (1,0xFF)...(3,0xFF),(0,1),...(0,7)) */
     if (muxseqptr->muxCh == 0xFF)
         return; /* Channel 0xFF means that the multiplexer is deactivated, therefore no measurement will be made and saved*/
@@ -2042,21 +2087,19 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
             } else {
                 ltc_celltemperature.valid_temperature[i] |= bitmask;
             }
-#ifdef IS_TEST
+#ifndef IS_TEST
                 if(temperature < BC_TEMPMIN_DISCHARGE_MSL){
-                	cell_errors.under_temperature_discharge = 1;
-                	cell_errors.under_temperature_charge = 1;
+
+                	DIAG_Handler(DIAG_CH_TEMP_UNDERTEMPERATURE_CHARGE_MSL, DIAG_EVENT_NOK, 0);
+                	DIAG_Handler(DIAG_CH_TEMP_UNDERTEMPERATURE_DISCHARGE_MSL, DIAG_EVENT_NOK, 0);
                 }
                 if(temperature > BC_TEMPMAX_DISCHARGE_MSL){
-                   	cell_errors.over_temperature_discharge = 1;
-                   	cell_errors.over_temperature_charge = 1;
+                	DIAG_Handler(DIAG_CH_TEMP_OVERTEMPERATURE_CHARGE_MSL, DIAG_EVENT_NOK, 0);
+                	DIAG_Handler(DIAG_CH_TEMP_OVERTEMPERATURE_DISCHARGE_MSL, DIAG_EVENT_NOK, 0);
                 }
 #endif
         }
     }
-#ifdef IS_TEST
-    DB_WriteBlock(&cell_errors,DATA_BLOCK_ID_MSL);
-#endif
 }
 
 
