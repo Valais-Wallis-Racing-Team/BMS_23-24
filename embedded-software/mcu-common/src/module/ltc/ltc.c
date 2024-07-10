@@ -105,6 +105,9 @@ static DATA_BLOCK_BALANCING_CONTROL_s ltc_balancing_control;
 static DATA_BLOCK_SLAVE_CONTROL_s ltc_slave_control;
 static DATA_BLOCK_ALLGPIOVOLTAGE_s ltc_allgpiovoltage;
 static DATA_BLOCK_OPENWIRE_s ltc_openwire;
+#ifdef IS_TEST
+static DATA_BLOCK_MSL_FLAG_s cell_errors;
+#endif
 static uint16_t ltc_openwire_pup_buffer[BS_NR_OF_BAT_CELLS];
 static uint16_t ltc_openwire_pdown_buffer[BS_NR_OF_BAT_CELLS];
 static int32_t ltc_openwire_delta[BS_NR_OF_BAT_CELLS];
@@ -399,17 +402,15 @@ extern void LTC_SaveVoltages(void) {
     STD_RETURN_TYPE_e retval_PLminmax = E_NOT_OK;
     STD_RETURN_TYPE_e retval_PLspread = E_NOT_OK;
     STD_RETURN_TYPE_e result = E_NOT_OK;
-
+#ifdef IS_TEST
+    DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
+#endif
     /* Perform min/max voltage plausibility check */
     retval_PLminmax = PL_CheckVoltageMinMax(&ltc_cellvoltage);
 
     /* Use only valid cell voltages for calculating mean voltage */
     for (i=0; i < BS_NR_OF_MODULES; i++) {
-#ifdef LAST_CELL_NOT_PLUGGED
-    	for (j=0; j < BS_NR_OF_BAT_CELLS_PER_MODULE-1; j++) {
-#else
         for (j=0; j < BS_NR_OF_BAT_CELLS_PER_MODULE; j++) {
-#endif
 
             if ((ltc_cellvoltage.valid_volt[i] & (0x01 << j)) == 0) {
                 /* Cell voltage is valid -> use this voltage for subsequent calculations */
@@ -425,6 +426,14 @@ extern void LTC_SaveVoltages(void) {
                     module_number_max = i;
                     cell_number_max = j;
                 }
+#ifdef IS_TEST
+                if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] < BC_VOLTMIN_MSL){
+                	cell_errors.under_voltage = 1;
+                }
+                if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] > BC_VOLTMAX_MSL){
+                   	cell_errors.over_voltage = 1;
+                }
+#endif
             }
         }
     }
@@ -459,6 +468,9 @@ extern void LTC_SaveVoltages(void) {
 
     DB_WriteBlock(&ltc_cellvoltage, DATA_BLOCK_ID_CELLVOLTAGE);
     DB_WriteBlock(&ltc_minmax, DATA_BLOCK_ID_MINMAX);
+#ifdef IS_TEST
+    DB_WriteBlock(&cell_errors,DATA_BLOCK_ID_MSL);
+#endif
 }
 
 /**
@@ -484,12 +496,10 @@ extern void LTC_SaveTemperatures(void) {
     uint8_t sensor_number_max = 0;
     STD_RETURN_TYPE_e retval_PL  = E_NOT_OK;
     uint16_t nrValidTemperatures = 0;
-
     /* Perform plausibility check */
     retval_PL = PL_CheckTempMinMax(&ltc_celltemperature);
     /* Set flag if plausibility error detected */
     DIAG_checkEvent(retval_PL, DIAG_CH_PLAUSIBILITY_CELL_TEMP, 0);
-#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
     for (i=0; i < BS_NR_OF_MODULES; i++) {
         for (j=0; j < BS_NR_OF_TEMP_SENSORS_PER_MODULE; j++) {
             if ((ltc_celltemperature.valid_temperature[i] & (0x01 << j)) == 0) {
@@ -509,7 +519,6 @@ extern void LTC_SaveTemperatures(void) {
             }
         }
     }
-#endif
 
     /* Prevent division by 0, if all temperatues are invalid */
     if (nrValidTemperatures > 0) {
@@ -1933,19 +1942,11 @@ void LTC_Trigger(void) {
                 for (uint8_t m = 0; m < BS_NR_OF_MODULES; m++) {
                     /* Open-wire at C0: cell_pup(0) == 0 */
                     if (ltc_openwire_pup_buffer[0 + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)] == 0) {
-#ifdef LAST_CELL_NOT_PLUGGED
-                    	ltc_openwire.openwire[0 + (m*(BS_NR_OF_BAT_CELLS_PER_MODULE))] = 0;
-#else
                         ltc_openwire.openwire[0 + (m*(BS_NR_OF_BAT_CELLS_PER_MODULE))] = 1;
-#endif
                     }
                     /* Open-wire at Cmax: cell_pdown(BS_NR_OF_BAT_CELLS_PER_MODULE-1) == 0 */
                     if (ltc_openwire_pdown_buffer[((BS_NR_OF_BAT_CELLS_PER_MODULE-1) + (m*BS_NR_OF_BAT_CELLS_PER_MODULE))] == 0) {
-#ifdef LAST_CELL_NOT_PLUGGED
-                    	ltc_openwire.openwire[BS_NR_OF_BAT_CELLS_PER_MODULE + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)] = 0;
-#else
                         ltc_openwire.openwire[BS_NR_OF_BAT_CELLS_PER_MODULE + (m*BS_NR_OF_BAT_CELLS_PER_MODULE)] = 1;
-#endif
                     }
                 }
 

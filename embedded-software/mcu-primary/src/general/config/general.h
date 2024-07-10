@@ -79,7 +79,7 @@
  * \par Default:
  * 0
 */
-#define BUILD_MODULE_ENABLE_FLASHCHECKSUM           1
+#define BUILD_MODULE_ENABLE_FLASHCHECKSUM           0
 /* #define BUILD_MODULE_ENABLE_FLASHCHECKSUM           0 */
 
 /**
@@ -186,7 +186,7 @@
   * at the expense of (maybe) slightly reduced system performance
 */
 
-#define BUILD_MODULE_ENABLE_RUNTIMESTATS  1
+#define BUILD_MODULE_ENABLE_RUNTIMESTATS  0
 /* #define BUILD_MODULE_ENABLE_RUNTIMESTATS 0 */
 
 
@@ -223,7 +223,7 @@
  * If this define is set to 1, task statistics will be computed
  * during runtime with diag_calc_runtime_stats().
  */
-#define BUILD_DIAG_ENABLE_TASK_STATISTICS        1
+#define BUILD_DIAG_ENABLE_TASK_STATISTICS        0
 /* #define BUILD_DIAG_ENABLE_TASK_STATISTICS      0 */
 
 /**

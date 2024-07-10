@@ -329,14 +329,14 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x190, 8, 1000, 30, NULL_PTR },  /*!< Tempering */
         { 0x1A0, 8, 1000, 30, NULL_PTR },  /*!< Insulation */
 
-        { 0x062, 8, 100, 40, NULL_PTR },  /*!< Running average power 0 */  							//to send
+        { 0x062, 8, 1000, 40, NULL_PTR },  /*!< Running average power 0 */  							//to send
         { 0x1D1, 8, 1000, 40, NULL_PTR },  /*!< Running average power 1 */
         { 0x1D2, 8, 1000, 40, NULL_PTR },  /*!< Running average power 2 */
-        { 0x063, 8, 100, 40, NULL_PTR },  /*!< Running average current 0 */  						//to send
+        { 0x063, 8, 1000, 40, NULL_PTR },  /*!< Running average current 0 */  						//to send
         { 0x1E1, 8, 1000, 40, NULL_PTR },  /*!< Running average current 1 */
         { 0x1E2, 8, 1000, 40, NULL_PTR },  /*!< Running average current 2 */
 
-        { 0x064, 8, 100, 40, NULL_PTR },  /*!< Pack voltage */  									//to send
+        { 0x064, 8, 1000, 40, NULL_PTR },  /*!< Pack voltage */  									//to send
 
         { 0x200, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 0 1 2 */
         { 0x201, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 3 4 5 */
@@ -492,14 +492,14 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x527, 8, 100, 250, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
         { 0x528, 8, 100, 250, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
 #else /* CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC */
-        { 0x521, 8, 100, 20, NULL_PTR },    /*!< current sensor I in cyclic mode   */
-        { 0x522, 8, 100, 20, NULL_PTR },    /*!< current sensor U1 in cyclic mode  */
-        { 0x523, 8, 100, 20, NULL_PTR },    /*!< current sensor U2 in cyclic mode  */
-        { 0x524, 8, 100, 20, NULL_PTR },    /*!< current sensor U3 in cyclic mode  */
-        { 0x525, 8, 100, 20, NULL_PTR },    /*!< current sensor T in cyclic mode  */
-        { 0x526, 8, 100, 20, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
-        { 0x527, 8, 100, 20, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
-        { 0x528, 8, 100, 20, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
+        { 0x521, 8, 100, 10, NULL_PTR },    /*!< current sensor I in cyclic mode   */
+        { 0x522, 8, 100, 10, NULL_PTR },    /*!< current sensor U1 in cyclic mode  */
+        { 0x523, 8, 100, 10, NULL_PTR },    /*!< current sensor U2 in cyclic mode  */
+        { 0x524, 8, 100, 10, NULL_PTR },    /*!< current sensor U3 in cyclic mode  */
+        { 0x525, 8, 100, 10, NULL_PTR },    /*!< current sensor T in cyclic mode  */
+        { 0x526, 8, 100, 10, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
+        { 0x527, 8, 100, 10, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
+        { 0x528, 8, 100, 10, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
 #endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
 
 };
