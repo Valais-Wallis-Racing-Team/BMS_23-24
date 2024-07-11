@@ -251,7 +251,7 @@
  * Maximum number of re-tries in case of CRC error during the communication with daisy chain
  * before going into error state
  */
-#define LTC_TRANSMIT_PECERRLIMIT    10
+#define LTC_TRANSMIT_PECERRLIMIT    100
 
 /**
  * Maximum number of re-tries in case of SPI error during the communication with daisy chain

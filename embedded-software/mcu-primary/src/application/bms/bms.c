@@ -116,6 +116,8 @@ static void BMS_CheckCurrent(void);
 static void BMS_CheckSlaveTemperatures(void);
 static void BMS_CheckOpenSenseWire(void);
 
+static uint8_t countFail = 0;
+
 /*================== Function Implementations =============================*/
 
 /**
@@ -1354,9 +1356,9 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
 #ifndef NO_INTERLOCK_ERROR
         error_flags.interlock                 == 1 ||
 #endif
-#ifndef NO_CRC_ERROR
-        error_flags.crc_error                 == 1 ||
 
+        error_flags.crc_error                 == 1 ||
+#ifndef NO_CRC_ERROR
         error_flags.mux_error                 == 1 ||
 #endif
         error_flags.spi_error                 == 1 ||
@@ -1372,6 +1374,16 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         retVal = E_NOT_OK;
     }
 
+	if(retVal == E_NOT_OK){
+	    countFail++;
+	    if(countFail >= LTC_TRANSMIT_PECERRLIMIT){
+	    	countFail = 0;
+	    } else{
+	    	retVal = E_OK;
+	    }
+	} else {
+		countFail = 0;
+	}
 
     return retVal;
 }
