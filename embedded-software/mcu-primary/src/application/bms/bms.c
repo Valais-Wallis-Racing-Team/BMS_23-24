@@ -1338,6 +1338,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         msl_flags.under_temperature_discharge == 1) {
         /* error detected */
         retVal = E_NOT_OK;
+        return retVal;
     }
 
     /* Check system error flags */
@@ -1352,38 +1353,37 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         error_flags.charge_precharge          == 1 ||
 #endif
         error_flags.fuse_state_normal         == 1 ||
-        error_flags.fuse_state_charge         == 1 ||
+        error_flags.fuse_state_charge         == 1 ||//from here no error
 #ifndef NO_INTERLOCK_ERROR
         error_flags.interlock                 == 1 ||
 #endif
 
         error_flags.crc_error                 == 1 ||
-#ifndef NO_CRC_ERROR
         error_flags.mux_error                 == 1 ||
-#endif
         error_flags.spi_error                 == 1 ||
         error_flags.ltc_config_error          == 1 ||
         error_flags.currentsensorresponding   == 1 ||
         error_flags.open_wire                 == 1 ||
 #if BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR == TRUE
         error_flags.insulation_error          == 1 ||
-#endif /* BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR */
+#endif // BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR
         error_flags.can_timing_cc             == 1 ||
         error_flags.can_timing                == 1) {
-        /* error detected */
+        // error detected
         retVal = E_NOT_OK;
+        if(retVal == E_NOT_OK){
+        	    countFail++;
+        	    if(countFail >= LTC_TRANSMIT_PECERRLIMIT){
+        	    	countFail = 0;
+        	    } else{
+        	    	retVal = E_OK;
+        	    }
+        	} else {
+        		countFail = 0;
+        	}
     }
 
-	if(retVal == E_NOT_OK){
-	    countFail++;
-	    if(countFail >= LTC_TRANSMIT_PECERRLIMIT){
-	    	countFail = 0;
-	    } else{
-	    	retVal = E_OK;
-	    }
-	} else {
-		countFail = 0;
-	}
+
 
     return retVal;
 }

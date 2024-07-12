@@ -105,9 +105,6 @@ static DATA_BLOCK_BALANCING_CONTROL_s ltc_balancing_control;
 static DATA_BLOCK_SLAVE_CONTROL_s ltc_slave_control;
 static DATA_BLOCK_ALLGPIOVOLTAGE_s ltc_allgpiovoltage;
 static DATA_BLOCK_OPENWIRE_s ltc_openwire;
-#ifdef IS_TEST
-static DATA_BLOCK_MSL_FLAG_s cell_errors;
-#endif
 static uint16_t ltc_openwire_pup_buffer[BS_NR_OF_BAT_CELLS];
 static uint16_t ltc_openwire_pdown_buffer[BS_NR_OF_BAT_CELLS];
 static int32_t ltc_openwire_delta[BS_NR_OF_BAT_CELLS];
@@ -216,7 +213,8 @@ static uint8_t ltc_TXBuffer[LTC_N_BYTES_FOR_DATA_TRANSMISSION_DATA_ONLY];
 static uint8_t ltc_TXBufferClock[4+9];
 static uint8_t ltc_TXPECBufferClock[4+9];
 
-static uint8_t countFail = 0;
+
+
 
 /*================== Function Prototypes ==================================*/
 /* Init functions */
@@ -403,9 +401,6 @@ extern void LTC_SaveVoltages(void) {
     STD_RETURN_TYPE_e retval_PLminmax = E_NOT_OK;
     STD_RETURN_TYPE_e retval_PLspread = E_NOT_OK;
     STD_RETURN_TYPE_e result = E_NOT_OK;
-#ifdef IS_TEST
-    DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
-#endif
     /* Perform min/max voltage plausibility check */
     retval_PLminmax = PL_CheckVoltageMinMax(&ltc_cellvoltage);
 
@@ -469,9 +464,6 @@ extern void LTC_SaveVoltages(void) {
 
     DB_WriteBlock(&ltc_cellvoltage, DATA_BLOCK_ID_CELLVOLTAGE);
     DB_WriteBlock(&ltc_minmax, DATA_BLOCK_ID_MINMAX);
-#ifdef IS_TEST
-    DB_WriteBlock(&cell_errors,DATA_BLOCK_ID_MSL);
-#endif
 }
 
 /**
@@ -2000,9 +1992,6 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
     uint8_t sensor_idx = 0;
     uint8_t ch_idx = 0;
     uint32_t bitmask = 0;
-#ifdef IS_TEST
-    DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
-#endif
 
     /* pointer to measurement Sequence of Mux- and Channel-Configurations (1,0xFF)...(3,0xFF),(0,1),...(0,7)) */
     if (muxseqptr->muxCh == 0xFF)
@@ -2706,7 +2695,7 @@ static STD_RETURN_TYPE_e LTC_StartOpenWireMeasurement(LTC_ADCMODE_e adcMode, uin
  *
  */
 static STD_RETURN_TYPE_e LTC_RX_PECCheck(uint8_t *DataBufferSPI_RX_with_PEC) {
-    uint16_t i = 0;
+	uint16_t i = 0;
     STD_RETURN_TYPE_e retVal = E_OK;
     uint8_t PEC_TX[2];
     uint16_t PEC_result = 0;
@@ -2742,16 +2731,6 @@ static STD_RETURN_TYPE_e LTC_RX_PECCheck(uint8_t *DataBufferSPI_RX_with_PEC) {
     if (LTC_DISCARD_PEC == TRUE) {
         return E_OK;
     } else {
-    	if(retVal == E_NOT_OK){
-    		    countFail++;
-    		    if(countFail >= LTC_TRANSMIT_PECERRLIMIT){
-    		    	countFail = 0;
-    		    } else{
-    		    	retVal = E_OK;
-    		    }
-    	}else {
-    		countFail = 0;
-  		}
         return (retVal);
     }
 }

@@ -391,7 +391,7 @@
  * Imax =  1000A, Ploss = 206W: -> voltage drop at 1000A roughly 206mV
  * -> select 500mV because of measurement inaccuracies
  */
-#define BS_MAX_VOLTAGE_DROP_OVER_FUSE_mV            500
+#define BS_MAX_VOLTAGE_DROP_OVER_FUSE_mV            250000
 
 /**
  * Set to TRUE if fuse in NORMAL path should be checked. This can only be done

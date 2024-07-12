@@ -251,7 +251,7 @@
  * Maximum number of re-tries in case of CRC error during the communication with daisy chain
  * before going into error state
  */
-#define LTC_TRANSMIT_PECERRLIMIT    100
+#define LTC_TRANSMIT_PECERRLIMIT    10
 
 /**
  * Maximum number of re-tries in case of SPI error during the communication with daisy chain
@@ -280,7 +280,7 @@
 /**
  * Periodic open-wire check time in STANDBY state in ms
  */
-#define LTC_STANDBY_OPEN_WIRE_PERIOD_ms      600000
+#define LTC_STANDBY_OPEN_WIRE_PERIOD_ms      500
 
 /* #define LTC_NORMAL_PERIODIC_OPEN_WIRE_CHECK TRUE */
 #define LTC_NORMAL_PERIODIC_OPEN_WIRE_CHECK FALSE
@@ -288,7 +288,7 @@
 /**
  * Periodic open-wire check time in NORMAL state in ms
  */
-#define LTC_NORMAL_OPEN_WIRE_PERIOD_ms      600000
+#define LTC_NORMAL_OPEN_WIRE_PERIOD_ms      500
 
 /* #define LTC_CHARGE_PERIODIC_OPEN_WIRE_CHECK TRUE */
 #define LTC_CHARGE_PERIODIC_OPEN_WIRE_CHECK FALSE
@@ -296,12 +296,12 @@
 /**
  * Periodic open-wire check time in CHARGE state in ms
  */
-#define LTC_CHARGE_OPEN_WIRE_PERIOD_ms      600000
+#define LTC_CHARGE_OPEN_WIRE_PERIOD_ms      500
 
 /**
  * Periodic open-wire check time in ERROR state in ms
  */
-#define LTC_ERROR_OPEN_WIRE_PERIOD_ms      30000
+#define LTC_ERROR_OPEN_WIRE_PERIOD_ms      500
 
 /**
  * Number of required ADOW commands because of external C-Pin capacitance and
