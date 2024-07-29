@@ -98,6 +98,7 @@ static DATA_BLOCK_CURRENT_SENSOR_s bms_tab_cur_sensor;
 static DATA_BLOCK_MINMAX_s bms_tab_minmax;
 static DATA_BLOCK_OPENWIRE_s bms_ow_tab;
 static DATA_BLOCK_SOF_s bms_tab_sof;
+static DATA_BLOCK_ISOMETER_s weirdDataHere;
 
 
 /*================== Function Prototypes ==================================*/
@@ -115,8 +116,7 @@ static void BMS_CheckTemperatures(void);
 static void BMS_CheckCurrent(void);
 static void BMS_CheckSlaveTemperatures(void);
 static void BMS_CheckOpenSenseWire(void);
-
-static uint8_t countFail = 0;
+static uint32_t countFail = 0;
 
 /*================== Function Implementations =============================*/
 
@@ -1315,6 +1315,7 @@ static STD_RETURN_TYPE_e BMS_CheckInterlockError(void) {
  * @return  E_OK if no error flag is set, otherwise E_NOT_OK
  */
 static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
+	DB_ReadBlock(&weirdDataHere, DATA_BLOCK_ID_ISOGUARD);
     STD_RETURN_TYPE_e retVal = E_OK;  /* is set to E_NOT_OK if error detected */
     DATA_BLOCK_ERRORSTATE_s error_flags;
     DATA_BLOCK_MSL_FLAG_s msl_flags;
@@ -1358,8 +1359,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         error_flags.interlock                 == 1 ||
 #endif
 
-        error_flags.crc_error                 == 1 ||
-        error_flags.mux_error                 == 1 ||
+
         error_flags.spi_error                 == 1 ||
         error_flags.ltc_config_error          == 1 ||
         error_flags.currentsensorresponding   == 1 ||
@@ -1370,18 +1370,28 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         error_flags.can_timing_cc             == 1 ||
         error_flags.can_timing                == 1) {
         // error detected
-        retVal = E_NOT_OK;
-        if(retVal == E_NOT_OK){
-        	    countFail++;
-        	    if(countFail >= LTC_TRANSMIT_PECERRLIMIT){
-        	    	countFail = 0;
-        	    } else{
-        	    	retVal = E_OK;
-        	    }
-        	} else {
-        		countFail = 0;
-        	}
+    	retVal = E_NOT_OK;
+    	return retVal;
     }
+
+    if(error_flags.crc_error                 == 1 ||
+       error_flags.mux_error                 == 1 ){
+    	if(weirdDataHere.state== 0){
+        	retVal = E_NOT_OK;
+        	/*countFail++;
+        	if(countFail >= LTC_TRANSMIT_PECERRLIMIT){
+        		countFail = LTC_TRANSMIT_PECERRLIMIT;
+        	} else{
+        		retVal = E_OK;
+        	}*/
+        } else {
+        	retVal = E_OK;
+
+        }
+    }/*else {
+    	countFail = 0;
+    }*/
+
 
 
 
@@ -1436,7 +1446,6 @@ static void BMS_UpdateBatsysState(DATA_BLOCK_CURRENT_SENSOR_s *curSensor) {
         }
     }
 }
-
 
 BMS_CURRENT_FLOW_STATE_e BMS_GetBatterySystemState(void) {
     return bms_state.currentFlowState;

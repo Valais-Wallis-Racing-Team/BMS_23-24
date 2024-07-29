@@ -180,6 +180,7 @@ typedef enum {
     DIAG_CH_LTC_MUX,                                /* LTC */
     DIAG_CH_LTC_CONFIG,                             /* LTC */
 
+
     /* Communication events: 50-63*/
     DIAG_CH_CAN_TIMING,  /* error in CAN timing */
     DIAG_CH_CAN_CC_RESPONDING, /* CAN C-C */

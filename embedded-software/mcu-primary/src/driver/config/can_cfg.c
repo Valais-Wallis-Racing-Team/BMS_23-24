@@ -530,6 +530,7 @@ CAN_MSG_RX_TYPE_s can0_RxMsgs[] = {
 
         { 0x100, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< debug message      */
         { 0x777, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< request SW version */
+		{ 0x185, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
 };
 
 

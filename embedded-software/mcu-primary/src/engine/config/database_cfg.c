@@ -58,6 +58,8 @@
 /*================== Macros and Definitions =================================*/
 
 /*================== Static Constant and Variable Definitions ===============*/
+
+
 /**
  * data block: cell voltage
  */

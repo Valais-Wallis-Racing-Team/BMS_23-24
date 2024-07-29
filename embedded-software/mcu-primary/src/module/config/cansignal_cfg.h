@@ -278,6 +278,7 @@ typedef enum {
     CAN0_MSG_SW_RESET,                       /*!< can message for SW reset */
     CAN0_MSG_DEBUG,                          /*!< debug messages */
     CAN0_MSG_GetReleaseVersion,              /*!< Get SW release version */
+	CAN0_MSG_Dummy,
 
     /* Insert here symbolic names for CAN1 messages */ //dupplicated from the CAN0
 	CAN1_MSG_IVT_Current,                    /*!< current sensing */
@@ -939,7 +940,8 @@ typedef enum {
 typedef enum {
     CAN0_SIG_ReceiveStateRequest,          /*!< current sensor counter */
     CAN0_SIG_DEBUG_Data,                   /*!< Data of debug message */
-    CAN0_SIG_GetReleaseVersion
+    CAN0_SIG_GetReleaseVersion,
+	CAN0_SIG_Dummy
 } CANS_CAN0_signalsRx_e;
 
 

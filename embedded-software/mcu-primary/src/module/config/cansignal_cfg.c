@@ -93,6 +93,7 @@ static uint32_t cans_setcurr(uint32_t, void *);
 static uint32_t cans_setstaterequest(uint32_t, void *);
 static uint32_t cans_setdebug(uint32_t, void *);
 static uint32_t cans_setSWversion(uint32_t, void *);
+static uint32_t cans_dummy(uint32_t sigIdx, void *value);
 
 
 #ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
@@ -762,7 +763,8 @@ const CANS_signal_s cans_CAN1_signals_tx[] = {
 const CANS_signal_s cans_CAN0_signals_rx[] = {
     { {CAN0_MSG_StateRequest}, 8, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_setstaterequest },
     { {CAN0_MSG_DEBUG}, 0, 64, 0, UINT64_MAX, 1, 0, littleEndian, &cans_setdebug },  /* CAN0_SIG_DEBUG_Data */
-    { {CAN0_MSG_GetReleaseVersion}, 0, 64, 0, UINT64_MAX, 1, 0, littleEndian, &cans_setSWversion }  /* CAN0_SIG_DEBUG_Data */
+    { {CAN0_MSG_GetReleaseVersion}, 0, 64, 0, UINT64_MAX, 1, 0, littleEndian, &cans_setSWversion },  /* CAN0_SIG_DEBUG_Data */
+	{ {CAN0_MSG_Dummy}, 0, 8, 0, UINT8_MAX, 1, 0, littleEndian, &cans_dummy }
 };
 
 const CANS_signal_s cans_CAN1_signals_rx[] = {
@@ -1687,9 +1689,9 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                     canerr_tab.spi_error                 == 1 ||
                     canerr_tab.currentsensorresponding   == 1 ||
                     canerr_tab.open_wire                 == 1 ||
-            #if BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR == TRUE
+           #if BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR == TRUE
                     canerr_tab.insulation_error          == 1 ||
-            #endif /* BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR */
+           #endif /* BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR */
                     canerr_tab.can_timing_cc             == 1 ||
                     canerr_tab.can_timing                == 1) {
                     /* set flag if error detected */
@@ -2564,6 +2566,14 @@ uint32_t cans_getisoguard(uint32_t sigIdx, void *value) {
     return 0;
 }
 
+uint32_t cans_dummy(uint32_t sigIdx, void *value) {
+	DATA_BLOCK_ISOMETER_s weirdData;
+	DB_ReadBlock(&weirdData, DATA_BLOCK_ID_ISOGUARD);
+	weirdData.state = 1;
+	DB_WriteBlock(&weirdData, DATA_BLOCK_ID_ISOGUARD);
+	SYS_SendBootMessage(0);
+	return 0;
+}
 
 uint32_t cans_setdebug(uint32_t sigIdx, void *value) {
     uint8_t data[8] = {0, 0, 0, 0, 0, 0, 0, 0};

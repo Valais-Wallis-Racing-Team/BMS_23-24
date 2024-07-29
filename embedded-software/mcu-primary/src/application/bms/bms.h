@@ -215,8 +215,6 @@ static STD_RETURN_TYPE_e BMS_CheckInterlockError(void);
  *          called time-triggered, every 1ms.
  */
 extern void BMS_Trigger(void);
-
-
 /**
  * @brief   Returns current battery system state (charging/discharging,
  *          resting or in relaxation phase)

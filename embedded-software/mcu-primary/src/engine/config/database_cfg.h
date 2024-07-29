@@ -158,6 +158,8 @@ typedef struct {
 #define DATA_BLOCK_ID_ALLGPIOVOLTAGE                DATA_BLOCK_23
 #define DATA_BLOCK_ID_CONT_SOH                      DATA_BLOCK_24
 
+
+
 /**
  * data block struct of cell voltage
  */
