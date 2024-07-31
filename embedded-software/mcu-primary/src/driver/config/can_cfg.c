@@ -311,8 +311,24 @@ CAN_HandleTypeDef hcan1 = {
  ****************************************/
 
 const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
+
+        { 0x112, 8, 100, 0, NULL_PTR },  /*!< BMS system state 2 */									//to send
+
+        { 0x060, 8, 100, 30, NULL_PTR },  /*!< Cell voltages Min Max Average */  					//to send
+
+        { 0x061, 8, 100, 30, NULL_PTR },  /*!< Cell temperatures Min Max Average */  				//to send
+
+        { 0x062, 8, 1000, 40, NULL_PTR },  /*!< Running average power 0 */  							//to send
+
+        { 0x063, 8, 100, 40, NULL_PTR },  /*!< Running average current 0 */  						//to send
+
+        { 0x064, 8, 1000, 40, NULL_PTR }  /*!< Pack voltage */  									//to send
+};
+
+
+const CAN_MSG_TX_TYPE_s can_CAN1_messages_tx[] = {
         { 0x110, 8, 100, 0, NULL_PTR },  /*!< BMS system state 0 */
-        { 0x111, 8, 100, 0, NULL_PTR },  /*!< BMS system state 1 */									//to send
+        { 0x111, 8, 100, 0, NULL_PTR },  /*!< BMS system state 1 */
         { 0x112, 8, 100, 0, NULL_PTR },  /*!< BMS system state 2 */
 
         { 0x115, 8, 100, 0, NULL_PTR },  /*!< BMS slave state 0 */
@@ -323,20 +339,20 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x140, 8, 1000, 30, NULL_PTR },  /*!< SOC */
         { 0x150, 8, 5000, 30, NULL_PTR },  /*!< SOH */
         { 0x160, 8, 1000, 30, NULL_PTR },  /*!< SOE */
-        { 0x060, 8, 100, 30, NULL_PTR },  /*!< Cell voltages Min Max Average */  					//to send
+        { 0x170, 8, 100, 30, NULL_PTR },  /*!< Cell voltages Min Max Average */
         { 0x171, 8, 100, 30, NULL_PTR },  /*!< SOV */
-        { 0x061, 8, 100, 30, NULL_PTR },  /*!< Cell temperatures Min Max Average */  				//to send
+        { 0x180, 8, 100, 30, NULL_PTR },  /*!< Cell temperatures Min Max Average */
         { 0x190, 8, 1000, 30, NULL_PTR },  /*!< Tempering */
         { 0x1A0, 8, 1000, 30, NULL_PTR },  /*!< Insulation */
 
-        { 0x062, 8, 1000, 40, NULL_PTR },  /*!< Running average power 0 */  							//to send
+        { 0x1D0, 8, 1000, 40, NULL_PTR },  /*!< Running average power 0 */
         { 0x1D1, 8, 1000, 40, NULL_PTR },  /*!< Running average power 1 */
         { 0x1D2, 8, 1000, 40, NULL_PTR },  /*!< Running average power 2 */
-        { 0x063, 8, 100, 40, NULL_PTR },  /*!< Running average current 0 */  						//to send
+        { 0x1E0, 8, 100, 40, NULL_PTR },  /*!< Running average current 0 */
         { 0x1E1, 8, 1000, 40, NULL_PTR },  /*!< Running average current 1 */
         { 0x1E2, 8, 1000, 40, NULL_PTR },  /*!< Running average current 2 */
 
-        { 0x064, 8, 1000, 40, NULL_PTR },  /*!< Pack voltage */  									//to send
+        { 0x1F0, 8, 1000, 40, NULL_PTR },  /*!< Pack voltage */
 
         { 0x200, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 0 1 2 */
         { 0x201, 8, 200, 20, NULL_PTR },  /*!< Cell voltages module 0 cells 3 4 5 */
@@ -482,31 +498,6 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
 		{ 0x372, 8, 200, 130, NULL_PTR },  /*!< Cell temperatures module 11 cells 6 7 8 */
 		//{ 0x373, 8, 200, 130, NULL_PTR },  /*!< Cell temperatures module 11 cells 9 10 11 */
 
-#ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
-        { 0x35C, 8, 100, 250, NULL_PTR },   /*!< current sensor I   */
-        { 0x35D, 8, 100, 250, NULL_PTR },   /*!< current sensor U1  */
-        { 0x35E, 8, 100, 250, NULL_PTR },   /*!< current sensor U2  */
-        { 0x35F, 8, 100, 250, NULL_PTR },   /*!< current sensor U3  */
-        { 0x525, 8, 100, 250, NULL_PTR },    /*!< current sensor T in cyclic mode  */
-        { 0x526, 8, 100, 250, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
-        { 0x527, 8, 100, 250, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
-        { 0x528, 8, 100, 250, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
-#else /* CURRENT_SENSOR_ISABELLENHUETTE_CYCLIC */
-        { 0x521, 8, 100, 10, NULL_PTR },    /*!< current sensor I in cyclic mode   */
-        { 0x522, 8, 100, 10, NULL_PTR },    /*!< current sensor U1 in cyclic mode  */
-        { 0x523, 8, 100, 10, NULL_PTR },    /*!< current sensor U2 in cyclic mode  */
-        { 0x524, 8, 100, 10, NULL_PTR },    /*!< current sensor U3 in cyclic mode  */
-        { 0x525, 8, 100, 10, NULL_PTR },    /*!< current sensor T in cyclic mode  */
-        { 0x526, 8, 100, 10, NULL_PTR },    /*!< current sensor Power in cyclic mode  */
-        { 0x527, 8, 100, 10, NULL_PTR },    /*!< current sensor C-C in cyclic mode  */
-        { 0x528, 8, 100, 10, NULL_PTR },    /*!< current sensor E-C in cyclic mode  */
-#endif /* CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED */
-
-};
-
-
-const CAN_MSG_TX_TYPE_s can_CAN1_messages_tx[] = {
-
 #if CURRENT_SENSOR_CAN_CHANNEL == 1
 #ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
         { 0x35B, 8, 100, 20, NULL_PTR }  /*!< Current Sensor Trigger */
@@ -534,7 +525,12 @@ CAN_MSG_RX_TYPE_s can0_RxMsgs[] = {
 
 
 CAN_MSG_RX_TYPE_s can1_RxMsgs[] = {
+        { 0x120, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },   /*!< state request      */
 
+        { CAN_ID_SOFTWARE_RESET_MSG, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },   /*!< software reset     */
+
+        { 0x100, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },    /*!< debug message      */
+        { 0x777, 0xFFFF, 8, 0, CAN_FILTER_FIFO1, NULL },    /*!< request SW version */
 
 #if CURRENT_SENSOR_CAN_CHANNEL == 1
 #ifdef CURRENT_SENSOR_ISABELLENHUETTE_TRIGGERED
