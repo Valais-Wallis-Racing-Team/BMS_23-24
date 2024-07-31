@@ -271,6 +271,10 @@ static LTC_RETURN_TYPE_e LTC_CheckStateRequest(LTC_STATE_REQUEST_e statereq);
 
 static STD_RETURN_TYPE_e LTC_TimerElapsedAndSPITransmitOngoing(uint16_t timer);
 
+#ifdef IS_TEST
+static DATA_BLOCK_MSL_FLAG_s cell_errors;
+#endif
+
 /*================== Function Implementations =============================*/
 
 /*================== Public functions =====================================*/
@@ -401,6 +405,9 @@ extern void LTC_SaveVoltages(void) {
     STD_RETURN_TYPE_e retval_PLminmax = E_NOT_OK;
     STD_RETURN_TYPE_e retval_PLspread = E_NOT_OK;
     STD_RETURN_TYPE_e result = E_NOT_OK;
+#ifdef IS_TEST
+    DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
+#endif
     /* Perform min/max voltage plausibility check */
     retval_PLminmax = PL_CheckVoltageMinMax(&ltc_cellvoltage);
 
@@ -424,10 +431,12 @@ extern void LTC_SaveVoltages(void) {
                 }
 #ifdef IS_TEST
                 if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] < BC_VOLTMIN_MSL){
-                	DIAG_Handler(DIAG_CH_CELLVOLTAGE_UNDERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
+                	//DIAG_Handler(DIAG_CH_CELLVOLTAGE_UNDERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
+                	cell_errors.under_voltage = 1;
                 }
                 if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] > BC_VOLTMAX_MSL){
-                	DIAG_Handler(DIAG_CH_CELLVOLTAGE_OVERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
+                	//DIAG_Handler(DIAG_CH_CELLVOLTAGE_OVERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
+                	cell_errors.over_voltage = 1;
                 }
 #endif
             }
@@ -464,6 +473,9 @@ extern void LTC_SaveVoltages(void) {
 
     DB_WriteBlock(&ltc_cellvoltage, DATA_BLOCK_ID_CELLVOLTAGE);
     DB_WriteBlock(&ltc_minmax, DATA_BLOCK_ID_MINMAX);
+#ifdef IS_TEST
+    DB_WriteBlock(&cell_errors,DATA_BLOCK_ID_MSL);
+#endif
 }
 
 /**
@@ -1992,7 +2004,9 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
     uint8_t sensor_idx = 0;
     uint8_t ch_idx = 0;
     uint32_t bitmask = 0;
-
+#ifdef IS_TEST
+    DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
+#endif
     /* pointer to measurement Sequence of Mux- and Channel-Configurations (1,0xFF)...(3,0xFF),(0,1),...(0,7)) */
     if (muxseqptr->muxCh == 0xFF)
         return; /* Channel 0xFF means that the multiplexer is deactivated, therefore no measurement will be made and saved*/
@@ -2034,17 +2048,23 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
             }
 #ifndef IS_TEST
                 if(temperature < BC_TEMPMIN_DISCHARGE_MSL){
-
                 	DIAG_Handler(DIAG_CH_TEMP_UNDERTEMPERATURE_CHARGE_MSL, DIAG_EVENT_NOK, 0);
                 	DIAG_Handler(DIAG_CH_TEMP_UNDERTEMPERATURE_DISCHARGE_MSL, DIAG_EVENT_NOK, 0);
+                	cell_errors.under_temperature_discharge = 1;
+                	cell_errors.under_temperature_charge = 1;
                 }
                 if(temperature > BC_TEMPMAX_DISCHARGE_MSL){
                 	DIAG_Handler(DIAG_CH_TEMP_OVERTEMPERATURE_CHARGE_MSL, DIAG_EVENT_NOK, 0);
                 	DIAG_Handler(DIAG_CH_TEMP_OVERTEMPERATURE_DISCHARGE_MSL, DIAG_EVENT_NOK, 0);
+                	cell_errors.over_temperature_discharge = 1;
+                	cell_errors.over_temperature_charge = 1;
                 }
 #endif
         }
     }
+#ifdef IS_TEST
+    DB_WriteBlock(&cell_errors,DATA_BLOCK_ID_MSL);
+#endif
 
 }
 
