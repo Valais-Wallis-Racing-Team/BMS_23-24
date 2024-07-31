@@ -302,7 +302,7 @@ void BMS_Trigger(void) {
             BMS_SAVELASTSTATES();
             bms_state.initFinished = E_OK;
             bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
-            bms_state.state = BMS_STATEMACH_IDLE;
+            bms_state.state = BMS_STATEMACH_STANDBY;
             bms_state.substate = BMS_ENTRY;
             break;
 

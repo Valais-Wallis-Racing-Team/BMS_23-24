@@ -79,25 +79,25 @@
  * BAL voltage threshold for balancing in mV
  */
 
-#define BAL_THRESHOLD_MV     200
+#define BAL_THRESHOLD_MV     20
 
 /**
  * BAL hysteresis for voltage threshold when balancing was finished in mV
  */
 
-#define BAL_HYSTERESIS_MV     200
+#define BAL_HYSTERESIS_MV     10
 
 /**
  * BAL lower voltage limit in MV
  */
 
-#define BAL_LOWER_VOLTAGE_LIMIT_MV     2000
+#define BAL_LOWER_VOLTAGE_LIMIT_MV     2700
 
 /**
  * BAL upper temperature limit in Celsius
  */
 
-#define BAL_UPPER_TEMPERATURE_LIMIT_DEG     70
+#define BAL_UPPER_TEMPERATURE_LIMIT_DEG     55
 
 /**
  * If set to FALSE, SOC-history based balancing is used.
