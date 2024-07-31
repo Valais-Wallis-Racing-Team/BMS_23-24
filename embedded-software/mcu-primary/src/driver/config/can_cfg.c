@@ -332,7 +332,7 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x062, 8, 1000, 40, NULL_PTR },  /*!< Running average power 0 */  							//to send
         { 0x1D1, 8, 1000, 40, NULL_PTR },  /*!< Running average power 1 */
         { 0x1D2, 8, 1000, 40, NULL_PTR },  /*!< Running average power 2 */
-        { 0x063, 8, 1000, 40, NULL_PTR },  /*!< Running average current 0 */  						//to send
+        { 0x063, 8, 100, 40, NULL_PTR },  /*!< Running average current 0 */  						//to send
         { 0x1E1, 8, 1000, 40, NULL_PTR },  /*!< Running average current 1 */
         { 0x1E2, 8, 1000, 40, NULL_PTR },  /*!< Running average current 2 */
 

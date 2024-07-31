@@ -193,7 +193,7 @@
  * \par Default:
  * 180000
 */
-#define BC_CURRENTMAX_CHARGE_MSL        54000
+#define BC_CURRENTMAX_CHARGE_MSL        180000
 
 /*
  * the cell capacity used for SOC calculation, in this case Ah counting

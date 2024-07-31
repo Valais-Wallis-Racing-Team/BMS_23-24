@@ -196,7 +196,7 @@
  * If set to TRUE, foxBMS checks for the presence of a current sensor. If sensor stops responding during runtime, an error is raised
  *
 */
-#define CURRENT_SENSOR_PRESENT               FALSE
+#define CURRENT_SENSOR_PRESENT               TRUE
 /**
  * defines if the Isabellenhuette current sensor is connected on CAN0 or CAN1
  * 0 = CAN0 / 1 = CAN1
@@ -226,9 +226,9 @@
  * or maximum operating limit (MOL) is violated, the respective flag will be
  * set.
  */
-#define BS_CURRENTMAX_CHARGE_PL0_MSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL0_RSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL0_MOL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL0_MSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL0_RSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL0_MOL_mA        (180000u)
 
 /**
  * @brief Maximum operation limit of current on the powerline 0 in
@@ -248,9 +248,9 @@
  * or maximum operating limit (MOL) is violated, the respective flag will be
  * set.
  */
-#define BS_CURRENTMAX_CHARGE_PL1_MSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL1_RSL_mA        (54000u)
-#define BS_CURRENTMAX_CHARGE_PL1_MOL_mA        (54000u)
+#define BS_CURRENTMAX_CHARGE_PL1_MSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL1_RSL_mA        (180000u)
+#define BS_CURRENTMAX_CHARGE_PL1_MOL_mA        (180000u)
 
 /**
  * @brief Maximum operation limit of current of powerline 1 in
@@ -391,7 +391,7 @@
  * Imax =  1000A, Ploss = 206W: -> voltage drop at 1000A roughly 206mV
  * -> select 500mV because of measurement inaccuracies
  */
-#define BS_MAX_VOLTAGE_DROP_OVER_FUSE_mV            500
+#define BS_MAX_VOLTAGE_DROP_OVER_FUSE_mV            250000
 
 /**
  * Set to TRUE if fuse in NORMAL path should be checked. This can only be done

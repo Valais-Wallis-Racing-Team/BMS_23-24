@@ -105,9 +105,6 @@ static DATA_BLOCK_BALANCING_CONTROL_s ltc_balancing_control;
 static DATA_BLOCK_SLAVE_CONTROL_s ltc_slave_control;
 static DATA_BLOCK_ALLGPIOVOLTAGE_s ltc_allgpiovoltage;
 static DATA_BLOCK_OPENWIRE_s ltc_openwire;
-#ifdef IS_TEST
-static DATA_BLOCK_MSL_FLAG_s cell_errors;
-#endif
 static uint16_t ltc_openwire_pup_buffer[BS_NR_OF_BAT_CELLS];
 static uint16_t ltc_openwire_pdown_buffer[BS_NR_OF_BAT_CELLS];
 static int32_t ltc_openwire_delta[BS_NR_OF_BAT_CELLS];
@@ -215,6 +212,8 @@ static uint8_t ltc_TXBuffer[LTC_N_BYTES_FOR_DATA_TRANSMISSION_DATA_ONLY];
 
 static uint8_t ltc_TXBufferClock[4+9];
 static uint8_t ltc_TXPECBufferClock[4+9];
+
+
 
 
 /*================== Function Prototypes ==================================*/
@@ -402,9 +401,6 @@ extern void LTC_SaveVoltages(void) {
     STD_RETURN_TYPE_e retval_PLminmax = E_NOT_OK;
     STD_RETURN_TYPE_e retval_PLspread = E_NOT_OK;
     STD_RETURN_TYPE_e result = E_NOT_OK;
-#ifdef IS_TEST
-    DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
-#endif
     /* Perform min/max voltage plausibility check */
     retval_PLminmax = PL_CheckVoltageMinMax(&ltc_cellvoltage);
 
@@ -428,10 +424,10 @@ extern void LTC_SaveVoltages(void) {
                 }
 #ifdef IS_TEST
                 if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] < BC_VOLTMIN_MSL){
-                	cell_errors.under_voltage = 1;
+                	DIAG_Handler(DIAG_CH_CELLVOLTAGE_UNDERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
                 }
                 if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] > BC_VOLTMAX_MSL){
-                   	cell_errors.over_voltage = 1;
+                	DIAG_Handler(DIAG_CH_CELLVOLTAGE_OVERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
                 }
 #endif
             }
@@ -468,9 +464,6 @@ extern void LTC_SaveVoltages(void) {
 
     DB_WriteBlock(&ltc_cellvoltage, DATA_BLOCK_ID_CELLVOLTAGE);
     DB_WriteBlock(&ltc_minmax, DATA_BLOCK_ID_MINMAX);
-#ifdef IS_TEST
-    DB_WriteBlock(&cell_errors,DATA_BLOCK_ID_MSL);
-#endif
 }
 
 /**
@@ -2026,13 +2019,9 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
             temperature = (int16_t)LTC_Convert_MuxVoltages_to_Temperatures((float)(val_ui)*0.0001f);        /* Unit Celsius */
             sensor_idx = ltc_muxsensortemperatur_cfg[muxseqptr->muxCh];
             /* if wrong configuration: exit and write nothing */
-#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
             if (sensor_idx >= BS_NR_OF_TEMP_SENSORS_PER_MODULE){
-#endif
                 return;
-#if BS_NR_OF_TEMP_SENSORS_PER_MODULE != 0
             }
-#endif
             /* Set bitmask for valid flags */
             bitmask |= 1 < sensor_idx;
             /* Check LTC PEC error */
@@ -2043,8 +2032,20 @@ static void LTC_SaveMuxMeasurement(uint8_t *rxBuffer, LTC_MUX_CH_CFG_s  *muxseqp
             } else {
                 ltc_celltemperature.valid_temperature[i] |= bitmask;
             }
+#ifndef IS_TEST
+                if(temperature < BC_TEMPMIN_DISCHARGE_MSL){
+
+                	DIAG_Handler(DIAG_CH_TEMP_UNDERTEMPERATURE_CHARGE_MSL, DIAG_EVENT_NOK, 0);
+                	DIAG_Handler(DIAG_CH_TEMP_UNDERTEMPERATURE_DISCHARGE_MSL, DIAG_EVENT_NOK, 0);
+                }
+                if(temperature > BC_TEMPMAX_DISCHARGE_MSL){
+                	DIAG_Handler(DIAG_CH_TEMP_OVERTEMPERATURE_CHARGE_MSL, DIAG_EVENT_NOK, 0);
+                	DIAG_Handler(DIAG_CH_TEMP_OVERTEMPERATURE_DISCHARGE_MSL, DIAG_EVENT_NOK, 0);
+                }
+#endif
         }
     }
+
 }
 
 
@@ -2694,7 +2695,7 @@ static STD_RETURN_TYPE_e LTC_StartOpenWireMeasurement(LTC_ADCMODE_e adcMode, uin
  *
  */
 static STD_RETURN_TYPE_e LTC_RX_PECCheck(uint8_t *DataBufferSPI_RX_with_PEC) {
-    uint16_t i = 0;
+	uint16_t i = 0;
     STD_RETURN_TYPE_e retVal = E_OK;
     uint8_t PEC_TX[2];
     uint16_t PEC_result = 0;

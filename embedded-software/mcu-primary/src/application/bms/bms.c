@@ -116,6 +116,8 @@ static void BMS_CheckCurrent(void);
 static void BMS_CheckSlaveTemperatures(void);
 static void BMS_CheckOpenSenseWire(void);
 
+static uint8_t countFail = 0;
+
 /*================== Function Implementations =============================*/
 
 /**
@@ -653,12 +655,19 @@ void BMS_Trigger(void) {
 
             if (bms_state.substate == BMS_ENTRY) {
                 BAL_SetStateRequest(BAL_STATE_NOBALANCING_REQUEST);
+
+                //bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
+                //bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
+#if BUILD_MODULE_ENABLE_ILCK == 1
+                //bms_state.substate = BMS_OPEN_INTERLOCK;
+                ILCK_SetStateRequest(ILCK_STATE_OPEN_REQUEST);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
                 CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
 #endif
+                nextOpenWireCheck = timestamp + LTC_ERROR_OPEN_WIRE_PERIOD_ms;
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
-#if BUILD_MODULE_ENABLE_ILCK == 1
-                bms_state.substate = BMS_OPEN_INTERLOCK;
+                bms_state.substate = BMS_CHECK_ERROR_FLAGS;
+                
 #else
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
 #endif
@@ -666,15 +675,15 @@ void BMS_Trigger(void) {
                 systemstate.bms_state = BMS_STATEMACH_ERROR;
                 DB_WriteBlock(&systemstate, DATA_BLOCK_ID_SYSTEMSTATE);
                 break;
-#if BUILD_MODULE_ENABLE_ILCK == 1
-            } else if (bms_state.substate == BMS_OPEN_INTERLOCK) {
+//#if BUILD_MODULE_ENABLE_ILCK == 1
+            }/* else if (bms_state.substate == BMS_OPEN_INTERLOCK) {
                 ILCK_SetStateRequest(ILCK_STATE_OPEN_REQUEST);
                 nextOpenWireCheck = timestamp + LTC_ERROR_OPEN_WIRE_PERIOD_ms;
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
                 break;
 #endif
-            } else if (bms_state.substate == BMS_CHECK_ERROR_FLAGS) {
+            } */else if (bms_state.substate == BMS_CHECK_ERROR_FLAGS) {
                 if (BMS_CheckAnyErrorFlagSet() == E_NOT_OK) {
                     /* we stay already in requested state */
                     if (nextOpenWireCheck <= timestamp) {
@@ -1329,6 +1338,7 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         msl_flags.under_temperature_discharge == 1) {
         /* error detected */
         retVal = E_NOT_OK;
+        return retVal;
     }
 
     /* Check system error flags */
@@ -1343,26 +1353,36 @@ static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
         error_flags.charge_precharge          == 1 ||
 #endif
         error_flags.fuse_state_normal         == 1 ||
-        error_flags.fuse_state_charge         == 1 ||
+        error_flags.fuse_state_charge         == 1 ||//from here no error
 #ifndef NO_INTERLOCK_ERROR
         error_flags.interlock                 == 1 ||
 #endif
-#ifndef NO_CRC_ERROR
+
         error_flags.crc_error                 == 1 ||
         error_flags.mux_error                 == 1 ||
-#endif
         error_flags.spi_error                 == 1 ||
         error_flags.ltc_config_error          == 1 ||
         error_flags.currentsensorresponding   == 1 ||
         error_flags.open_wire                 == 1 ||
 #if BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR == TRUE
         error_flags.insulation_error          == 1 ||
-#endif /* BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR */
+#endif // BMS_OPEN_CONTACTORS_ON_INSULATION_ERROR
         error_flags.can_timing_cc             == 1 ||
         error_flags.can_timing                == 1) {
-        /* error detected */
+        // error detected
         retVal = E_NOT_OK;
+        if(retVal == E_NOT_OK){
+        	    countFail++;
+        	    if(countFail >= LTC_TRANSMIT_PECERRLIMIT){
+        	    	countFail = 0;
+        	    } else{
+        	    	retVal = E_OK;
+        	    }
+        	} else {
+        		countFail = 0;
+        	}
     }
+
 
 
     return retVal;
