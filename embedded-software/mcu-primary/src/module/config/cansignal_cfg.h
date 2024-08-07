@@ -288,7 +288,7 @@ typedef enum {
 	CAN1_MSG_IVT_Temperature,                /*!< current sensor temperature */
 	CAN1_MSG_IVT_Power,                      /*!< current sensor power */
 	CAN1_MSG_IVT_CoulombCount,               /*!< current sensor C-C */
-	CAN1_MSG_IVT_EnergyCount,                /*!< current sensor E-C */
+	CAN1_MSG_IVT_EnergyCount                /*!< current sensor E-C */
 } CANS_messagesRx_e;
 
 /**
