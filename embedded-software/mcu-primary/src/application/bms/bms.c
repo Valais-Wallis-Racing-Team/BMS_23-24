@@ -372,7 +372,6 @@ void BMS_Trigger(void) {
                     break;
                 } else if (BMS_CheckInterlockError() == E_NOT_OK){
             	    bms_state.timer = BMS_STATEMACH_A_BIT_LONGERTIME_MS;
-            	    bms_state.state = BMS_STATEMACH_IDLE;
             	    bms_state.substate = BMS_ENTRY;
             	    break;
             	} else {
@@ -396,7 +395,7 @@ void BMS_Trigger(void) {
                     break;
                 }
             } else if (bms_state.substate == BMS_CHECK_STATE_REQUESTS) {
-            	if (BMS_CheckCANRequests() == BMS_REQ_ID_NORMAL) {
+            	if (BMS_CheckCANRequests() == BMS_REQ_ID_NORMAL && BMS_CheckInterlockError() == E_OK) {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.state = BMS_STATEMACH_PRECHARGE;
                     bms_state.substate = BMS_ENTRY;
@@ -444,7 +443,7 @@ void BMS_Trigger(void) {
                     break;
                 } else if(BMS_CheckInterlockError() == E_NOT_OK) {
                 	bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
-                	bms_state.state = BMS_STATEMACH_IDLE;
+                	bms_state.state = BMS_STATEMACH_STANDBY;
                 	bms_state.substate = BMS_ENTRY;
                 	break;
                 } else {
@@ -511,7 +510,7 @@ void BMS_Trigger(void) {
                     break;
                 } else if(BMS_CheckInterlockError() == E_NOT_OK) {
                 	bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
-                	bms_state.state = BMS_STATEMACH_IDLE;
+                	bms_state.state = BMS_STATEMACH_STANDBY;
                 	bms_state.substate = BMS_ENTRY;
                 	break;
                 } else {
@@ -687,7 +686,6 @@ void BMS_Trigger(void) {
             } */else if (bms_state.substate == BMS_CHECK_ERROR_FLAGS) {
                 if (BMS_CheckAnyErrorFlagSet() == E_NOT_OK) {
                     /* we stay already in requested state */
-                	ILCK_SetStateRequest(ILCK_STATE_OPEN_REQUEST);
                     if (nextOpenWireCheck <= timestamp) {
                         /* Perform open-wire check periodically */
                         MEAS_Request_OpenWireCheck();

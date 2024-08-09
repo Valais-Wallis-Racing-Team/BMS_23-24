@@ -569,7 +569,7 @@ static uint8_t CANS_CheckCanTiming(void) {
     if (current_time-current_tab.timestamp > CURRENT_SENSOR_RESPONSE_TIMEOUT_MS) {
         DIAG_Handler(DIAG_CH_CURRENT_SENSOR_RESPONDING, DIAG_EVENT_NOK, 0);
     } else {
-    	DIAG_Handler(DIAG_CH_CURRENT_SENSOR_RESPONDING, DIAG_EVENT_OK, 0);
+        DIAG_Handler(DIAG_CH_CURRENT_SENSOR_RESPONDING, DIAG_EVENT_OK, 0);
         if (cans_state.current_sensor_present == FALSE) {
             CANS_SetCurrentSensorPresent(TRUE);
         }
@@ -579,9 +579,9 @@ static uint8_t CANS_CheckCanTiming(void) {
     /* if timestamp_cc != 0, this means current sensor cc message has been received at least once */
     if (current_tab.timestamp_cc != 0) {
         if (current_time-current_tab.timestamp_cc > CURRENT_SENSOR_RESPONSE_TIMEOUT_MS) {
-        	DIAG_Handler(DIAG_CH_CAN_CC_RESPONDING, DIAG_EVENT_NOK, 0);
+            DIAG_Handler(DIAG_CH_CAN_CC_RESPONDING, DIAG_EVENT_NOK, 0);
         } else {
-        	DIAG_Handler(DIAG_CH_CAN_CC_RESPONDING, DIAG_EVENT_OK, 0);
+            DIAG_Handler(DIAG_CH_CAN_CC_RESPONDING, DIAG_EVENT_OK, 0);
             if (cans_state.current_sensor_cc_present == FALSE) {
                 CANS_SetCurrentSensorCCPresent(TRUE);
             }

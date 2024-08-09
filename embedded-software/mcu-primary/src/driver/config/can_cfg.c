@@ -329,7 +329,7 @@ const CAN_MSG_TX_TYPE_s can_CAN0_messages_tx[] = {
         { 0x190, 8, 1000, 30, NULL_PTR },  /*!< Tempering */
         { 0x1A0, 8, 1000, 30, NULL_PTR },  /*!< Insulation */
 
-        { 0x062, 8, 1000, 40, NULL_PTR },  /*!< Running average power 0 */  						//to send
+        { 0x062, 8, 1000, 40, NULL_PTR },  /*!< Running average power 0 */  							//to send
         { 0x1D1, 8, 1000, 40, NULL_PTR },  /*!< Running average power 1 */
         { 0x1D2, 8, 1000, 40, NULL_PTR },  /*!< Running average power 2 */
         { 0x063, 8, 100, 40, NULL_PTR },  /*!< Running average current 0 */  						//to send
@@ -530,7 +530,7 @@ CAN_MSG_RX_TYPE_s can0_RxMsgs[] = {
 
         { 0x100, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< debug message      */
         { 0x777, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },    /*!< request SW version */
-		{ 0x285, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
+		{ 0x012, 0xFFFF, 8, 0, CAN_FILTER_FIFO0, NULL },
 };
 
 

@@ -67,29 +67,29 @@
 #define DIAG_ERROR_SENSITIVITY_MID          (5)    /* logging at fifth event */
 #define DIAG_ERROR_SENSITIVITY_LOW          (10)   /* logging at tenth event */
 
-#define DIAG_ERROR_VOLTAGE_SENSITIVITY_MSL      (5)   /*!< MSL level for event occurrence if over/under voltage event   */
-#define DIAG_ERROR_VOLTAGE_SENSITIVITY_RSL      (5)   /*!< RSL level for event occurrence if over/under voltage event   */
-#define DIAG_ERROR_VOLTAGE_SENSITIVITY_MOL      (5)   /*!< MOL level for event occurrence if over/under voltage event   */
+#define DIAG_ERROR_VOLTAGE_SENSITIVITY_MSL      (500)   /*!< MSL level for event occurrence if over/under voltage event   */
+#define DIAG_ERROR_VOLTAGE_SENSITIVITY_RSL      (500)   /*!< RSL level for event occurrence if over/under voltage event   */
+#define DIAG_ERROR_VOLTAGE_SENSITIVITY_MOL      (500)   /*!< MOL level for event occurrence if over/under voltage event   */
 
-#define DIAG_ERROR_TEMPERATURE_SENSITIVITY_MSL  (5)   /*!< MSL level for event occurrence if over/under temperature event    */
-#define DIAG_ERROR_TEMPERATURE_SENSITIVITY_RSL  (5)   /*!< RSL level for event occurrence if over/under temperature event    */
-#define DIAG_ERROR_TEMPERATURE_SENSITIVITY_MOL  (5)   /*!< MOL level for event occurrence if over/under temperature event    */
+#define DIAG_ERROR_TEMPERATURE_SENSITIVITY_MSL  (500)   /*!< MSL level for event occurrence if over/under temperature event    */
+#define DIAG_ERROR_TEMPERATURE_SENSITIVITY_RSL  (500)   /*!< RSL level for event occurrence if over/under temperature event    */
+#define DIAG_ERROR_TEMPERATURE_SENSITIVITY_MOL  (500)   /*!< MOL level for event occurrence if over/under temperature event    */
 
-#define DIAG_ERROR_CURRENT_SENSITIVITY_MSL      (5)   /*!< MSL level for event occurrence if over/under current event        */
-#define DIAG_ERROR_CURRENT_SENSITIVITY_RSL      (5)   /*!< RSL level for event occurrence if over/under current event        */
-#define DIAG_ERROR_CURRENT_SENSITIVITY_MOL      (5)   /*!< MOL level for event occurrence if over/under current event        */
+#define DIAG_ERROR_CURRENT_SENSITIVITY_MSL      (500)   /*!< MSL level for event occurrence if over/under current event        */
+#define DIAG_ERROR_CURRENT_SENSITIVITY_RSL      (500)   /*!< RSL level for event occurrence if over/under current event        */
+#define DIAG_ERROR_CURRENT_SENSITIVITY_MOL      (500)   /*!< MOL level for event occurrence if over/under current event        */
 
-#define DIAG_ERROR_SLAVE_TEMP_SENSITIVITY_MSL   (5)   /*!< MSL level for event occurrence if slave PCB temperature event     */
-#define DIAG_ERROR_SLAVE_TEMP_SENSITIVITY_RSL   (5)   /*!< RSL level for event occurrence if slave PCB temperature event     */
-#define DIAG_ERROR_SLAVE_TEMP_SENSITIVITY_MOL   (5)   /*!< MOL level for event occurrence if slave PCB temperature event     */
+#define DIAG_ERROR_SLAVE_TEMP_SENSITIVITY_MSL   (500)   /*!< MSL level for event occurrence if slave PCB temperature event     */
+#define DIAG_ERROR_SLAVE_TEMP_SENSITIVITY_RSL   (500)   /*!< RSL level for event occurrence if slave PCB temperature event     */
+#define DIAG_ERROR_SLAVE_TEMP_SENSITIVITY_MOL   (500)   /*!< MOL level for event occurrence if slave PCB temperature event     */
 
-#define DIAG_ERROR_LTC_PEC_SENSITIVITY          (50)
-#define DIAG_ERROR_LTC_MUX_SENSITIVITY          (50)
-#define DIAG_ERROR_LTC_SPI_SENSITIVITY          (50)
+#define DIAG_ERROR_LTC_PEC_SENSITIVITY          (5)
+#define DIAG_ERROR_LTC_MUX_SENSITIVITY          (5)
+#define DIAG_ERROR_LTC_SPI_SENSITIVITY          (5)
 
 #define DIAG_ERROR_CAN_TIMING_SENSITIVITY       (100)
-#define DIAG_ERROR_CAN_TIMING_CC_SENSITIVITY    (1)
-#define DIAG_ERROR_CAN_SENSOR_SENSITIVITY       (1)
+#define DIAG_ERROR_CAN_TIMING_CC_SENSITIVITY    (100)
+#define DIAG_ERROR_CAN_SENSOR_SENSITIVITY       (100)
 
 #define DIAG_ERROR_MAIN_PLUS_SENSITIVITY        (50)
 #define DIAG_ERROR_MAIN_MINUS_SENSITIVITY       (50)
@@ -97,7 +97,7 @@
 
 #define DIAG_ERROR_INTERLOCK_SENSITIVITY        (10)
 
-#define DIAG_ERROR_INSULATION_SENSITIVITY       (100)
+#define DIAG_ERROR_INSULATION_SENSITIVITY       (30)
 
 #define DIAG_ERROR_PLAUSIBILITY_PACK_SENSITIVITY    (100)
 

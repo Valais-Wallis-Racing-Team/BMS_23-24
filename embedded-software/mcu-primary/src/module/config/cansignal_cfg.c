@@ -1856,7 +1856,7 @@ uint32_t cans_getcanerr(uint32_t sigIdx, void *value) {
                 break;
 
             case CAN0_SIG_GS2_error_insulation:
-                //*(uint32_t *)value = canerr_tab.insulation_error;
+                *(uint32_t *)value = 0;//canerr_tab.insulation_error;
                 break;
 
             case CAN0_SIG_GS2_fuse_state:
@@ -2574,7 +2574,6 @@ uint32_t cans_dummy(uint32_t sigIdx, void *value) {
 	SYS_SendBootMessage(0);
 	return 0;
 }
-
 
 uint32_t cans_setdebug(uint32_t sigIdx, void *value) {
     uint8_t data[8] = {0, 0, 0, 0, 0, 0, 0, 0};

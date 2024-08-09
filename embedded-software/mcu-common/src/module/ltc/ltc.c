@@ -405,7 +405,7 @@ extern void LTC_SaveVoltages(void) {
     STD_RETURN_TYPE_e retval_PLminmax = E_NOT_OK;
     STD_RETURN_TYPE_e retval_PLspread = E_NOT_OK;
     STD_RETURN_TYPE_e result = E_NOT_OK;
-#ifdef IS_TEST1
+#ifdef IS_TEST
     DB_ReadBlock(&cell_errors , DATA_BLOCK_ID_MSL);
 #endif
     /* Perform min/max voltage plausibility check */
@@ -429,7 +429,7 @@ extern void LTC_SaveVoltages(void) {
                     module_number_max = i;
                     cell_number_max = j;
                 }
-#ifdef IS_TEST1
+#ifdef IS_TEST
                 if(ltc_cellvoltage.voltage[i*(BS_NR_OF_BAT_CELLS_PER_MODULE)+j] < BC_VOLTMIN_MSL){
                 	//DIAG_Handler(DIAG_CH_CELLVOLTAGE_UNDERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
                 	cell_errors.under_voltage = 1;
@@ -473,7 +473,7 @@ extern void LTC_SaveVoltages(void) {
 
     DB_WriteBlock(&ltc_cellvoltage, DATA_BLOCK_ID_CELLVOLTAGE);
     DB_WriteBlock(&ltc_minmax, DATA_BLOCK_ID_MINMAX);
-#ifdef IS_TEST1
+#ifdef IS_TEST
     DB_WriteBlock(&cell_errors,DATA_BLOCK_ID_MSL);
 #endif
 }

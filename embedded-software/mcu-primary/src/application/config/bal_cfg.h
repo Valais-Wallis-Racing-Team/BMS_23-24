@@ -85,7 +85,7 @@
  * BAL hysteresis for voltage threshold when balancing was finished in mV
  */
 
-#define BAL_HYSTERESIS_MV     10
+#define BAL_HYSTERESIS_MV     20
 
 /**
  * BAL lower voltage limit in MV
